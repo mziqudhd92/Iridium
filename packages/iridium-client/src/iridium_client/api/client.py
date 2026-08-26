@@ -34,7 +34,7 @@ class IridiumApiClient:
             "X-Iridium-Client-Version": CLIENT_VERSION,
         }
         if self.api_key:
-            headers["Authorization"] = f"Bearer {self.api_key}"
+            headers["X-API-Key"] = self.api_key
         return headers
 
     def submit_scan(self, payload: dict[str, Any]) -> dict[str, Any]:

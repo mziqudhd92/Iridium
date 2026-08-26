@@ -8,6 +8,7 @@ from typing import Any
 
 from pydantic import BaseModel, Field
 
+from iridium_core.models.enums import NodeKind
 from iridium_core.models.fragment import GraphFragment
 
 
@@ -47,3 +48,61 @@ class ClientScanPayload(BaseModel):
     @classmethod
     def from_dict(cls, data: dict[str, Any]) -> ClientScanPayload:
         return cls.model_validate(data)
+
+    def to_api_dict(self) -> dict[str, Any]:
+        """Flatten fragments into backend /api/v1/client/scan wire format."""
+        nodes: list[dict[str, Any]] = []
+        edges: list[dict[str, Any]] = []
+        entrypoints: list[str] = []
+        seen_node_ids: set[str] = set()
+
+        for fragment in self.fragments:
+            for node in fragment.nodes:
+                if node.id in seen_node_ids:
+                    continue
+                seen_node_ids.add(node.id)
+                api_node: dict[str, Any] = {
+                    "id": node.id,
+                    "type": node.kind.value,
+                    "language": node.language or None,
+                    "metadata": {"file": node.file, "line": node.line},
+                }
+                if node.symbol:
+                    api_node["label"] = node.symbol
+                if node.kind == NodeKind.DEPENDENCY:
+                    api_node["package"] = node.symbol or None
+                nodes.append(api_node)
+                if node.kind in (NodeKind.HTTP_ROUTE, NodeKind.DYNAMIC_ENTRYPOINT):
+                    entrypoints.append(node.id)
+
+            for edge in fragment.edges:
+                edges.append(
+                    {
+                        "source": edge.source,
+                        "target": edge.target,
+                        "type": edge.edge_type.value,
+                    }
+                )
+
+        return {
+            "schema_version": self.schema_version,
+            "repo_fingerprint": self.repo_fingerprint,
+            "git_tree_hash": self.git_tree_hash,
+            "commit_hash": self.commit_hash,
+            "client_os": self.client_os,
+            "languages": self.languages,
+            "dependencies": [
+                {
+                    "name": dep.name,
+                    "version": dep.version or "",
+                    "ecosystem": dep.ecosystem,
+                    "env_marker": dep.env_marker,
+                }
+                for dep in self.dependencies
+            ],
+            "nodes": nodes,
+            "edges": edges,
+            "entrypoints": entrypoints,
+            "graph_truncated": self.graph_truncated,
+            "supply_chain_warnings": self.supply_chain_warnings,
+        }
