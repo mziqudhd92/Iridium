@@ -55,7 +55,8 @@ def validate_dependency_addition(
     name="get_reachability_context",
     description=(
         "Returns the execution path from HTTP/API entrypoints to a vulnerable function, "
-        "formatted for agent context. Use after validate_dependency_addition returns reachable=true."
+        "formatted for agent context. Use after validate_dependency_addition "
+        "returns reachable=true."
     ),
 )
 def get_reachability_context(
