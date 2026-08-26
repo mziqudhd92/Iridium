@@ -1,6 +1,6 @@
 [project]
 name = "iridium-monorepo"
-version = "0.1.0"
+version = "0.2.0"
 description = "Iridium public OSS monorepo (iridium-core, iridium-client, iridium-mcp-server)"
 requires-python = ">=3.11"
 readme = "README.md"
@@ -43,3 +43,6 @@ target-version = "py311"
 
 [tool.ruff.lint.per-file-ignores]
 "packages/iridium-client/src/iridium_client/cli.py" = ["B008"]
+"packages/iridium-client/src/iridium_client/api/client.py" = ["BLE001"]
+"packages/iridium-mcp-server/src/iridium_mcp/api_client.py" = ["BLE001"]
+"packages/iridium-mcp-server/src/iridium_mcp/indexer.py" = ["BLE001"]

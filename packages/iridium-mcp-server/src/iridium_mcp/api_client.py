@@ -1,19 +1,15 @@
-"""HTTP client for Iridium SaaS API."""
+"""HTTP client for sync query endpoints with fail-open semantics."""
 
 from __future__ import annotations
 
 import os
-import time
 from typing import Any
 
 import httpx
 
 DEFAULT_API_URL = "https://api.iridium.example.com"
 CLIENT_VERSION = "0.2.0"
-POLL_INTERVAL_SECONDS = 2.0
-MAX_POLL_SECONDS = 300.0
-REQUEST_TIMEOUT = 30.0
-QUERY_TIMEOUT = 2.0
+REQUEST_TIMEOUT = 2.0
 
 _DEGRADED_VALIDATE = {
     "allowed": True,
@@ -34,9 +30,7 @@ _DEGRADED_CONTEXT = {
 }
 
 
-class IridiumApiClient:
-    """Thin client for /api/v1/client/* endpoints."""
-
+class QueryApiClient:
     def __init__(
         self,
         api_url: str | None = None,
@@ -56,44 +50,10 @@ class IridiumApiClient:
             headers["X-API-Key"] = self.api_key
         return headers
 
-    def submit_scan(self, payload: dict[str, Any]) -> dict[str, Any]:
-        """POST /api/v1/client/scan — returns 202 with scan_id."""
-        url = f"{self.api_url}/api/v1/client/scan"
-        with httpx.Client(timeout=self.timeout) as client:
-            response = client.post(url, json=payload, headers=self._headers())
-            response.raise_for_status()
-            return response.json()
-
-    def poll_scan(self, scan_id: str) -> dict[str, Any]:
-        """GET /api/v1/client/scan/{scan_id}."""
-        url = f"{self.api_url}/api/v1/client/scan/{scan_id}"
-        with httpx.Client(timeout=self.timeout) as client:
-            response = client.get(url, headers=self._headers())
-            response.raise_for_status()
-            return response.json()
-
-    def wait_for_scan(
-        self,
-        scan_id: str,
-        *,
-        poll_interval: float = POLL_INTERVAL_SECONDS,
-        max_wait: float = MAX_POLL_SECONDS,
-    ) -> dict[str, Any]:
-        """Poll until scan completes or times out."""
-        deadline = time.monotonic() + max_wait
-        while time.monotonic() < deadline:
-            result = self.poll_scan(scan_id)
-            status = result.get("status", "").lower()
-            if status in ("completed", "failed", "error"):
-                return result
-            time.sleep(poll_interval)
-        raise TimeoutError(f"scan {scan_id} did not complete within {max_wait}s")
-
     def validate_dependency(self, payload: dict[str, Any]) -> dict[str, Any]:
-        """POST /api/v1/client/query/validate-dependency (sync, <2s). Fail-open on errors."""
         url = f"{self.api_url}/api/v1/client/query/validate-dependency"
         try:
-            with httpx.Client(timeout=QUERY_TIMEOUT) as client:
+            with httpx.Client(timeout=self.timeout) as client:
                 response = client.post(url, json=payload, headers=self._headers())
                 if response.status_code == 429:
                     return dict(_DEGRADED_VALIDATE)
@@ -103,10 +63,9 @@ class IridiumApiClient:
             return {**_DEGRADED_VALIDATE, "warning": f"Iridium API error: {exc}"}
 
     def reachability_context(self, payload: dict[str, Any]) -> dict[str, Any]:
-        """POST /api/v1/client/query/reachability-context (sync, <2s). Fail-open on errors."""
         url = f"{self.api_url}/api/v1/client/query/reachability-context"
         try:
-            with httpx.Client(timeout=QUERY_TIMEOUT) as client:
+            with httpx.Client(timeout=self.timeout) as client:
                 response = client.post(url, json=payload, headers=self._headers())
                 if response.status_code == 429:
                     return dict(_DEGRADED_CONTEXT)

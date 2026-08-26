@@ -3,4 +3,4 @@
 from iridium_core.workspace.indexer import WorkspaceIndexer
 
 __all__ = ["WorkspaceIndexer"]
-__version__ = "0.1.0"
+__version__ = "0.2.0"
