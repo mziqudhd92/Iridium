@@ -1,0 +1,162 @@
+openapi: 3.1.0
+info:
+  title: Iridium Client Scan API
+  version: 1.0.0
+  description: |
+    Client-facing API for Iridium reachability scanning.
+    Base URL configured via IRIDIUM_API_URL (default https://api.iridium.example.com).
+  license:
+    name: Apache-2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0
+
+servers:
+  - url: https://api.iridium.example.com
+    description: Placeholder production host
+
+paths:
+  /api/v1/client/scan:
+    post:
+      operationId: submitClientScan
+      summary: Submit a client scan payload
+      description: Validates auth and schema, queues async analysis, returns 202.
+      parameters:
+        - name: X-Iridium-Client-Version
+          in: header
+          schema:
+            type: string
+        - name: X-CI-Run-Id
+          in: header
+          required: false
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: ../schema/client-scan-payload-v1.json
+      responses:
+        "202":
+          description: Scan accepted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ScanAccepted"
+        "400":
+          description: Invalid payload
+        "401":
+          description: Unauthorized
+
+  /api/v1/client/scan/{scan_id}:
+    get:
+      operationId: getClientScan
+      summary: Poll scan status and findings
+      parameters:
+        - name: scan_id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Scan status
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ScanResult"
+        "404":
+          description: Scan not found
+
+  /api/v1/client/events:
+    post:
+      operationId: postClientEvent
+      summary: Anonymized product analytics ping (opt-out)
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ClientEvent"
+      responses:
+        "204":
+          description: Event recorded
+
+components:
+  schemas:
+    ScanAccepted:
+      type: object
+      required: [scan_id, poll_url, status]
+      properties:
+        scan_id:
+          type: string
+        poll_url:
+          type: string
+          format: uri
+        status:
+          type: string
+          enum: [queued, processing]
+
+    ScanResult:
+      type: object
+      required: [scan_id, status]
+      properties:
+        scan_id:
+          type: string
+        status:
+          type: string
+          enum: [queued, processing, completed, failed, error]
+        findings:
+          type: array
+          items:
+            $ref: "#/components/schemas/Finding"
+        dependency_count:
+          type: integer
+        entrypoint_count:
+          type: integer
+        languages:
+          type: array
+          items:
+            type: string
+        raw_cve_count:
+          type: integer
+
+    Finding:
+      type: object
+      properties:
+        cve_id:
+          type: string
+        reachable:
+          type: boolean
+        path:
+          type: string
+        severity:
+          type: string
+
+    ClientEvent:
+      type: object
+      required: [event, client_version]
+      properties:
+        event:
+          type: string
+        reachable_found:
+          type: integer
+        cve_suppressed_unreachable:
+          type: integer
+        languages:
+          type: array
+          items:
+            type: string
+        duration_ms:
+          type: integer
+        client_version:
+          type: string
+        install_id:
+          type: string
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+
+security:
+  - bearerAuth: []

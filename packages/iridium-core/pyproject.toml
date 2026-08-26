@@ -1,0 +1,36 @@
+[project]
+name = "iridium-core"
+version = "0.1.0"
+description = "Local AST extraction, graph assembly, and cache for Iridium security scanning"
+readme = "README.md"
+license = { text = "Apache-2.0" }
+requires-python = ">=3.11"
+authors = [{ name = "Iridium Contributors" }]
+keywords = ["security", "sast", "reachability", "dependency-analysis"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Security",
+]
+dependencies = [
+    "pydantic>=2.0",
+    "pathspec>=0.12",
+]
+
+[project.optional-dependencies]
+msgpack = ["msgpack>=1.0"]
+
+[project.urls]
+Homepage = "https://github.com/mziqudhd92/Iridium"
+Repository = "https://github.com/mziqudhd92/Iridium"
+Documentation = "https://github.com/mziqudhd92/Iridium#readme"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/iridium_core"]

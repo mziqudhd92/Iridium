@@ -1,0 +1,22 @@
+"""Node and edge kind enumerations."""
+
+from enum import Enum
+
+
+class NodeKind(str, Enum):
+    FUNCTION = "FUNCTION"
+    IMPORT = "IMPORT"
+    HTTP_ROUTE = "HTTP_ROUTE"
+    DEPENDENCY = "DEPENDENCY"
+    TYPE_ONLY_IMPORT = "TYPE_ONLY_IMPORT"
+    DYNAMIC_ENTRYPOINT = "DYNAMIC_ENTRYPOINT"
+    INDIRECT_CALL_SINK = "INDIRECT_CALL_SINK"
+    DYNAMIC_INVOCATION = "DYNAMIC_INVOCATION"
+
+
+class EdgeType(str, Enum):
+    CALLS = "CALLS"
+    IMPORTS = "IMPORTS"
+    ROUTES_TO = "ROUTES_TO"
+    DEPENDS_ON = "DEPENDS_ON"
+    INDIRECT = "INDIRECT"

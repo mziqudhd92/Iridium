@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://iridium.example.com/schema/client-scan-payload-v1.json",
+  "title": "ClientScanPayload",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "repo_fingerprint",
+    "git_tree_hash",
+    "client_os",
+    "languages",
+    "fragments",
+    "dependencies"
+  ],
+  "properties": {
+    "schema_version": { "type": "string", "const": "1" },
+    "repo_fingerprint": { "type": "string", "minLength": 8 },
+    "git_tree_hash": { "type": "string", "minLength": 8 },
+    "commit_hash": { "type": ["string", "null"] },
+    "client_os": { "type": "string" },
+    "languages": { "type": "array", "items": { "type": "string" } },
+    "fragments": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/GraphFragment" }
+    },
+    "dependencies": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/DependencyNode" }
+    },
+    "graph_truncated": { "type": "boolean", "default": false },
+    "supply_chain_warnings": { "type": "array", "items": { "type": "string" } },
+    "determinism_warnings": { "type": "array", "items": { "type": "string" } },
+    "entrypoint_count": { "type": "integer", "minimum": 0 },
+    "dependency_count": { "type": "integer", "minimum": 0 }
+  },
+  "$defs": {
+    "NodeKind": {
+      "type": "string",
+      "enum": [
+        "FUNCTION",
+        "IMPORT",
+        "HTTP_ROUTE",
+        "DEPENDENCY",
+        "TYPE_ONLY_IMPORT",
+        "DYNAMIC_ENTRYPOINT",
+        "INDIRECT_CALL_SINK",
+        "DYNAMIC_INVOCATION"
+      ]
+    },
+    "EdgeType": {
+      "type": "string",
+      "enum": ["CALLS", "IMPORTS", "ROUTES_TO", "DEPENDS_ON", "INDIRECT"]
+    },
+    "GraphNode": {
+      "type": "object",
+      "required": ["id", "kind", "file", "line", "language"],
+      "properties": {
+        "id": { "type": "string" },
+        "kind": { "$ref": "#/$defs/NodeKind" },
+        "file": { "type": "string" },
+        "line": { "type": "integer", "minimum": 0 },
+        "language": { "type": "string" },
+        "symbol": { "type": "string" }
+      }
+    },
+    "GraphEdge": {
+      "type": "object",
+      "required": ["source", "target", "edge_type"],
+      "properties": {
+        "source": { "type": "string" },
+        "target": { "type": "string" },
+        "edge_type": { "$ref": "#/$defs/EdgeType" }
+      }
+    },
+    "GraphFragment": {
+      "type": "object",
+      "properties": {
+        "nodes": { "type": "array", "items": { "$ref": "#/$defs/GraphNode" } },
+        "edges": { "type": "array", "items": { "$ref": "#/$defs/GraphEdge" } },
+        "warnings": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "DependencyNode": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string" },
+        "version": { "type": ["string", "null"] },
+        "ecosystem": { "type": "string", "default": "pypi" },
+        "resolved_url": { "type": ["string", "null"] },
+        "env_marker": { "type": ["string", "null"] }
+      }
+    }
+  }
+}
