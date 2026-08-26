@@ -3,9 +3,8 @@
 from pathlib import Path
 from unittest.mock import MagicMock, patch
 
-from typer.testing import CliRunner
-
 from iridium_client.cli import app
+from typer.testing import CliRunner
 
 runner = CliRunner()
 

@@ -3,9 +3,9 @@
 from __future__ import annotations
 
 import hashlib
-import os
 import sqlite3
 from pathlib import Path
+from typing import Self
 
 WAL_PRAGMAS = (
     "PRAGMA journal_mode=WAL",
@@ -102,7 +102,7 @@ class AstCache:
     def close(self) -> None:
         self._conn.close()
 
-    def __enter__(self) -> AstCache:
+    def __enter__(self) -> Self:
         return self
 
     def __exit__(self, *args: object) -> None:

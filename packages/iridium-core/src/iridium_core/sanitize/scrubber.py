@@ -36,8 +36,8 @@ def scrub_source(source: str) -> str:
 def _shannon_entropy(data: str) -> float:
     if not data:
         return 0.0
-    from collections import Counter
     import math
+    from collections import Counter
 
     counts = Counter(data)
     length = len(data)

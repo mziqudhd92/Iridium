@@ -2,13 +2,13 @@
 
 from __future__ import annotations
 
-import json
 import os
 import time
 from pathlib import Path
-from typing import Optional
 
 import typer
+from iridium_core import WorkspaceIndexer
+from iridium_core.models.payload import ClientScanPayload
 from rich.console import Console
 
 from iridium_client.api.client import IridiumApiClient
@@ -18,8 +18,6 @@ from iridium_client.output.terminal import (
     render_scan_results,
     render_zero_results,
 )
-from iridium_core import WorkspaceIndexer
-from iridium_core.models.payload import ClientScanPayload
 
 app = typer.Typer(
     name="iridium-client",
@@ -36,7 +34,7 @@ console = Console()
 def payload_dump(
     path: Path = typer.Argument(Path("."), exists=True, file_okay=False, resolve_path=True),
     validate: bool = typer.Option(False, "--validate", help="Validate against schema"),
-    output: Optional[Path] = typer.Option(None, "--output", "-o", help="Write JSON to file"),
+    output: Path | None = typer.Option(None, "--output", "-o", help="Write JSON to file"),
 ) -> None:
     """Dump local scan payload (zero network)."""
     indexer = WorkspaceIndexer(path, use_process_pool=False)
@@ -55,7 +53,7 @@ def payload_dump(
 @app.command()
 def scan(
     path: Path = typer.Argument(Path("."), exists=True, file_okay=False, resolve_path=True),
-    api_url: Optional[str] = typer.Option(None, "--api-url", envvar="IRIDIUM_API_URL"),
+    api_url: str | None = typer.Option(None, "--api-url", envvar="IRIDIUM_API_URL"),
     anonymize: bool = typer.Option(False, "--anonymize"),
     no_telemetry: bool = typer.Option(False, "--no-telemetry"),
     on_error: str = typer.Option("block", "--on-error", help="pass|block"),

@@ -1,6 +1,5 @@
 """Tests for AST cache."""
 
-import json
 from pathlib import Path
 
 from iridium_core.cache.ast_cache import AstCache, content_hash, resolve_cache_path

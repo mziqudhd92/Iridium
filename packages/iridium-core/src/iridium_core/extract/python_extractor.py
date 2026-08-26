@@ -74,7 +74,7 @@ def _is_type_only_import(node: ast.Import | ast.ImportFrom) -> bool:
 def _annotate_parents(tree: ast.AST) -> None:
     for node in ast.walk(tree):
         for child in ast.iter_child_nodes(node):
-            setattr(child, "_parent", node)
+            child._parent = node
 
 
 def _route_decorator_name(dec: ast.expr) -> str:
@@ -236,8 +236,7 @@ class PythonExtractor(LanguageExtractor):
                 continue
             rel = path.relative_to(repo).as_posix()
             module = rel[:-3].replace("/", ".")
-            if module.endswith(".__init__"):
-                module = module[: -len(".__init__")]
+            module = module.removesuffix(".__init__")
             mapping[module] = rel
             parts = module.split(".")
             if parts:

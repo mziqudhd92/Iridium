@@ -4,7 +4,6 @@ from unittest.mock import MagicMock, patch
 
 import httpx
 import pytest
-
 from iridium_client.api.client import IridiumApiClient
 
 
@@ -62,10 +61,12 @@ def test_wait_for_scan_polls_until_terminal_status() -> None:
 
 def test_wait_for_scan_times_out() -> None:
     api = IridiumApiClient(api_url="https://api.example.com")
-    with patch.object(api, "poll_scan", return_value={"status": "RUNNING"}):
-        with patch("iridium_client.api.client.time.monotonic", side_effect=[0.0, 0.0, 10.0]):
-            with pytest.raises(TimeoutError, match="did not complete"):
-                api.wait_for_scan("SCAN-ABC123", poll_interval=0.01, max_wait=1.0)
+    with (
+        patch.object(api, "poll_scan", return_value={"status": "RUNNING"}),
+        patch("iridium_client.api.client.time.monotonic", side_effect=[0.0, 0.0, 10.0]),
+        pytest.raises(TimeoutError, match="did not complete"),
+    ):
+        api.wait_for_scan("SCAN-ABC123", poll_interval=0.01, max_wait=1.0)
 
 
 def test_submit_scan_raises_on_http_error() -> None:
