@@ -15,7 +15,7 @@ flowchart LR
   subgraph local["Developer machine"]
     core["iridium-core\n(AST, graph, cache)"]
     client["iridium-client\n(CLI)"]
-    mcp["iridium-mcp-server\n(Phase 2 skeleton)"]
+    mcp["iridium-mcp-server\n(MCP guardrails)"]
     core --> client
     core --> mcp
   end
@@ -27,7 +27,7 @@ flowchart LR
 | --- | --- | --- |
 | `iridium-core` | [`pip install iridium-core`](https://pypi.org/project/iridium-core/) | Extractors, cache, graph, payload models (no network) |
 | `iridium-client` | [`pip install iridium-client`](https://pypi.org/project/iridium-client/) | Typer CLI + httpx SaaS client |
-| `iridium-mcp-server` | [`pip install iridium-mcp-server`](https://pypi.org/project/iridium-mcp-server/) | MCP server skeleton for AI agents (Phase 2) |
+| `iridium-mcp-server` | [`pip install iridium-mcp-server`](https://pypi.org/project/iridium-mcp-server/) | MCP server for AI agent guardrails (Phase 2) |
 
 The **private SaaS backend** (CVE intelligence, reachability workers, patches) lives in a separate repository — not in this OSS monorepo.
 
@@ -110,7 +110,7 @@ See [SECURITY.md](SECURITY.md) for vulnerability reporting, client-side threat m
 
 **Phase 1 limitations:**
 
-- **Local audit log** (`.iridium/audit.log`) is planned but **not yet implemented**.
+- **Local audit log** (`.iridium/audit.log`) is implemented for MCP server; CLI audit log planned.
 - **`--anonymize`** HMAC-hashes internal symbols in graph payloads; available on `iridium-client scan`.
 - **Product analytics** are on by default (anonymized operational pings, no AST/source); opt out with `DO_NOT_TRACK=1` or `--no-telemetry`.
 - Graph payloads contain syntactic structure only — string literals and secrets are stripped client-side.

@@ -43,11 +43,13 @@ class WorkspaceIndexer:
         extractors: list[LanguageExtractor] | None = None,
         use_cache: bool = True,
         use_process_pool: bool = True,
+        only_paths: list[Path] | None = None,
     ) -> None:
         self.repo = repo.resolve()
         self.extractors = extractors or DEFAULT_EXTRACTORS
         self.use_cache = use_cache
         self.use_process_pool = use_process_pool
+        self.only_paths = [p.resolve() for p in only_paths] if only_paths else None
 
     def discover_files(self) -> list[Path]:
         spec = load_ignore_spec(self.repo)
@@ -64,7 +66,11 @@ class WorkspaceIndexer:
             if should_ignore(path, self.repo, spec):
                 continue
             files.append(path)
-        return sorted(files)
+        files = sorted(files)
+        if self.only_paths:
+            allowed = set(self.only_paths)
+            files = [path for path in files if path in allowed]
+        return files
 
     def index(self) -> ClientScanPayload:
         files = self.discover_files()

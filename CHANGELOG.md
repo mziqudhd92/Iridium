@@ -4,6 +4,20 @@ All notable changes to the Iridium public OSS packages are documented here.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.2.0] - 2026-08-27
+
+Phase 2 — MCP runtime guardrails and sync query API.
+
+### Added
+
+- **iridium-mcp-server** — stdio MCP transport with `validate_dependency_addition`, `get_reachability_context`, `refresh_workspace_graph` tools; fail-open on 429/5xx; background warm-index; parent heartbeat; `.iridium/audit.log`.
+- **iridium-client** — `validate_dependency()` and `reachability_context()` query methods on `IridiumApiClient`.
+- OpenAPI sync query endpoints: `POST /api/v1/client/query/validate-dependency`, `POST /api/v1/client/query/reachability-context` (MessagePack supported).
+
+### Changed
+
+- MCP server is production-ready for agent workflows (no longer a skeleton).
+
 ## [0.1.0] - 2026-08-27
 
 Phase 1 initial release — client-side scanning libraries and CLI.
@@ -22,4 +36,5 @@ Phase 1 initial release — client-side scanning libraries and CLI.
 - MCP server is a skeleton — no stdio transport or tools yet.
 - SaaS API host defaults to placeholder `https://api.iridium.example.com`.
 
+[0.2.0]: https://github.com/mziqudhd92/Iridium/releases/tag/v0.2.0
 [0.1.0]: https://github.com/mziqudhd92/Iridium/releases/tag/v0.1.0

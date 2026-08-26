@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "iridium": {
+      "command": "iridium-mcp-server",
+      "env": {
+        "IRIDIUM_API_URL": "https://api.iridium.example.com"
+      }
+    }
+  }
+}

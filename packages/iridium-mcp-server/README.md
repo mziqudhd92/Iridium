@@ -1,22 +1,6 @@
 # iridium-mcp-server
 
-MCP server for AI agent security guardrails — **Phase 2 implementation**.
-
-## Phase 1 status
-
-This package is a **skeleton only** in v0.1.0:
-
-- Package structure and `iridium-core` dependency are in place.
-- `iridium-mcp-server` prints a stub message and exits.
-- Planned Phase 2: stdio MCP transport, `validate_dependency` and `reachability_context` tools.
-
-```bash
-pip install iridium-mcp-server
-iridium-mcp-server
-# iridium-mcp-server 0.1.0 (skeleton)
-```
-
-Do not use in production agent workflows until Phase 2 ships.
+MCP server for AI agent security guardrails — blocks vulnerable imports at generation time.
 
 ## Install
 
@@ -24,21 +8,43 @@ Do not use in production agent workflows until Phase 2 ships.
 pip install iridium-mcp-server
 ```
 
-For local development, use the monorepo workspace:
+## Cursor setup
 
-```bash
-git clone https://github.com/mziqudhd92/Iridium.git
-cd Iridium
-uv sync
-uv run iridium-mcp-server
+Add to your MCP config (see `src/iridium_mcp/cursor_config.json`):
+
+```json
+{
+  "mcpServers": {
+    "iridium": {
+      "command": "iridium-mcp-server",
+      "env": {
+        "IRIDIUM_API_URL": "https://api.iridium.example.com"
+      }
+    }
+  }
+}
 ```
+
+No API key required for anonymous tier (rate-limited).
+
+## Tools (Phase 2)
+
+| Tool | Purpose |
+| --- | --- |
+| `validate_dependency_addition` | Check if adding a package creates reachable CVE risk |
+| `get_reachability_context` | Return entrypoint → sink path + rewrite hints for agents |
+| `refresh_workspace_graph` | Re-index workspace after agent saves files |
+
+## Behavior
+
+- **Fail-open:** API 429/5xx never blocks the agent — returns `degraded: true`
+- **Background warm-index:** indexes workspace on startup before first tool call
+- **Parent heartbeat:** exits cleanly when MCP parent process dies
+- **Audit log:** writes to `.iridium/audit.log`
 
 ## Development
 
-From repo root:
-
 ```bash
+uv sync
 uv run pytest packages/iridium-mcp-server/tests -v
 ```
-
-See the [monorepo README](https://github.com/mziqudhd92/Iridium#readme) for architecture and security notes.

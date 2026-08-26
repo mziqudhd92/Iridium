@@ -81,6 +81,48 @@ paths:
         "204":
           description: Event recorded
 
+  /api/v1/client/query/validate-dependency:
+    post:
+      operationId: validateDependency
+      summary: Sync query — hypothetical dependency verdict for MCP
+      description: Returns allowed/risk_score/CVEs in <2s. Accepts JSON or MessagePack.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ValidateDependencyQuery"
+          application/msgpack:
+            schema:
+              $ref: "#/components/schemas/ValidateDependencyQuery"
+      responses:
+        "200":
+          description: Dependency verdict
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ValidateDependencyResult"
+        "429":
+          description: Rate limited (fail-open degraded response)
+
+  /api/v1/client/query/reachability-context:
+    post:
+      operationId: reachabilityContext
+      summary: Sync query — entrypoint to sink call path for MCP
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReachabilityContextQuery"
+      responses:
+        "200":
+          description: Compressed call path and rewrite hints
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ReachabilityContextResult"
+
 components:
   schemas:
     ScanAccepted:
@@ -152,6 +194,55 @@ components:
           type: string
         install_id:
           type: string
+
+    ValidateDependencyQuery:
+      type: object
+      required: [package, version, target_file, repo_fingerprint]
+      properties:
+        package: { type: string }
+        version: { type: string }
+        target_file: { type: string }
+        ecosystem: { type: string, enum: [pypi, npm, crates, go, maven, other] }
+        repo_fingerprint: { type: string }
+        graph:
+          $ref: ../schema/client-scan-payload-v1.json
+
+    ValidateDependencyResult:
+      type: object
+      properties:
+        allowed: { type: boolean }
+        risk_score: { type: number }
+        cves: { type: array, items: { type: object } }
+        recommendation: { type: string }
+        safe_alternatives: { type: array, items: { type: object } }
+        degraded: { type: boolean }
+        indexing: { type: boolean }
+        share_report_url: { type: string }
+
+    ReachabilityContextQuery:
+      type: object
+      required: [package, symbol, repo_fingerprint]
+      properties:
+        package: { type: string }
+        symbol: { type: string }
+        cve_id: { type: string }
+        target_file: { type: string }
+        repo_fingerprint: { type: string }
+        graph:
+          $ref: ../schema/client-scan-payload-v1.json
+
+    ReachabilityContextResult:
+      type: object
+      properties:
+        entrypoints: { type: array, items: { type: string } }
+        call_path_compressed: { type: array, items: { type: string } }
+        call_path_full: { type: array, items: { type: string } }
+        rewrite_hints: { type: array, items: { type: string } }
+        secure_interface_stub: { type: string }
+        secure_interface_docstring: { type: string }
+        patch_available: { type: boolean }
+        patch_registry_hit: { type: boolean }
+        degraded: { type: boolean }
 
   securitySchemes:
     bearerAuth:
