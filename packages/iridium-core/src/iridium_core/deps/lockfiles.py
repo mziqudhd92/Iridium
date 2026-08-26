@@ -39,7 +39,9 @@ def parse_uv_lock(repo: Path) -> tuple[list[DependencyNode], list[str]]:
             current_version = None
 
     for dep in deps:
-        if dep.version and any(re.search(p, dep.version, re.I) for p in DETERMINISM_PATTERNS):
+        if dep.version and any(
+            re.search(p, dep.version, re.IGNORECASE) for p in DETERMINISM_PATTERNS
+        ):
             warnings.append(f"DETERMINISM_WARNING: unpinned {dep.name}={dep.version} in uv.lock")
 
     return deps, warnings
@@ -76,7 +78,7 @@ def parse_package_lock(repo: Path) -> tuple[list[DependencyNode], list[str]]:
                     resolved_url=resolved,
                 )
             )
-            if any(re.search(p, str(version), re.I) for p in DETERMINISM_PATTERNS):
+            if any(re.search(p, str(version), re.IGNORECASE) for p in DETERMINISM_PATTERNS):
                 warnings.append(
                     f"DETERMINISM_WARNING: unpinned {name}={version} in package-lock.json"
                 )

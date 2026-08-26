@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 import os
-from concurrent.futures import ProcessPoolExecutor, TimeoutError as FuturesTimeoutError
+from collections.abc import Callable
+from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import TimeoutError as FuturesTimeoutError
 from pathlib import Path
-from typing import Callable, TypeVar
+from typing import TypeVar
 
 BATCH_SIZE = 50
 BATCH_TIMEOUT_SECONDS = 10

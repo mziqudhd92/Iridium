@@ -2,6 +2,7 @@
 
 import json
 from pathlib import Path
+
 from iridium_core import WorkspaceIndexer
 from iridium_core.models.payload import ClientScanPayload
 
@@ -18,9 +19,6 @@ def test_payload_validate_minimal():
 
 
 def test_workspace_indexer_demo_target():
-    repo = (
-        Path(__file__).parent.parent.parent / "iridium-client" / "src" / "iridium_client" / "demo"
-    )
     # Use inline temp target instead
     import tempfile
 

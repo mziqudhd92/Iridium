@@ -3,7 +3,6 @@
 from pathlib import Path
 
 from iridium_core import WorkspaceIndexer
-from iridium_core.models.enums import NodeKind
 
 
 def test_empty_repo_produces_minimal_payload(tmp_path: Path) -> None:

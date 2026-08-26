@@ -18,7 +18,7 @@ def test_tarjan_detects_cycle():
 
 def test_collapse_scc_macro_nodes():
     adj = {"a": ["b"], "b": ["a"], "c": ["a"]}
-    macro_adj, mapping = collapse_scc_to_macro_nodes(adj)
+    _macro_adj, mapping = collapse_scc_to_macro_nodes(adj)
     assert mapping["a"] == mapping["b"]
     assert mapping["a"] != mapping["c"]
 

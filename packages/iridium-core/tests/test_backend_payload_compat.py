@@ -6,11 +6,11 @@ client and private API stay compatible without cross-repo imports.
 
 from typing import Literal
 
-from pydantic import BaseModel, Field
-
 from iridium_core.models.enums import EdgeType, NodeKind
 from iridium_core.models.fragment import GraphEdge, GraphFragment, GraphNode
-from iridium_core.models.payload import ClientScanPayload as CoreClientScanPayload, DependencyNode
+from iridium_core.models.payload import ClientScanPayload as CoreClientScanPayload
+from iridium_core.models.payload import DependencyNode
+from pydantic import BaseModel, Field
 
 
 class BackendDependencyPayload(BaseModel):

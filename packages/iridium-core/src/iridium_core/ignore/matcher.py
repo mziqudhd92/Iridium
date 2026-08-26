@@ -39,6 +39,4 @@ def should_ignore(path: Path, repo: Path, spec: pathspec.PathSpec | None) -> boo
     rel = path.relative_to(repo).as_posix()
     if any(part in DEFAULT_IGNORE_DIRS for part in path.parts):
         return True
-    if spec and spec.match_file(rel):
-        return True
-    return False
+    return bool(spec and spec.match_file(rel))
