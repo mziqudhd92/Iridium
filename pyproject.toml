@@ -1,0 +1,28 @@
+[project]
+name = "iridium-monorepo"
+version = "0.1.0"
+description = "Iridium public OSS monorepo (iridium-core, iridium-client, iridium-mcp-server)"
+requires-python = ">=3.11"
+readme = "README.md"
+license = { text = "Apache-2.0" }
+
+[tool.uv.workspace]
+members = ["packages/*"]
+
+[tool.uv]
+dev-dependencies = [
+    "pytest>=8.0",
+    "pytest-cov>=5.0",
+    "ruff>=0.6",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["packages/iridium-core/tests", "packages/iridium-client/tests"]
+pythonpath = [
+    "packages/iridium-core/src",
+    "packages/iridium-client/src",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"

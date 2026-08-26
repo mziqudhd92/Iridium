@@ -1,0 +1,42 @@
+# Security Policy
+
+## Reporting vulnerabilities
+
+Report security issues privately to the maintainers via GitHub Security Advisories on [mziqudhd92/Iridium](https://github.com/mziqudhd92/Iridium/security/advisories/new).
+
+Do **not** open public issues for exploitable vulnerabilities.
+
+## Client-side threat model (Phase 1)
+
+Iridium client tools analyze **untrusted repository contents** on the developer machine. Mitigations:
+
+| Threat | Mitigation |
+| --- | --- |
+| Parser DoS | 2 MB file cap, AST depth 256, ProcessPool batches of 50, 10s batch timeout |
+| Secret exfiltration via payload | Pre-AST scrubbing (PEM, JWT, API keys); string literal stripping |
+| Prompt injection | Payload emits structure only (`kind`, `file`, `line`) — no raw identifiers by default |
+| Cache corruption | SQLite WAL + 5s busy timeout; cross-mount fallback to `~/.cache/iridium` |
+
+## Privacy & telemetry
+
+| Layer | Default | Content |
+| --- | --- | --- |
+| Graph payload | Per scan | Structure only; `--anonymize` HMAC-hashes internal symbols |
+| Product analytics | **On** | Anonymized operational pings — zero AST/source |
+| Local audit log | **Always on** | `.iridium/audit.log` — never uploaded |
+
+**Opt out of analytics:** `DO_NOT_TRACK=1`, `IRIDIUM_TELEMETRY=0`, or `iridium-client scan --no-telemetry`.
+
+Graph payloads are zero-knowledge regardless of analytics setting.
+
+## Supported versions
+
+| Version | Supported |
+| --- | --- |
+| 0.1.x | ✅ Active development |
+
+## API authentication
+
+Production scans require `IRIDIUM_API_KEY` (Bearer token). Never commit keys; use CI secrets.
+
+Placeholder API host: `https://api.iridium.example.com` — configure via `IRIDIUM_API_URL`.
