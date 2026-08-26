@@ -19,6 +19,7 @@ iridium-client = "iridium_client.cli:app"
 [project.urls]
 Homepage = "https://github.com/mziqudhd92/Iridium"
 Repository = "https://github.com/mziqudhd92/Iridium"
+Documentation = "https://github.com/mziqudhd92/Iridium#readme"
 
 [build-system]
 requires = ["hatchling"]

@@ -77,6 +77,152 @@ def _annotate_parents(tree: ast.AST) -> None:
             setattr(child, "_parent", node)
 
 
+def _route_decorator_name(dec: ast.expr) -> str:
+    if isinstance(dec, ast.Call) and isinstance(dec.func, ast.Attribute):
+        return dec.func.attr
+    if isinstance(dec, ast.Attribute):
+        return dec.attr
+    return ""
+
+
+class _PythonFileVisitor(ast.NodeVisitor):
+    def __init__(self, *, rel: str, source: str, language: str) -> None:
+        self.rel = rel
+        self.source = source
+        self.language = language
+        self.nodes: list[GraphNode] = []
+        self.edges: list[GraphEdge] = []
+        self.current_function_id: str | None = None
+        self.module_import_ids: list[str] = []
+        self.function_ids: list[str] = []
+        self._seen_edges: set[tuple[str, str, EdgeType]] = set()
+
+    def _add_edge(self, source: str, target: str, edge_type: EdgeType) -> None:
+        key = (source, target, edge_type)
+        if key in self._seen_edges:
+            return
+        self._seen_edges.add(key)
+        self.edges.append(GraphEdge(source=source, target=target, edge_type=edge_type))
+
+    def visit_FunctionDef(self, node: ast.FunctionDef) -> None:
+        self._visit_function(node)
+
+    def visit_AsyncFunctionDef(self, node: ast.AsyncFunctionDef) -> None:
+        self._visit_function(node)
+
+    def _visit_function(self, node: ast.FunctionDef | ast.AsyncFunctionDef) -> None:
+        func_id = _node_id(self.rel, node.lineno, NodeKind.FUNCTION.value, node.name)
+        self.nodes.append(
+            GraphNode(
+                id=func_id,
+                kind=NodeKind.FUNCTION,
+                file=self.rel,
+                line=node.lineno,
+                language=self.language,
+                symbol=node.name,
+            )
+        )
+        self.function_ids.append(func_id)
+
+        for dec in node.decorator_list:
+            if _route_decorator_name(dec) in FLASK_ROUTE_DECORATORS:
+                route_id = _node_id(self.rel, node.lineno, NodeKind.HTTP_ROUTE.value, node.name)
+                self.nodes.append(
+                    GraphNode(
+                        id=route_id,
+                        kind=NodeKind.HTTP_ROUTE,
+                        file=self.rel,
+                        line=node.lineno,
+                        language=self.language,
+                        symbol=node.name,
+                    )
+                )
+                self._add_edge(route_id, func_id, EdgeType.ROUTES_TO)
+                break
+
+        if node.name.startswith("add_url_rule") or "add_url_rule" in node.name:
+            entry_id = _node_id(self.rel, node.lineno, NodeKind.DYNAMIC_ENTRYPOINT.value)
+            self.nodes.append(
+                GraphNode(
+                    id=entry_id,
+                    kind=NodeKind.DYNAMIC_ENTRYPOINT,
+                    file=self.rel,
+                    line=node.lineno,
+                    language=self.language,
+                )
+            )
+
+        previous = self.current_function_id
+        self.current_function_id = func_id
+        self.generic_visit(node)
+        self.current_function_id = previous
+
+    def visit_Import(self, node: ast.Import) -> None:
+        self._visit_import(node)
+
+    def visit_ImportFrom(self, node: ast.ImportFrom) -> None:
+        self._visit_import(node)
+
+    def _visit_import(self, node: ast.Import | ast.ImportFrom) -> None:
+        kind = NodeKind.TYPE_ONLY_IMPORT if _is_type_only_import(node) else NodeKind.IMPORT
+        symbol = ""
+        if isinstance(node, ast.Import):
+            if node.names:
+                symbol = node.names[0].name.split(".")[0]
+        elif isinstance(node, ast.ImportFrom) and node.module:
+            symbol = node.module.split(".")[0]
+        nid = _node_id(self.rel, node.lineno, kind.value, symbol)
+        self.nodes.append(
+            GraphNode(
+                id=nid,
+                kind=kind,
+                file=self.rel,
+                line=node.lineno,
+                language=self.language,
+                symbol=symbol,
+            )
+        )
+        if kind == NodeKind.TYPE_ONLY_IMPORT:
+            return
+        if self.current_function_id:
+            self._add_edge(self.current_function_id, nid, EdgeType.IMPORTS)
+        else:
+            self.module_import_ids.append(nid)
+
+    def visit_Call(self, node: ast.Call) -> None:
+        name = _call_name(node)
+        if not name:
+            self.generic_visit(node)
+            return
+        dynamic = name in ("importlib.import_module", "getattr", "eval", "exec")
+        indirect = bool(re.search(r"\.map\(", ast.get_source_segment(self.source, node) or ""))
+        if dynamic:
+            kind = NodeKind.DYNAMIC_INVOCATION
+        elif indirect:
+            kind = NodeKind.INDIRECT_CALL_SINK
+        else:
+            kind = NodeKind.FUNCTION
+        nid = _node_id(self.rel, node.lineno, kind.value, name)
+        self.nodes.append(
+            GraphNode(
+                id=nid,
+                kind=kind,
+                file=self.rel,
+                line=node.lineno,
+                language=self.language,
+                symbol=name,
+            )
+        )
+        if self.current_function_id:
+            self._add_edge(self.current_function_id, nid, EdgeType.CALLS)
+        self.generic_visit(node)
+
+    def finalize(self) -> None:
+        for func_id in self.function_ids:
+            for imp_id in self.module_import_ids:
+                self._add_edge(func_id, imp_id, EdgeType.IMPORTS)
+
+
 class PythonExtractor(LanguageExtractor):
     language = "python"
 
@@ -108,8 +254,6 @@ class PythonExtractor(LanguageExtractor):
 
     def _parse_file(self, path: Path) -> GraphFragment:
         warnings: list[str] = []
-        nodes: list[GraphNode] = []
-        edges: list[GraphEdge] = []
 
         try:
             raw = path.read_bytes()
@@ -135,77 +279,7 @@ class PythonExtractor(LanguageExtractor):
         if _ast_depth(tree) > MAX_AST_DEPTH:
             warnings.append(f"AST depth cap exceeded: {path.name}")
 
-        for node in ast.walk(tree):
-            if isinstance(node, (ast.Import, ast.ImportFrom)):
-                kind = NodeKind.TYPE_ONLY_IMPORT if _is_type_only_import(node) else NodeKind.IMPORT
-                nid = _node_id(rel, node.lineno, kind.value)
-                nodes.append(
-                    GraphNode(
-                        id=nid,
-                        kind=kind,
-                        file=rel,
-                        line=node.lineno,
-                        language=self.language,
-                    )
-                )
-                if kind == NodeKind.TYPE_ONLY_IMPORT:
-                    continue
-
-            if isinstance(node, ast.Call):
-                name = _call_name(node)
-                if not name:
-                    continue
-                dynamic = name in ("importlib.import_module", "getattr", "eval", "exec")
-                indirect = bool(re.search(r"\.map\(", ast.get_source_segment(source, node) or ""))
-                if dynamic:
-                    kind = NodeKind.DYNAMIC_INVOCATION
-                elif indirect:
-                    kind = NodeKind.INDIRECT_CALL_SINK
-                else:
-                    kind = NodeKind.FUNCTION
-                nid = _node_id(rel, node.lineno, kind.value, name)
-                nodes.append(
-                    GraphNode(
-                        id=nid,
-                        kind=kind,
-                        file=rel,
-                        line=node.lineno,
-                        language=self.language,
-                        symbol=name,
-                    )
-                )
-
-            if isinstance(node, ast.FunctionDef):
-                for dec in node.decorator_list:
-                    dec_name = ""
-                    if isinstance(dec, ast.Call) and isinstance(dec.func, ast.Attribute):
-                        dec_name = dec.func.attr
-                    elif isinstance(dec, ast.Attribute):
-                        dec_name = dec.attr
-                    if dec_name in FLASK_ROUTE_DECORATORS:
-                        nid = _node_id(rel, node.lineno, NodeKind.HTTP_ROUTE.value, node.name)
-                        nodes.append(
-                            GraphNode(
-                                id=nid,
-                                kind=NodeKind.HTTP_ROUTE,
-                                file=rel,
-                                line=node.lineno,
-                                language=self.language,
-                                symbol=node.name,
-                            )
-                        )
-                        break
-
-                if node.name.startswith("add_url_rule") or "add_url_rule" in node.name:
-                    nid = _node_id(rel, node.lineno, NodeKind.DYNAMIC_ENTRYPOINT.value)
-                    nodes.append(
-                        GraphNode(
-                            id=nid,
-                            kind=NodeKind.DYNAMIC_ENTRYPOINT,
-                            file=rel,
-                            line=node.lineno,
-                            language=self.language,
-                        )
-                    )
-
-        return GraphFragment(nodes=nodes, edges=edges, warnings=warnings)
+        visitor = _PythonFileVisitor(rel=rel, source=source, language=self.language)
+        visitor.visit(tree)
+        visitor.finalize()
+        return GraphFragment(nodes=visitor.nodes, edges=visitor.edges, warnings=warnings)

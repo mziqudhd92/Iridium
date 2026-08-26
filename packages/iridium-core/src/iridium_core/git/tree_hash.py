@@ -54,4 +54,5 @@ def is_shallow_repository(repo: Path) -> bool:
 def repo_fingerprint(repo: Path) -> str:
     """Stable fingerprint for repo identity (path + remote url)."""
     remote = _run_git(repo, "remote", "get-url", "origin") or str(repo.resolve())
-    return hashlib.sha256(remote.encode()).hexdigest()[:32]
+    digest = hashlib.blake2b(remote.encode(), digest_size=16).hexdigest()
+    return f"blake2b:{digest}"

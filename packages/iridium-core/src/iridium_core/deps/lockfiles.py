@@ -77,7 +77,9 @@ def parse_package_lock(repo: Path) -> tuple[list[DependencyNode], list[str]]:
                 )
             )
             if any(re.search(p, str(version), re.I) for p in DETERMINISM_PATTERNS):
-                warnings.append(f"DETERMINISM_WARNING: unpinned {name}={version} in package-lock.json")
+                warnings.append(
+                    f"DETERMINISM_WARNING: unpinned {name}={version} in package-lock.json"
+                )
 
     return deps, warnings
 

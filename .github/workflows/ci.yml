@@ -27,11 +27,16 @@ jobs:
       - name: Sync workspace
         run: uv sync --all-packages
 
+      - name: Ruff format
+        run: uv run ruff format --check packages/
+
       - name: Ruff
-        run: uv run ruff check packages/
+        run: |
+          uv run ruff check packages/
+          uv run ruff check --select E501 packages/
 
       - name: Pytest
-        run: uv run pytest -v
+        run: uv run pytest -v --cov=iridium_core --cov=iridium_client --cov=iridium_mcp --cov-report=term-missing --cov-fail-under=80
 
       - name: CLI smoke
         run: |

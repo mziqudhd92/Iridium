@@ -23,7 +23,7 @@ Iridium client tools analyze **untrusted repository contents** on the developer 
 | --- | --- | --- |
 | Graph payload | Per scan | Structure only; `--anonymize` HMAC-hashes internal symbols |
 | Product analytics | **On** | Anonymized operational pings — zero AST/source |
-| Local audit log | **Always on** | `.iridium/audit.log` — never uploaded |
+| Local audit log | **Phase 1: planned** | `.iridium/audit.log` — not yet implemented |
 
 **Opt out of analytics:** `DO_NOT_TRACK=1`, `IRIDIUM_TELEMETRY=0`, or `iridium-client scan --no-telemetry`.
 
@@ -37,6 +37,6 @@ Graph payloads are zero-knowledge regardless of analytics setting.
 
 ## API authentication
 
-Production scans require `IRIDIUM_API_KEY` (Bearer token). Never commit keys; use CI secrets.
+Production scans require `IRIDIUM_API_KEY` sent as `X-API-Key`. Never commit keys; use CI secrets.
 
 Placeholder API host: `https://api.iridium.example.com` — configure via `IRIDIUM_API_URL`.

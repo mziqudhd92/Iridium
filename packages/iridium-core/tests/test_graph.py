@@ -33,7 +33,7 @@ def test_bounded_bfs_hop_limit():
 
 
 def test_bounded_bfs_node_limit():
-    edges = [(f"n{i}", f"n{i+1}") for i in range(100)]
+    edges = [(f"n{i}", f"n{i + 1}") for i in range(100)]
     adj = build_adjacency_from_edges(edges)
     result = bounded_bfs(adj, ["n0"], max_hops=100, max_nodes=10)
     assert result.node_limit_hit

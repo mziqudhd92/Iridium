@@ -18,7 +18,9 @@ def test_payload_validate_minimal():
 
 
 def test_workspace_indexer_demo_target():
-    repo = Path(__file__).parent.parent.parent / "iridium-client" / "src" / "iridium_client" / "demo"
+    repo = (
+        Path(__file__).parent.parent.parent / "iridium-client" / "src" / "iridium_client" / "demo"
+    )
     # Use inline temp target instead
     import tempfile
 
@@ -63,7 +65,9 @@ def test_to_api_dict_matches_backend_shape():
                     ),
                 ],
                 edges=[
-                    GraphEdge(source="route:root", target="dep:requests.get", edge_type=EdgeType.CALLS),
+                    GraphEdge(
+                        source="route:root", target="dep:requests.get", edge_type=EdgeType.CALLS
+                    ),
                 ],
             )
         ],
@@ -78,6 +82,16 @@ def test_to_api_dict_matches_backend_shape():
     route_node = next(n for n in api["nodes"] if n["id"] == "route:root")
     assert route_node["label"] == "GET /"
     assert route_node["metadata"] == {"file": "app.py", "line": 1}
+
+
+def test_to_api_dict_includes_determinism_warnings():
+    payload = ClientScanPayload(
+        repo_fingerprint="abc12345",
+        git_tree_hash="tree45678",
+        determinism_warnings=["DETERMINISM_WARNING: uv.lock unpinned"],
+    )
+    api = payload.to_api_dict()
+    assert api["determinism_warnings"] == ["DETERMINISM_WARNING: uv.lock unpinned"]
 
 
 def test_indexer_uv_lock_determinism_warning(tmp_path: Path):

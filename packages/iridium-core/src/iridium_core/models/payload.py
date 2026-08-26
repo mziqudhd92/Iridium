@@ -105,4 +105,5 @@ class ClientScanPayload(BaseModel):
             "entrypoints": entrypoints,
             "graph_truncated": self.graph_truncated,
             "supply_chain_warnings": self.supply_chain_warnings,
+            "determinism_warnings": self.determinism_warnings,
         }
