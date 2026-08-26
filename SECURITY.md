@@ -37,6 +37,6 @@ Graph payloads are zero-knowledge regardless of analytics setting.
 
 ## API authentication
 
-Production scans require `IRIDIUM_API_KEY` sent as `X-API-Key`. Never commit keys; use CI secrets.
+`iridium-client scan` works without an API key on the anonymous tier (rate-limited). Set `IRIDIUM_API_KEY` for authenticated tiers (higher quotas, patches, enterprise features). Never commit keys; use CI secrets.
 
 Placeholder API host: `https://api.iridium.example.com` — configure via `IRIDIUM_API_URL`.
