@@ -67,7 +67,7 @@ def scan(
 
     client = IridiumApiClient(api_url=api_url)
     try:
-        response = client.submit_scan(payload.model_dump(mode="json"))
+        response = client.submit_scan(payload.to_api_dict())
         scan_id = response.get("scan_id") or response.get("id")
         if not scan_id:
             raise RuntimeError(f"unexpected response: {response}")

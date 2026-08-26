@@ -34,7 +34,54 @@ def test_workspace_indexer_demo_target():
     json.loads(payload.to_json())
 
 
-def test_determinism_warning_in_lockfile(tmp_path: Path):
+def test_to_api_dict_matches_backend_shape():
+    from iridium_core.models.enums import EdgeType, NodeKind
+    from iridium_core.models.fragment import GraphEdge, GraphFragment, GraphNode
+
+    payload = ClientScanPayload(
+        repo_fingerprint="abc12345",
+        git_tree_hash="tree45678",
+        languages=["python"],
+        fragments=[
+            GraphFragment(
+                nodes=[
+                    GraphNode(
+                        id="route:root",
+                        kind=NodeKind.HTTP_ROUTE,
+                        file="app.py",
+                        line=1,
+                        language="python",
+                        symbol="GET /",
+                    ),
+                    GraphNode(
+                        id="dep:requests.get",
+                        kind=NodeKind.DEPENDENCY,
+                        file="app.py",
+                        line=2,
+                        language="python",
+                        symbol="requests",
+                    ),
+                ],
+                edges=[
+                    GraphEdge(source="route:root", target="dep:requests.get", edge_type=EdgeType.CALLS),
+                ],
+            )
+        ],
+    )
+    api = payload.to_api_dict()
+    assert api["schema_version"] == "1"
+    assert api["entrypoints"] == ["route:root"]
+    assert len(api["nodes"]) == 2
+    assert api["edges"][0]["type"] == "CALLS"
+    dep_node = next(n for n in api["nodes"] if n["id"] == "dep:requests.get")
+    assert dep_node["package"] == "requests"
+    route_node = next(n for n in api["nodes"] if n["id"] == "route:root")
+    assert route_node["label"] == "GET /"
+    assert route_node["metadata"] == {"file": "app.py", "line": 1}
+
+
+def test_indexer_uv_lock_determinism_warning(tmp_path: Path):
+    (tmp_path / "app.py").write_text("x = 1\n", encoding="utf-8")
     (tmp_path / "uv.lock").write_text(
         '[[package]]\nname = "foo"\nversion = "*"\n',
         encoding="utf-8",
