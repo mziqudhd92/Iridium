@@ -3,9 +3,9 @@
 Client-side security scanning: local AST extraction, dependency graph assembly, and CLI upload to Iridium SaaS for reachability analysis.
 
 [![CI](https://github.com/mziqudhd92/Iridium/actions/workflows/ci.yml/badge.svg)](https://github.com/mziqudhd92/Iridium/actions/workflows/ci.yml)
-[![PyPI iridium-core](https://img.shields.io/pypi/v/iridium-core?label=iridium-core)](https://pypi.org/project/iridium-core/)
-[![PyPI iridium-client](https://img.shields.io/pypi/v/iridium-client?label=iridium-client)](https://pypi.org/project/iridium-client/)
-[![PyPI iridium-mcp-server](https://img.shields.io/pypi/v/iridium-mcp-server?label=iridium-mcp-server)](https://pypi.org/project/iridium-mcp-server/)
+[![PyPI iridium-core](https://img.shields.io/pypi/v/iridium-core?label=iridium-core&logo=python&logoColor=white)](https://pypi.org/project/iridium-core/)
+[![PyPI iridium-client](https://img.shields.io/pypi/v/iridium-client?label=iridium-client&logo=python&logoColor=white&cacheSeconds=60)](https://pypi.org/project/iridium-client/)
+[![PyPI iridium-mcp-server](https://img.shields.io/pypi/v/iridium-mcp-server?label=iridium-mcp-server&logo=python&logoColor=white)](https://pypi.org/project/iridium-mcp-server/)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
 ## Architecture
