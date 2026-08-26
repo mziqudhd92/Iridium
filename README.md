@@ -37,10 +37,11 @@ pip install iridium-client
 # Zero-install demo (<10s, no API key)
 uvx iridium-client demo
 
-# Full scan (requires IRIDIUM_API_KEY when API is live)
-export IRIDIUM_API_URL=https://api.iridium.example.com
-export IRIDIUM_API_KEY=iridium_live_...
+# Full scan — local parsing + cloud reachability (no API key required for anonymous tier)
 iridium-client scan .
+
+# Optional: API key for higher quotas / pro features
+# export IRIDIUM_API_KEY=iridium_live_...
 ```
 
 Local payload dump (zero network):
@@ -54,7 +55,7 @@ iridium-client payload dump . --validate
 | Variable | Default | Description |
 | --- | --- | --- |
 | `IRIDIUM_API_URL` | `https://api.iridium.example.com` | SaaS API base URL (no trailing slash) |
-| `IRIDIUM_API_KEY` | — | API key for authenticated scans (`X-API-Key` header) |
+| `IRIDIUM_API_KEY` | — | Optional. Sent as `X-API-Key` for authenticated tiers (higher limits, patches) |
 | `DO_NOT_TRACK` | unset | Set to `1` to disable product analytics pings |
 | `IRIDIUM_TELEMETRY` | `1` | Set to `0` to disable analytics (also `--no-telemetry`) |
 | `IRIDIUM_ANON_KEY` | — | HMAC key for `--anonymize` blind-graphing mode |

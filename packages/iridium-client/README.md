@@ -22,12 +22,14 @@ uvx iridium-client demo
 
 ### `iridium-client scan`
 
-Index a repository locally and submit the payload to Iridium SaaS.
+Index a repository locally and submit the payload to Iridium SaaS. **No API key required** for the anonymous tier (rate-limited by IP).
 
 ```bash
-export IRIDIUM_API_URL=https://api.iridium.example.com
-export IRIDIUM_API_KEY=iridium_live_...
 iridium-client scan .
+
+# Optional: override API host or authenticate for higher quotas
+export IRIDIUM_API_URL=https://api.iridium.example.com
+# export IRIDIUM_API_KEY=iridium_live_...
 ```
 
 | Option | Description |
@@ -56,7 +58,7 @@ iridium-client payload dump . --output payload.json --validate
 | Variable | Default | Description |
 | --- | --- | --- |
 | `IRIDIUM_API_URL` | `https://api.iridium.example.com` | SaaS API base URL |
-| `IRIDIUM_API_KEY` | — | API key (`X-API-Key` header) |
+| `IRIDIUM_API_KEY` | — | Optional (`X-API-Key`). Anonymous scans work without it |
 | `DO_NOT_TRACK` | unset | `1` disables analytics |
 | `IRIDIUM_TELEMETRY` | `1` | `0` disables analytics |
 | `IRIDIUM_ANON_KEY` | — | Key for `--anonymize` mode |
