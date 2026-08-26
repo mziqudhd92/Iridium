@@ -1,0 +1,30 @@
+# Publishes iridium-mcp-server to PyPI (trusted publisher: iridium-mcp-server / publish-mcp.yml)
+name: Publish iridium-mcp-server
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+
+      - name: Build iridium-mcp-server
+        run: |
+          uv sync --all-packages
+          uv build --package iridium-mcp-server
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist/
+          verbose: true
