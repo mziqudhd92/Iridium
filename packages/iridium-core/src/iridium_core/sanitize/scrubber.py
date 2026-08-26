@@ -5,7 +5,8 @@ from __future__ import annotations
 import re
 
 PEM_RE = re.compile(
-    r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----[\s\S]*?-----END (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"
+    r"-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----[\s\S]*?"
+    r"-----END (?:RSA |EC |OPENSSH )?PRIVATE KEY-----"
 )
 JWT_RE = re.compile(r"eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+")
 API_KEY_RE = re.compile(

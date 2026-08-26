@@ -153,9 +153,7 @@ class WorkspaceIndexer:
                 lang_set.add("javascript")
 
         entrypoints = sum(
-            1
-            for n in merged.nodes
-            if n.kind in (NodeKind.HTTP_ROUTE, NodeKind.DYNAMIC_ENTRYPOINT)
+            1 for n in merged.nodes if n.kind in (NodeKind.HTTP_ROUTE, NodeKind.DYNAMIC_ENTRYPOINT)
         )
 
         return ClientScanPayload(

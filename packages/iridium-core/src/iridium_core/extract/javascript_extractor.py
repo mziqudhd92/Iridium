@@ -7,8 +7,8 @@ import re
 from pathlib import Path
 
 from iridium_core.extract.base import ImportMap, LanguageExtractor
-from iridium_core.models.enums import NodeKind
-from iridium_core.models.fragment import GraphFragment, GraphNode
+from iridium_core.models.enums import EdgeType, NodeKind
+from iridium_core.models.fragment import GraphEdge, GraphFragment, GraphNode
 from iridium_core.sanitize.scrubber import scrub_source
 
 MAX_FILE_BYTES = 2 * 1024 * 1024
@@ -50,9 +50,25 @@ class JavaScriptExtractor(LanguageExtractor):
     def parse_batch_safe(self, paths: list[Path]) -> list[GraphFragment]:
         return [self._parse_file(path) for path in paths]
 
+    def _add_edge(
+        self,
+        edges: list[GraphEdge],
+        seen: set[tuple[str, str, EdgeType]],
+        source: str,
+        target: str,
+        edge_type: EdgeType,
+    ) -> None:
+        key = (source, target, edge_type)
+        if key in seen:
+            return
+        seen.add(key)
+        edges.append(GraphEdge(source=source, target=target, edge_type=edge_type))
+
     def _parse_file(self, path: Path) -> GraphFragment:
         warnings: list[str] = []
         nodes: list[GraphNode] = []
+        edges: list[GraphEdge] = []
+        seen_edges: set[tuple[str, str, EdgeType]] = set()
 
         try:
             raw = path.read_bytes()
@@ -68,8 +84,25 @@ class JavaScriptExtractor(LanguageExtractor):
 
         rel = path.as_posix()
         lines = source.splitlines()
+        current_handler_id: str | None = None
+        handler_indent: int | None = None
+        module_import_ids: list[str] = []
+        handler_ids: list[str] = []
 
         for lineno, line in enumerate(lines, start=1):
+            stripped = line.strip()
+            if not stripped:
+                continue
+            indent = len(line) - len(line.lstrip())
+            if (
+                current_handler_id
+                and handler_indent is not None
+                and indent <= handler_indent
+                and not ROUTE_RE.search(line)
+            ):
+                current_handler_id = None
+                handler_indent = None
+
             if TYPE_IMPORT_RE.search(line):
                 nodes.append(
                     GraphNode(
@@ -82,24 +115,13 @@ class JavaScriptExtractor(LanguageExtractor):
                 )
                 continue
 
-            for match in IMPORT_RE.finditer(line):
-                specifier = match.group(1) or match.group(2) or ""
-                nodes.append(
-                    GraphNode(
-                        id=_node_id(rel, lineno, NodeKind.IMPORT.value, specifier),
-                        kind=NodeKind.IMPORT,
-                        file=rel,
-                        line=lineno,
-                        language=self.language,
-                        symbol=specifier,
-                    )
-                )
-
             for match in ROUTE_RE.finditer(line):
                 route = match.group(2) or ""
+                route_id = _node_id(rel, lineno, NodeKind.HTTP_ROUTE.value, route)
+                handler_id = _node_id(rel, lineno, NodeKind.FUNCTION.value, f"handler:{route}")
                 nodes.append(
                     GraphNode(
-                        id=_node_id(rel, lineno, NodeKind.HTTP_ROUTE.value, route),
+                        id=route_id,
                         kind=NodeKind.HTTP_ROUTE,
                         file=rel,
                         line=lineno,
@@ -107,6 +129,38 @@ class JavaScriptExtractor(LanguageExtractor):
                         symbol=route,
                     )
                 )
+                nodes.append(
+                    GraphNode(
+                        id=handler_id,
+                        kind=NodeKind.FUNCTION,
+                        file=rel,
+                        line=lineno,
+                        language=self.language,
+                        symbol=f"handler:{route}",
+                    )
+                )
+                self._add_edge(edges, seen_edges, route_id, handler_id, EdgeType.ROUTES_TO)
+                current_handler_id = handler_id
+                handler_indent = indent
+                handler_ids.append(handler_id)
+
+            for match in IMPORT_RE.finditer(line):
+                specifier = match.group(1) or match.group(2) or ""
+                imp_id = _node_id(rel, lineno, NodeKind.IMPORT.value, specifier)
+                nodes.append(
+                    GraphNode(
+                        id=imp_id,
+                        kind=NodeKind.IMPORT,
+                        file=rel,
+                        line=lineno,
+                        language=self.language,
+                        symbol=specifier,
+                    )
+                )
+                if current_handler_id:
+                    self._add_edge(edges, seen_edges, current_handler_id, imp_id, EdgeType.IMPORTS)
+                else:
+                    module_import_ids.append(imp_id)
 
             if "router.use(" in line or "add_url_rule" in line:
                 nodes.append(
@@ -124,9 +178,10 @@ class JavaScriptExtractor(LanguageExtractor):
                 if name in ("if", "for", "while", "switch", "catch", "function"):
                     continue
                 kind = NodeKind.INDIRECT_CALL_SINK if ".map(" in line else NodeKind.FUNCTION
+                call_id = _node_id(rel, lineno, kind.value, name)
                 nodes.append(
                     GraphNode(
-                        id=_node_id(rel, lineno, kind.value, name),
+                        id=call_id,
                         kind=kind,
                         file=rel,
                         line=lineno,
@@ -134,5 +189,11 @@ class JavaScriptExtractor(LanguageExtractor):
                         symbol=name,
                     )
                 )
+                if current_handler_id:
+                    self._add_edge(edges, seen_edges, current_handler_id, call_id, EdgeType.CALLS)
 
-        return GraphFragment(nodes=nodes, warnings=warnings)
+        for handler_id in handler_ids:
+            for imp_id in module_import_ids:
+                self._add_edge(edges, seen_edges, handler_id, imp_id, EdgeType.IMPORTS)
+
+        return GraphFragment(nodes=nodes, edges=edges, warnings=warnings)

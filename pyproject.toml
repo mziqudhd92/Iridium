@@ -17,12 +17,26 @@ dev-dependencies = [
 ]
 
 [tool.pytest.ini_options]
-testpaths = ["packages/iridium-core/tests", "packages/iridium-client/tests"]
+testpaths = [
+    "packages/iridium-core/tests",
+    "packages/iridium-client/tests",
+    "packages/iridium-mcp-server/tests",
+]
 pythonpath = [
     "packages/iridium-core/src",
     "packages/iridium-client/src",
+    "packages/iridium-mcp-server/src",
 ]
 
+[tool.coverage.run]
+source = ["iridium_core", "iridium_client", "iridium_mcp"]
+omit = ["*/__init__.py"]
+
+[tool.coverage.report]
+fail_under = 80
+show_missing = true
+skip_empty = true
+
 [tool.ruff]
-line-length = 100
+line-length = 100  # project standard (100 columns)
 target-version = "py311"
