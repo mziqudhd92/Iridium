@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import os
 import time
 from pathlib import Path
 
@@ -12,6 +11,7 @@ from iridium_core.models.payload import ClientScanPayload
 from rich.console import Console
 
 from iridium_client.api.client import IridiumApiClient
+from iridium_client.telemetry import apply_telemetry_env
 from iridium_client.demo.target import materialize_demo_target
 from iridium_client.output.terminal import (
     render_demo_graph,
@@ -55,12 +55,20 @@ def scan(
     path: Path = typer.Argument(Path("."), exists=True, file_okay=False, resolve_path=True),
     api_url: str | None = typer.Option(None, "--api-url", envvar="IRIDIUM_API_URL"),
     anonymize: bool = typer.Option(False, "--anonymize"),
-    no_telemetry: bool = typer.Option(False, "--no-telemetry"),
+    telemetry: bool = typer.Option(
+        False,
+        "--telemetry",
+        help="Opt in to anonymized product analytics for this run (off by default)",
+    ),
+    no_telemetry: bool = typer.Option(
+        False,
+        "--no-telemetry",
+        help="Disable product analytics for this run",
+    ),
     on_error: str = typer.Option("block", "--on-error", help="pass|block"),
 ) -> None:
     """Scan a repository and submit payload to Iridium SaaS."""
-    if no_telemetry or os.environ.get("DO_NOT_TRACK") == "1":
-        os.environ["IRIDIUM_TELEMETRY"] = "0"
+    apply_telemetry_env(cli_opt_in=telemetry, cli_opt_out=no_telemetry)
 
     start = time.monotonic()
     indexer = WorkspaceIndexer(path)
