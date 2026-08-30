@@ -1,6 +1,24 @@
-# Iridium
+```text
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║   ██╗██████╗ ██╗██████╗ ██╗██╗   ██╗███╗   ███╗                              ║
+║   ██║██╔══██╗██║██╔══██╗██║██║   ██║████╗ ████║                              ║
+║   ██║██████╔╝██║██║  ██║██║██║   ██║██╔████╔██║                              ║
+║   ██║██╔══██╗██║██║  ██║██║██║   ██║██║╚██╔╝██║                              ║
+║   ██║██║  ██║██║██████╔╝██║╚██████╔╝██║ ╚═╝ ██║                              ║
+║   ╚═╝╚═╝  ╚═╝╚═╝╚═════╝ ╚═╝ ╚═════╝ ╚═╝     ╚═╝                              ║
+║                                                                              ║
+║.---[ A.I CYBER REASONING SYSTEM · CLIENT LAYER ]----------------------------.║
+║|  local AST/graph  ·  CLI scan  ·  MCP guardrails  ·  cloud reachability    |║
+║'----------------------------------------------------------------------------'║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
 
-Client-side security scanning: local AST extraction, dependency graph assembly, and CLI upload to Iridium SaaS for reachability analysis.
+  release ....... iridium-client / iridium-core / iridium-mcp-server
+  type .......... open-source client for the Iridium offensive research platform
+  pypi .......... iridium-core · iridium-client · iridium-mcp-server
+  platform ...... under active development — SaaS access limited during onboarding
+```
 
 [![CI](https://github.com/mziqudhd92/Iridium/actions/workflows/ci.yml/badge.svg)](https://github.com/mziqudhd92/Iridium/actions/workflows/ci.yml)
 [![PyPI iridium-core](https://img.shields.io/pypi/v/iridium-core?label=iridium-core&logo=python&logoColor=white)](https://pypi.org/project/iridium-core/)
@@ -8,28 +26,20 @@ Client-side security scanning: local AST extraction, dependency graph assembly, 
 [![PyPI iridium-mcp-server](https://img.shields.io/pypi/v/iridium-mcp-server?label=iridium-mcp-server&logo=python&logoColor=white)](https://pypi.org/project/iridium-mcp-server/)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
-## Architecture
+## What is Iridium?
 
-```mermaid
-flowchart LR
-  subgraph local["Developer machine"]
-    core["iridium-core\n(AST, graph, cache)"]
-    client["iridium-client\n(CLI)"]
-    mcp["iridium-mcp-server\n(MCP guardrails)"]
-    core --> client
-    core --> mcp
-  end
-  client -->|"POST /api/v1/client/scan"| api["Iridium SaaS API\n(private backend)"]
-  api -->|"GET findings"| client
-```
+Iridium is an **offensive security and red-team research platform** built to find **unknown vulnerabilities**. Multi-role AI reasoning plus **dynamic runtime verification**: isolate sinks, synthesize PoCs, prove crashes in sandboxes, ship bounty-ready packages.
 
-| Package | PyPI | Role |
-| --- | --- | --- |
-| `iridium-core` | [`pip install iridium-core`](https://pypi.org/project/iridium-core/) | Extractors, cache, graph, payload models (no network) |
-| `iridium-client` | [`pip install iridium-client`](https://pypi.org/project/iridium-client/) | Typer CLI + httpx SaaS client |
-| `iridium-mcp-server` | [`pip install iridium-mcp-server`](https://pypi.org/project/iridium-mcp-server/) | MCP server for AI agent guardrails (Phase 2) |
+**This repo** is the open-source **client layer**: local AST extraction, dependency graphs, CLI scanning, and MCP guardrails that feed the private Iridium engine.
 
-The **private SaaS backend** (CVE intelligence, reachability workers, patches) lives in a separate repository — not in this OSS monorepo.
+| Stage | What it does |
+| --- | --- |
+| **VERIFY** | C/C++ ASan harnesses in isolated Docker sandboxes |
+| **REASON** | Triage → Planner → Reasoner → Coder attack-path mapping |
+| **PATCH** | Maintainer-grade unified diffs |
+| **PACKAGE** | PoCs + reports + patches in submission-ready ZIPs |
+
+The Hunter Engine, verification backend, and SaaS API are **not yet publicly available** — access is limited while we onboard early users.
 
 ## Quick start
 
@@ -39,10 +49,10 @@ pip install iridium-client
 # Zero-install demo (<10s, no API key)
 uvx iridium-client demo
 
-# Full scan — local parsing + cloud reachability (no API key required for anonymous tier)
+# Full scan — local parsing + cloud reachability (anonymous tier OK)
 iridium-client scan .
 
-# Optional: API key for higher quotas / pro features
+# Optional: higher quotas / pro features
 # export IRIDIUM_API_KEY=iridium_live_...
 ```
 
@@ -52,31 +62,41 @@ Local payload dump (zero network):
 iridium-client payload dump . --validate
 ```
 
-## Environment variables
+## Packages
+
+| Package | Install | Role |
+| --- | --- | --- |
+| `iridium-core` | `pip install iridium-core` | AST, graph, cache — no network |
+| `iridium-client` | `pip install iridium-client` | Typer CLI + SaaS client |
+| `iridium-mcp-server` | `pip install iridium-mcp-server` | MCP guardrails for AI agents |
+
+## Architecture
+
+```mermaid
+flowchart LR
+  subgraph local["Developer machine"]
+    core["iridium-core"]
+    client["iridium-client"]
+    mcp["iridium-mcp-server"]
+    core --> client
+    core --> mcp
+  end
+  client -->|"POST /api/v1/client/scan"| api["Iridium SaaS API"]
+  api -->|"GET findings"| client
+```
+
+Technical details: [openapi/client-scan-api-v1.yaml](openapi/client-scan-api-v1.yaml) · [schema/client-scan-payload-v1.json](schema/client-scan-payload-v1.json)
+
+## Environment
 
 | Variable | Default | Description |
 | --- | --- | --- |
-| `IRIDIUM_API_URL` | `https://api.iridium.example.com` | SaaS API base URL (no trailing slash) |
-| `IRIDIUM_API_KEY` | — | Optional. Sent as `X-API-Key` for authenticated tiers (higher limits, patches) |
-| `DO_NOT_TRACK` | unset | Set to `1` to disable product analytics pings |
-| `IRIDIUM_TELEMETRY` | `1` | Set to `0` to disable analytics (also `--no-telemetry`) |
-| `IRIDIUM_ANON_KEY` | — | HMAC key for `--anonymize` blind-graphing mode |
-| `IRIDIUM_PUBLIC_URL` | — | Public dashboard URL for sharing reports |
+| `IRIDIUM_API_URL` | `https://api.iridium.example.com` | SaaS API base URL |
+| `IRIDIUM_API_KEY` | — | Optional — higher limits / patches |
+| `DO_NOT_TRACK` | unset | Set `1` to disable analytics |
+| `IRIDIUM_ANON_KEY` | — | HMAC key for `--anonymize` mode |
 
 See [`packages/iridium-client/.env.example`](packages/iridium-client/.env.example).
-
-## Monorepo structure
-
-```
-packages/
-  iridium-core/       # LanguageExtractor plugins, Tarjan SCC, AST cache
-  iridium-client/     # CLI, demo, terminal output
-  iridium-mcp-server/ # MCP skeleton (Phase 1)
-openapi/client-scan-api-v1.yaml
-schema/client-scan-payload-v1.json
-```
-
-Repository: [github.com/mziqudhd92/Iridium](https://github.com/mziqudhd92/Iridium)
 
 ## Development
 
@@ -87,33 +107,9 @@ uv sync
 uv run pytest
 ```
 
-Build wheels for a single package:
-
-```bash
-uv build --package iridium-core
-uv build --package iridium-client
-uv build --package iridium-mcp-server
-```
-
-## API contract
-
-Stable paths under `{IRIDIUM_API_URL}/api/v1/client/*`:
-
-- `POST /api/v1/client/scan` → 202 + `scan_id`
-- `GET /api/v1/client/scan/{scan_id}` → poll findings
-
-See [openapi/client-scan-api-v1.yaml](openapi/client-scan-api-v1.yaml) and [schema/client-scan-payload-v1.json](schema/client-scan-payload-v1.json).
-
 ## Security
 
-See [SECURITY.md](SECURITY.md) for vulnerability reporting, client-side threat model, and privacy defaults.
-
-**Phase 1 limitations:**
-
-- **Local audit log** (`.iridium/audit.log`) is implemented for MCP server; CLI audit log planned.
-- **`--anonymize`** HMAC-hashes internal symbols in graph payloads; available on `iridium-client scan`.
-- **Product analytics** are on by default (anonymized operational pings, no AST/source); opt out with `DO_NOT_TRACK=1` or `--no-telemetry`.
-- Graph payloads contain syntactic structure only — string literals and secrets are stripped client-side.
+See [SECURITY.md](SECURITY.md) for reporting, threat model, and privacy defaults.
 
 ## License
 
