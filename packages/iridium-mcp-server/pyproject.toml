@@ -1,6 +1,6 @@
 [project]
 name = "iridium-mcp-server"
-version = "0.2.0"
+version = "0.5.0"
 description = "Iridium MCP server for AI agent security guardrails"
 readme = "README.md"
 license = { text = "Apache-2.0" }
@@ -8,7 +8,7 @@ requires-python = ">=3.11"
 authors = [{ name = "Iridium Contributors" }]
 dependencies = [
     "httpx>=0.28.1",
-    "iridium-core==0.2.0",
+    "iridium-core==0.5.0",
     "mcp>=2.1.1",
 ]
 

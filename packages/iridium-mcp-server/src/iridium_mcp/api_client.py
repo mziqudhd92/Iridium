@@ -8,7 +8,7 @@ from typing import Any
 import httpx
 
 DEFAULT_API_URL = "https://api.iridium.example.com"
-CLIENT_VERSION = "0.2.0"
+CLIENT_VERSION = "0.5.0"
 REQUEST_TIMEOUT = 2.0
 
 _DEGRADED_VALIDATE = {

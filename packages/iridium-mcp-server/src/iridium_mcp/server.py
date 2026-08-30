@@ -14,7 +14,7 @@ from iridium_mcp.tools.refresh_workspace_graph import run_refresh_workspace_grap
 from iridium_mcp.tools.validate_dependency import run_validate_dependency_addition
 from iridium_mcp.workspace import append_audit, workspace_root
 
-mcp = MCPServer("iridium-mcp-server", version="0.2.0")
+mcp = MCPServer("iridium-mcp-server", version="0.5.0")
 
 
 def _start_parent_heartbeat() -> threading.Thread:
