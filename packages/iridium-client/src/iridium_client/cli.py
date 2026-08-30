@@ -11,13 +11,13 @@ from iridium_core.models.payload import ClientScanPayload
 from rich.console import Console
 
 from iridium_client.api.client import IridiumApiClient
-from iridium_client.telemetry import apply_telemetry_env
 from iridium_client.demo.target import materialize_demo_target
 from iridium_client.output.terminal import (
     render_demo_graph,
     render_scan_results,
     render_zero_results,
 )
+from iridium_client.telemetry import apply_telemetry_env
 
 app = typer.Typer(
     name="iridium-client",
