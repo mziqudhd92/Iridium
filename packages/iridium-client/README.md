@@ -36,7 +36,8 @@ export IRIDIUM_API_URL=https://api.iridium.example.com
 | --- | --- |
 | `--api-url` | Override `IRIDIUM_API_URL` |
 | `--anonymize` | HMAC-hash internal symbols in payload (requires `IRIDIUM_ANON_KEY`) |
-| `--no-telemetry` | Disable product analytics pings |
+| `--telemetry` | Opt in to anonymized product analytics (off by default) |
+| `--no-telemetry` | Disable product analytics for this run |
 | `--on-error pass` | Show local stats if API is unreachable (default: `block`) |
 
 ### `iridium-client payload dump`
@@ -59,8 +60,8 @@ iridium-client payload dump . --output payload.json --validate
 | --- | --- | --- |
 | `IRIDIUM_API_URL` | `https://api.iridium.example.com` | SaaS API base URL |
 | `IRIDIUM_API_KEY` | — | Optional (`X-API-Key`). Anonymous scans work without it |
-| `DO_NOT_TRACK` | unset | `1` disables analytics |
-| `IRIDIUM_TELEMETRY` | `1` | `0` disables analytics |
+| `DO_NOT_TRACK` | unset | `1` always disables analytics |
+| `IRIDIUM_TELEMETRY` | `0` | `1` opts in to anonymized analytics |
 | `IRIDIUM_ANON_KEY` | — | Key for `--anonymize` mode |
 
 Copy [`packages/iridium-client/.env.example`](.env.example) to `.env` for local development.

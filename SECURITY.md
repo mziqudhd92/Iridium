@@ -22,10 +22,12 @@ Iridium client tools analyze **untrusted repository contents** on the developer 
 | Layer | Default | Content |
 | --- | --- | --- |
 | Graph payload | Per scan | Structure only; `--anonymize` HMAC-hashes internal symbols |
-| Product analytics | **On** | Anonymized operational pings — zero AST/source |
+| Product analytics | **Off** | Opt-in anonymized operational pings — zero AST/source |
 | Local audit log | **Phase 1: planned** | `.iridium/audit.log` — not yet implemented |
 
-**Opt out of analytics:** `DO_NOT_TRACK=1`, `IRIDIUM_TELEMETRY=0`, or `iridium-client scan --no-telemetry`.
+**Opt in to analytics:** `IRIDIUM_TELEMETRY=1` or `iridium-client scan --telemetry`. We would be glad for opt-ins — they help us prioritize fixes and improve scan reliability. Pings include only coarse operational metadata (CLI version, scan duration, error classes), never repository contents.
+
+**Always disable:** `DO_NOT_TRACK=1` or `iridium-client scan --no-telemetry`.
 
 Graph payloads are zero-knowledge regardless of analytics setting.
 

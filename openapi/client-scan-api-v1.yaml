@@ -70,7 +70,7 @@ paths:
   /api/v1/client/events:
     post:
       operationId: postClientEvent
-      summary: Anonymized product analytics ping (opt-out)
+      summary: Anonymized product analytics ping (opt-in)
       requestBody:
         required: true
         content:
