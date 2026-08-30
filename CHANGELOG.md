@@ -4,6 +4,18 @@ All notable changes to the Iridium public OSS packages are documented here.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.5.0] - 2026-08-30
+
+### Added
+
+- Demo GIF and terminal cast assets in `docs/assets/`.
+- `iridium_client.telemetry` module with opt-in product analytics (`--telemetry`, `IRIDIUM_TELEMETRY=1`).
+
+### Changed
+
+- README refreshed with NFO-style client-layer header and architecture docs.
+- Product analytics are **off by default**; opt in to send anonymized operational pings.
+
 ## [0.2.0] - 2026-08-27
 
 Phase 2 — MCP runtime guardrails and sync query API.
@@ -36,5 +48,6 @@ Phase 1 initial release — client-side scanning libraries and CLI.
 - MCP server is a skeleton — no stdio transport or tools yet.
 - SaaS API host defaults to placeholder `https://api.iridium.example.com`.
 
+[0.5.0]: https://github.com/mziqudhd92/Iridium/releases/tag/v0.5.0
 [0.2.0]: https://github.com/mziqudhd92/Iridium/releases/tag/v0.2.0
 [0.1.0]: https://github.com/mziqudhd92/Iridium/releases/tag/v0.1.0
