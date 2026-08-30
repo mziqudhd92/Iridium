@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Iridium — A.I Cyber Reasoning System · Client Layer</title>
+  <meta name="description" content="Open-source Iridium client layer: local AST extraction, CLI scanning, MCP guardrails, and cloud reachability. pip install iridium-client." />
+  <meta name="theme-color" content="#050816" />
+  <meta property="og:title" content="Iridium — A.I Cyber Reasoning System" />
+  <meta property="og:description" content="Open-source client layer for the Iridium offensive research platform. Local AST/graph, CLI scan, MCP guardrails, cloud reachability." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <main id="main" class="wrap">
+    <section class="hero">
+      <div class="kicker">
+        <span class="pill">Iridium Client Layer</span>
+        <span class="pill live">Oss Online</span>
+        <span class="pill mute">Apache-2.0</span>
+      </div>
+
+      <div class="hero-grid">
+        <div>
+          <h1>A.I Cyber Reasoning System</h1>
+          <p class="lede">
+            Iridium is an autonomous security research platform that combines multi-role AI reasoning
+            with hardened runtime verification to find, prove, and package unknown vulnerabilities —
+            not just flag scanner noise. This repository is the open-source
+            <strong>client layer</strong>: local AST extraction, dependency graphs, CLI scanning, and
+            MCP guardrails that feed the Iridium engine.
+          </p>
+          <p class="lede">
+            Most AppSec tooling stops at static findings. Bounty hunters and red teams need
+            attacker-reachable bugs, verified under isolation, with submission-ready artifacts.
+            Iridium treats vulnerability research as an end-to-end pipeline — code ingest →
+            AI-guided hypotheses → sandbox execution → patch validation → bounty export.
+          </p>
+
+          <div class="stats">
+            <div class="stat">
+              <span>Packages</span>
+              <strong>3</strong>
+            </div>
+            <div class="stat">
+              <span>Release</span>
+              <strong class="accent">0.5.0</strong>
+            </div>
+            <div class="stat">
+              <span>Python</span>
+              <strong class="ok">3.11+</strong>
+            </div>
+            <div class="stat">
+              <span>License</span>
+              <strong>2.0</strong>
+            </div>
+          </div>
+        </div>
+
+        <aside class="pipeline" aria-label="Client pipeline">
+          <div class="mono-label">Client Verification Pipeline</div>
+          <div class="steps">
+            <div class="step">
+              <div class="step-row">
+                <div>
+                  <div class="mono-label">01 Ingest</div>
+                  <h3>Local AST / graph</h3>
+                </div>
+                <div class="glyph">{}</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-row">
+                <div>
+                  <div class="mono-label">02 Scan</div>
+                  <h3>CLI scan · payload dump</h3>
+                </div>
+                <div class="glyph">&gt;_</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-row">
+                <div>
+                  <div class="mono-label">03 Guard</div>
+                  <h3>MCP agent guardrails</h3>
+                </div>
+                <div class="glyph">OK</div>
+              </div>
+            </div>
+            <div class="step">
+              <div class="step-row">
+                <div>
+                  <div class="mono-label">04 Reach</div>
+                  <h3>Cloud reachability</h3>
+                </div>
+                <div class="glyph">API</div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="modules" aria-label="Packages">
+      <article class="module">
+        <div class="mono-label">01 / Core</div>
+        <h2>iridium-core</h2>
+        <p>
+          Extractors, SQLite AST cache, Tarjan SCC graphs, lockfile parsing, and payload models.
+          No network I/O — structure only, secrets stripped client-side.
+        </p>
+        <a href="https://pypi.org/project/iridium-core/">pip install iridium-core</a>
+      </article>
+      <article class="module">
+        <div class="mono-label">02 / Client</div>
+        <h2>iridium-client</h2>
+        <p>
+          Typer CLI plus httpx SaaS client. Zero-install demo, local payload dump, and
+          <code>scan .</code> for local parsing with cloud reachability.
+        </p>
+        <a href="https://pypi.org/project/iridium-client/">pip install iridium-client</a>
+      </article>
+      <article class="module">
+        <div class="mono-label">03 / Mcp</div>
+        <h2>iridium-mcp-server</h2>
+        <p>
+          MCP server for AI agent guardrails. Blocks vulnerable imports at generation time,
+          fail-open on 429/5xx, with a local audit log.
+        </p>
+        <a href="https://pypi.org/project/iridium-mcp-server/">pip install iridium-mcp-server</a>
+      </article>
+      <article class="module">
+        <div class="mono-label">04 / Contract</div>
+        <h2>Stable client API</h2>
+        <p>
+          <code>POST /api/v1/client/scan</code> → 202 + scan_id.
+          <code>GET /api/v1/client/scan/{scan_id}</code> → poll findings.
+          OpenAPI and JSON schema in-repo.
+        </p>
+        <a href="https://github.com/mziqudhd92/Iridium/blob/main/openapi/client-scan-api-v1.yaml">OpenAPI spec</a>
+      </article>
+    </section>
+
+    <section class="panel" aria-labelledby="quickstart">
+      <div class="panel-head">
+        <div>
+          <div class="mono-label">[02] Quick Start</div>
+          <h2 id="quickstart">zero-install demo / local parse / cloud reach</h2>
+          <p>release · iridium-client / iridium-core / iridium-mcp-server</p>
+        </div>
+        <div class="actions">
+          <a class="btn" href="https://github.com/mziqudhd92/Iridium">GitHub</a>
+          <a class="btn ghost" href="https://pypi.org/project/iridium-client/">PyPI</a>
+          <a class="btn ok" href="https://github.com/mziqudhd92/Iridium/blob/main/LICENSE">Apache-2.0</a>
+        </div>
+      </div>
+
+      <div class="term-wrap">
+        <button class="copy" type="button" data-copy="pip install iridium-client
+
+# Zero-install demo (&lt;10s, no API key)
+uvx iridium-client demo
+
+# Full scan — local parsing + cloud reachability
+iridium-client scan .
+
+# Local payload dump (zero network)
+iridium-client payload dump . --validate">Copy</button>
+        <pre class="term"><span class="cmd">pip install iridium-client</span>
+
+<span class="cmt"># Zero-install demo (&lt;10s, no API key)</span>
+<span class="cmd">uvx iridium-client demo</span>
+
+<span class="cmt"># Full scan — local parsing + cloud reachability</span>
+<span class="cmd">iridium-client scan .</span>
+
+<span class="cmt"># Local payload dump (zero network)</span>
+<span class="cmd">iridium-client payload dump . --validate</span>
+
+<span class="ok">✓</span> Scan complete · anonymous tier · no API key required</pre>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="architecture">
+      <div class="panel-head">
+        <div>
+          <div class="mono-label">[03] Architecture</div>
+          <h2 id="architecture">developer machine → Iridium SaaS API</h2>
+          <p>local AST/graph · CLI scan · MCP guardrails · cloud reachability</p>
+        </div>
+      </div>
+
+      <div class="flow">
+        <div class="local">
+          <div class="local-title">Developer machine</div>
+          <div class="nodes">
+            <div class="node span">
+              <strong>iridium-core</strong>
+              <span>AST, graph, cache — no network</span>
+            </div>
+            <div class="node">
+              <strong>iridium-client</strong>
+              <span>CLI</span>
+            </div>
+            <div class="node">
+              <strong>iridium-mcp-server</strong>
+              <span>MCP guardrails</span>
+            </div>
+          </div>
+        </div>
+        <div class="arrow">POST /api/v1/client/scan →</div>
+        <div class="arrow mobile">↓ POST /api/v1/client/scan</div>
+        <div class="cloud">
+          <div class="mono-label">Private backend</div>
+          <strong>Iridium SaaS API</strong>
+          <p>Reachability analysis. Poll findings with GET /api/v1/client/scan/{scan_id}.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="env">
+      <div class="panel-head">
+        <div>
+          <div class="mono-label">[04] Environment</div>
+          <h2 id="env">privacy defaults / opt-in telemetry</h2>
+          <p>graph payloads contain syntactic structure only — string literals and secrets are stripped client-side</p>
+        </div>
+      </div>
+      <table class="env">
+        <thead>
+          <tr>
+            <th>Variable</th>
+            <th>Default</th>
+            <th>Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>IRIDIUM_API_URL</code></td>
+            <td>api.iridium.example.com</td>
+            <td>SaaS API base URL (no trailing slash)</td>
+          </tr>
+          <tr>
+            <td><code>IRIDIUM_API_KEY</code></td>
+            <td>—</td>
+            <td>Optional. Sent as X-API-Key for authenticated tiers</td>
+          </tr>
+          <tr>
+            <td><code>DO_NOT_TRACK</code></td>
+            <td>unset</td>
+            <td>Set to 1 to block analytics even when opted in</td>
+          </tr>
+          <tr>
+            <td><code>IRIDIUM_TELEMETRY</code></td>
+            <td>0</td>
+            <td>Set to 1 to opt in to anonymized product analytics</td>
+          </tr>
+          <tr>
+            <td><code>IRIDIUM_ANON_KEY</code></td>
+            <td>—</td>
+            <td>HMAC key for --anonymize blind-graphing mode</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="chips">
+        <span class="chip">Analytics off by default</span>
+        <span class="chip">--anonymize HMAC-hashes symbols</span>
+        <span class="chip">MCP audit log · .iridium/audit.log</span>
+        <span class="chip">Report vulns via GitHub Security Advisories</span>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="sysop">
+      <div class="panel-head">
+        <div>
+          <div class="mono-label">[05] SysOp Notice</div>
+          <h2 id="sysop">V.32bis standard · 14,400 bps</h2>
+        </div>
+      </div>
+      <div class="sysop">
+        <img src="assets/v32bis-modem.svg" width="220" height="150" alt="SupraFAXModem 14.4 V.32bis style illustration" />
+        <div>
+          <p>
+            Access to the Iridium Engine is capped at 14,400 bps (V.32bis standard).
+            V.42bis compression enabled for hardware acceleration.
+          </p>
+          <pre class="nfo" aria-hidden="true">  ██╗██████╗ ██╗██████╗ ██╗██╗   ██╗███╗   ███╗
+  ██║██╔══██╗██║██╔══██╗██║██║   ██║████╗ ████║
+  ██║██████╔╝██║██║  ██║██║██║   ██║██╔████╔██║
+  ██║██╔══██╗██║██║  ██║██║██║   ██║██║╚██╔╝██║
+  ██║██║  ██║██║██████╔╝██║╚██████╔╝██║ ╚═╝ ██║
+  ╚═╝╚═╝  ╚═╝╚═╝╚═════╝ ╚═╝ ╚═════╝ ╚═╝     ╚═╝
+  local AST/graph  ·  CLI scan  ·  MCP guardrails  ·  cloud reachability</pre>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <span>Apache-2.0 · contributions require DCO sign-off</span>
+      <span>
+        <a href="https://github.com/mziqudhd92/Iridium">github.com/mziqudhd92/Iridium</a>
+        ·
+        <a href="https://github.com/mziqudhd92/Iridium/blob/main/SECURITY.md">SECURITY.md</a>
+      </span>
+    </footer>
+  </main>
+  <script>
+    async function copyText(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        return true;
+      } catch {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "fixed";
+        ta.style.left = "-9999px";
+        document.body.appendChild(ta);
+        ta.select();
+        try {
+          return document.execCommand("copy");
+        } finally {
+          ta.remove();
+        }
+      }
+    }
+
+    document.querySelectorAll(".copy").forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        const raw = btn.getAttribute("data-copy") || "";
+        const text = raw.replaceAll("&lt;", "<").replaceAll("&gt;", ">");
+        const ok = await copyText(text);
+        btn.textContent = ok ? "Copied" : "Failed";
+        setTimeout(() => { btn.textContent = "Copy"; }, 1600);
+      });
+    });
+  </script>
+</body>
+</html>

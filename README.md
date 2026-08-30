@@ -39,7 +39,10 @@
   <a href="https://pypi.org/project/iridium-client/"><img src="https://img.shields.io/pypi/v/iridium-client?label=iridium-client&logo=python&logoColor=white" alt="iridium-client"></a>
   <a href="https://pypi.org/project/iridium-mcp-server/"><img src="https://img.shields.io/pypi/v/iridium-mcp-server?label=iridium-mcp-server&logo=python&logoColor=white" alt="iridium-mcp-server"></a>
   <a href="https://github.com/mziqudhd92/Iridium/blob/main/LICENSE"><img src="https://img.shields.io/github/license/mziqudhd92/Iridium" alt="License"></a>
+  <a href="https://mziqudhd92.github.io/Iridium/"><img src="https://img.shields.io/badge/site-iridium-67e8f9?labelColor=050816" alt="Site"></a>
 </p>
+
+**Site:** [mziqudhd92.github.io/Iridium](https://mziqudhd92.github.io/Iridium/)
 
 **This repository** is the open-source **client layer**: local AST extraction, dependency graphs, CLI scanning, and MCP guardrails that feed the Iridium engine.
 
