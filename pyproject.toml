@@ -1,6 +1,6 @@
 [project]
 name = "iridium-monorepo"
-version = "0.2.0"
+version = "0.5.0"
 description = "Iridium public OSS monorepo (iridium-core, iridium-client, iridium-mcp-server)"
 requires-python = ">=3.11"
 readme = "README.md"
