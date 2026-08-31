@@ -72,6 +72,29 @@
       }
     },
     {
+      "id": "llamaindex",
+      "app_name": "LlamaIndex",
+      "repo_url": "https://github.com/run-llama/llama_index",
+      "stars": 51930,
+      "severity": "high",
+      "finding_title": "Insecure shared /tmp cache dir TOCTOU (CVE-2025-7647)",
+      "finding_summary": "run-llama/llama_index @ v0.12.44 — get_cache_dir() uses predictable /tmp/llama_index without isolation; symlink pre-creation enables cache poisoning (CVE-2025-7647, JOB-8F5BD8).",
+      "file_path": "llama-index-core/llama_index/core/utils.py",
+      "line_number": 419,
+      "scanner_name": "targeted-research",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2025-7647",
+        "file": "findings/llamaindex/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.py // CVE-2025-7647",
+        "file": "findings/llamaindex/poc.py",
+        "kind": "code"
+      }
+    },
+    {
       "id": "gradio",
       "app_name": "Gradio",
       "repo_url": "https://github.com/gradio-app/gradio",

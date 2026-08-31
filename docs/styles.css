@@ -105,6 +105,13 @@ svg {
   border-radius: 999px;
   border: 1px solid var(--border-cyan);
   padding: 6px 12px;
+  color: inherit;
+  text-decoration: none;
+}
+
+a.pill:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
 }
 
 .pill.live {
