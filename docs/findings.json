@@ -7,15 +7,23 @@
       "app_name": "llama.cpp",
       "repo_url": "https://github.com/ggml-org/llama.cpp",
       "stars": 126167,
-      "severity": "high",
-      "finding_title": "Config / model-path traversal (CVE-2026-27940)",
-      "finding_summary": "Verified path-traversal in llama.cpp config handling at tag b8145 (CVE-2026-27940). Submission-ready package from Iridium e2e.",
-      "file_path": "common/common.cpp",
-      "line_number": 0,
-      "scanner_name": "bug_hunter",
-      "verification_status": "SUBMISSION_READY",
-      "report": null,
-      "poc": null
+      "severity": "critical",
+      "finding_title": "Heap-buffer-overflow in gguf_init_from_file (CVE-2026-27940)",
+      "finding_summary": "Verified heap-buffer-overflow in gguf_init_from_file at ggml/src/gguf.cpp:285 (finding 14314, JOB-3ACAB4). LibFuzzer witness under AddressSanitizer on tag b8145.",
+      "file_path": "ggml/src/gguf.cpp",
+      "line_number": 285,
+      "scanner_name": "hunter-verify",
+      "verification_status": "CONFIRMED_TARGET_SNIPPET",
+      "report": {
+        "title": "report.md // CVE-2026-27940",
+        "file": "findings/llama/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.c // gguf_init_from_file",
+        "file": "findings/llama/poc.c",
+        "kind": "code"
+      }
     },
     {
       "id": "litellm",
@@ -28,9 +36,17 @@
       "file_path": "litellm/proxy/_experimental/mcp_server/rest_endpoints.py",
       "line_number": 0,
       "scanner_name": "bug_hunter",
-      "verification_status": "SUBMISSION_READY",
-      "report": null,
-      "poc": null
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-42271",
+        "file": "findings/litellm/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.py // CVE-2026-42271",
+        "file": "findings/litellm/poc.py",
+        "kind": "code"
+      }
     },
     {
       "id": "requests",
@@ -43,9 +59,17 @@
       "file_path": "src/requests/utils.py",
       "line_number": 0,
       "scanner_name": "bug_hunter",
-      "verification_status": "SUBMISSION_READY",
-      "report": null,
-      "poc": null
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-25645",
+        "file": "findings/requests/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.py // CVE-2026-25645",
+        "file": "findings/requests/poc.py",
+        "kind": "code"
+      }
     },
     {
       "id": "gradio",
