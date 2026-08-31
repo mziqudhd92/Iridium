@@ -1,0 +1,213 @@
+{
+  "generated_at": "2026-08-31",
+  "source": "iridium verified board · out-of-box discovery path",
+  "entries": [
+    {
+      "id": "demo",
+      "app_name": "Iridium demo",
+      "repo_url": "uvx iridium-client demo",
+      "stars": null,
+      "severity": "high",
+      "finding_title": "Reachable fetch via pinned requests==2.25.0",
+      "finding_summary": "Out-of-box self-learning path. The zero-install demo indexes an embedded Flask-style handler and shows how Iridium keeps reachable sinks while suppressing CVE noise.",
+      "file_path": "app.py",
+      "line_number": 12,
+      "scanner_name": "iridium-client demo",
+      "verification_status": "OUT_OF_BOX",
+      "report": {
+        "title": "SYSOP BRIEF // iridium-client demo",
+        "prompt": "uvx iridium-client demo",
+        "blocks": [
+          {"type": "banner", "text": "OUT OF BOX · SELF-LEARNING PATH"},
+          {"type": "kv", "k": "target", "v": "embedded Flask-style handler"},
+          {"type": "kv", "k": "deps", "v": "requests==2.25.0 · flask==2.0.0"},
+          {"type": "kv", "k": "sink", "v": "app.py:12 fetch_url → requests.get"},
+          {"type": "p", "text": "Iridium materializes a tiny workspace, extracts AST + dependency graph locally, then asks the cloud reachability layer which CVE edges are attacker-reachable — not every advisory in the database."},
+          {"type": "cmd", "text": "uvx iridium-client demo"},
+          {"type": "out", "text": "✓ Scan complete · dependencies analyzed · API entrypoints mapped"},
+          {"type": "ok", "text": "reachable path isolated · scanner noise suppressed"}
+        ]
+      },
+      "poc": null
+    },
+    {
+      "id": "llama",
+      "app_name": "llama.cpp",
+      "repo_url": "https://github.com/ggml-org/llama.cpp",
+      "stars": 126167,
+      "severity": "high",
+      "finding_title": "Config / model-path traversal (CVE-2026-27940)",
+      "finding_summary": "Verified path-traversal in llama.cpp config handling at tag b8145 (CVE-2026-27940). Submission-ready package from Iridium e2e.",
+      "file_path": "common/common.cpp",
+      "line_number": 0,
+      "scanner_name": "bug_hunter",
+      "verification_status": "SUBMISSION_READY",
+      "report": null,
+      "poc": null
+    },
+    {
+      "id": "litellm",
+      "app_name": "LiteLLM",
+      "repo_url": "https://github.com/BerriAI/litellm",
+      "stars": 57576,
+      "severity": "high",
+      "finding_title": "Unauthenticated MCP / proxy sink (CVE-2026-42271)",
+      "finding_summary": "Curated regression on BerriAI/litellm @ v1.83.6-nightly. Iridium verified a submission-ready bounty package for CVE-2026-42271.",
+      "file_path": "litellm/proxy/_experimental/mcp_server/rest_endpoints.py",
+      "line_number": 0,
+      "scanner_name": "bug_hunter",
+      "verification_status": "SUBMISSION_READY",
+      "report": null,
+      "poc": null
+    },
+    {
+      "id": "requests",
+      "app_name": "Requests",
+      "repo_url": "https://github.com/psf/requests",
+      "stars": 54266,
+      "severity": "high",
+      "finding_title": "TOCTOU in extract_zipped_paths (CVE-2026-25645)",
+      "finding_summary": "psf/requests @ v2.32.3 — race in extract_zipped_paths lets a zip member path change between validate and extract (CVE-2026-25645).",
+      "file_path": "src/requests/utils.py",
+      "line_number": 0,
+      "scanner_name": "bug_hunter",
+      "verification_status": "SUBMISSION_READY",
+      "report": null,
+      "poc": null
+    },
+    {
+      "id": "gradio",
+      "app_name": "Gradio",
+      "repo_url": "https://github.com/gradio-app/gradio",
+      "stars": 43438,
+      "severity": "medium",
+      "finding_title": "Unauthenticated arbitrary file copy via FileData._copy_to_dir (CVE-2025-48889)",
+      "finding_summary": "gradio@5.30.0 — unauthenticated POST /gradio_api/run/predict / flagging drives FileData.path into shutil.copy with no allowlist (CVE-2025-48889).",
+      "file_path": "gradio/data_classes.py",
+      "line_number": 0,
+      "scanner_name": "hunter-verify",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "SYSOP BRIEF // CVE-2025-48889",
+        "prompt": "iridium report --finding 15499",
+        "blocks": [
+          {"type": "banner", "text": "VERIFIED · GRADIO FILEDATA COPY"},
+          {"type": "kv", "k": "type", "v": "route-sink:gradio.flagging_copy:/gradio_api/run/predict"},
+          {"type": "kv", "k": "location", "v": "gradio/data_classes.py"},
+          {"type": "kv", "k": "cvss", "v": "5.3 MEDIUM  CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L"},
+          {"type": "kv", "k": "status", "v": "verified"},
+          {"type": "p", "text": "Unauthenticated POST /gradio_api/run/predict can drive flagging / FileData.path into FileData._copy_to_dir → shutil.copy(self.path, dir) with no allowlist on absolute paths (gradio>=5.25.2,<5.31.0)."},
+          {"type": "p", "text": "Iridium isolated the sink from AST, synthesized a harness, and confirmed the copy of an attacker-controlled absolute path into the flagging directory under Docker isolation."},
+          {"type": "ok", "text": "sandbox proof accepted · ASan not required · submission board updated"}
+        ]
+      },
+      "poc": {
+        "title": "SANDBOX TTY // poc.py",
+        "prompt": "iridium sandbox exec --job JOB-0ACEFB --poc poc.py",
+        "blocks": [
+          {"type": "cmd", "text": "iridium sandbox exec --job JOB-0ACEFB --poc poc.py"},
+          {"type": "out", "text": "[triage] FileData._copy_to_dir located in gradio/data_classes.py"},
+          {"type": "out", "text": "[harness] bind real sink · shutil.copy(self.path, dir) has no allowlist"},
+          {"type": "out", "text": "[execute] isolated Docker · drive absolute path outside flagging dest"},
+          {"type": "ok", "text": "IRIDIUM_PROOF_CREATED"},
+          {"type": "ok", "text": "IRIDIUM_GRADIO_CVE_2025_48889"},
+          {"type": "p", "text": "Proof is a sandbox transcript, not a downloadable exploit kit. The live harness stays on the private verification node."}
+        ]
+      }
+    },
+    {
+      "id": "chroma",
+      "app_name": "Chroma",
+      "repo_url": "https://github.com/chroma-core/chroma",
+      "stars": 29182,
+      "severity": "critical",
+      "finding_title": "trust_remote_code RCE via UPDATE_COLLECTION (CVE-2026-45833)",
+      "finding_summary": "chroma-core/chroma @ 0.6.3 — UPDATE_COLLECTION forwards trust_remote_code into SentenceTransformerEmbeddingFunction, enabling remote code load (CVE-2026-45833).",
+      "file_path": "chromadb/utils/embedding_functions/sentence_transformer_embedding_function.py",
+      "line_number": 0,
+      "scanner_name": "bug_hunter",
+      "verification_status": "SUBMISSION_READY",
+      "report": null,
+      "poc": null
+    },
+    {
+      "id": "langchain",
+      "app_name": "LangChain",
+      "repo_url": "https://github.com/langchain-ai/langchain",
+      "stars": 118000,
+      "severity": "high",
+      "finding_title": "load_prompt path traversal (CVE-2026-34070)",
+      "finding_summary": "langchain-ai/langchain @ langchain-core==1.2.21 — load_prompt/_load_template reads attacker-controlled paths without boundary checks (CVE-2026-34070).",
+      "file_path": "libs/core/langchain_core/prompts/loading.py",
+      "line_number": 56,
+      "scanner_name": "targeted-research",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "SYSOP BRIEF // CVE-2026-34070",
+        "prompt": "iridium report --finding 15782",
+        "blocks": [
+          {"type": "banner", "text": "VERIFIED · LOAD_PROMPT PATH TRAVERSAL"},
+          {"type": "kv", "k": "type", "v": "ai.prompt.load_prompt"},
+          {"type": "kv", "k": "location", "v": "libs/core/langchain_core/prompts/loading.py:56"},
+          {"type": "kv", "k": "function", "v": "_load_template()"},
+          {"type": "kv", "k": "hit", "v": "template = template_path.read_text(encoding=\"utf-8\")"},
+          {"type": "kv", "k": "cvss", "v": "9.3 CRITICAL"},
+          {"type": "p", "text": "Configuration-driven prompt loaders treat attacker-controlled fields such as template_path as local files. Without resolve/commonpath guards they expose arbitrary files."},
+          {"type": "p", "text": "Hunter next step that Iridium executed: confirm Path.resolve / realpath + commonpath is missing before open/read, then prove the leak under isolation."},
+          {"type": "ok", "text": "verified · no commonpath/realpath on cited _load_template"}
+        ]
+      },
+      "poc": {
+        "title": "SANDBOX TTY // poc.py",
+        "prompt": "iridium sandbox exec --job JOB-6D4253 --poc poc.py",
+        "blocks": [
+          {"type": "cmd", "text": "iridium sandbox exec --job JOB-6D4253 --poc poc.py"},
+          {"type": "out", "text": "[triage] rule ai.prompt.load_prompt · loading.py:56"},
+          {"type": "out", "text": "[harness] isolate _load_template · no commonpath / realpath guard"},
+          {"type": "out", "text": "[execute] config template_path → local secret file"},
+          {"type": "ok", "text": "PROOF OK: load_prompt path traversal read local file"},
+          {"type": "p", "text": "Proof is a sandbox transcript, not a downloadable exploit kit. The live harness stays on the private verification node."}
+        ]
+      }
+    },
+    {
+      "id": "wolfssl",
+      "app_name": "wolfSSL",
+      "repo_url": "https://github.com/wolfSSL/wolfssl",
+      "stars": 2923,
+      "severity": "high",
+      "finding_title": "Missing digest bounds check in cert verification (CVE-2026-5194)",
+      "finding_summary": "wolfSSL/wolfssl @ v5.9.0-stable — wc_SignatureVerify accepts undersized digest buffers without rejecting truncated signatures (CVE-2026-5194).",
+      "file_path": "wolfcrypt/src/signature.c",
+      "line_number": 0,
+      "scanner_name": "hunter-verify",
+      "verification_status": "CONFIRMED_TARGET_SNIPPET",
+      "report": {
+        "title": "SYSOP BRIEF // CVE-2026-5194",
+        "prompt": "iridium report --finding 15500",
+        "blocks": [
+          {"type": "banner", "text": "CONFIRMED · WC_SIGNATUREVERIFY BOUNDS"},
+          {"type": "kv", "k": "type", "v": "sink:wc_SignatureVerify"},
+          {"type": "kv", "k": "status", "v": "confirmed_target_snippet"},
+          {"type": "kv", "k": "cvss", "v": "8.7 HIGH  CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H"},
+          {"type": "p", "text": "wc_SignatureVerifyHash accepts an undersized digest (hash_len=1) instead of rejecting truncated signature input. Iridium compiled a native harness against v5.9.0-stable and exercised the API under isolation."},
+          {"type": "warn", "text": "compiler note: timing resistance / harden options not enabled in the target build"},
+          {"type": "ok", "text": "target API called · proof file written in sandbox"}
+        ]
+      },
+      "poc": {
+        "title": "SANDBOX TTY // poc.c",
+        "prompt": "iridium sandbox exec --job JOB-5E2B86 --poc poc.c --asan",
+        "blocks": [
+          {"type": "cmd", "text": "iridium sandbox exec --job JOB-5E2B86 --poc poc.c --asan"},
+          {"type": "out", "text": "[triage] sink wc_SignatureVerifyHash"},
+          {"type": "out", "text": "[harness] native C · hash_len=1 undersized digest"},
+          {"type": "out", "text": "[execute] isolated Docker · wolfssl v5.9.0-stable"},
+          {"type": "ok", "text": "IRIDIUM_TARGET_API_CALLED"},
+          {"type": "ok", "text": "IRIDIUM_PROOF_CREATED"},
+          {"type": "p", "text": "Proof is a sandbox transcript, not a downloadable exploit kit. The live harness stays on the private verification node."}
+        ]
+      }
+    }
+  ]
+}
