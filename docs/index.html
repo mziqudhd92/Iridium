@@ -171,6 +171,34 @@
       </article>
     </section>
 
+    <section class="panel" aria-labelledby="hall">
+      <div class="panel-head">
+        <div>
+          <div class="mono-label">[02] BBS Hall Of Fame</div>
+          <h2 id="hall">out of box discovery / self-learning path</h2>
+          <p>verified findings · sysop release board · report links only when a .md briefing exists</p>
+        </div>
+      </div>
+      <div class="board-wrap" data-findings-board>
+        <table class="board">
+          <thead>
+            <tr>
+              <th>App Name</th>
+              <th>Amount Of Stars</th>
+              <th>Finding</th>
+              <th>Report</th>
+              <th>PoC</th>
+            </tr>
+          </thead>
+          <tbody data-findings-rows>
+            <tr>
+              <td class="board-empty" colspan="5">Loading website findings board…</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
     <section class="panel" aria-labelledby="quickstart">
       <div class="panel-head">
         <div>
@@ -309,6 +337,16 @@ iridium-client payload dump . --validate">Copy</button>
       </span>
     </footer>
   </main>
+  <div id="term-modal" class="modal" hidden>
+    <div class="crt" role="dialog" aria-modal="true" aria-labelledby="crt-title">
+      <div class="crt-bar">
+        <span class="crt-dots" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span id="crt-title" class="crt-title" data-crt-title>SYSOP TTY</span>
+        <button type="button" class="crt-x" data-crt-close aria-label="Close terminal">×</button>
+      </div>
+      <div class="crt-screen" data-crt-screen></div>
+    </div>
+  </div>
   <script>
     async function copyText(text) {
       try {
@@ -340,5 +378,6 @@ iridium-client payload dump . --validate">Copy</button>
       });
     });
   </script>
+  <script src="board.js"></script>
 </body>
 </html>
