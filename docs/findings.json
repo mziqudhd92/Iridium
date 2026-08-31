@@ -3,34 +3,6 @@
   "source": "iridium verified board · out-of-box discovery path",
   "entries": [
     {
-      "id": "demo",
-      "app_name": "Iridium demo",
-      "repo_url": "uvx iridium-client demo",
-      "stars": null,
-      "severity": "high",
-      "finding_title": "Reachable fetch via pinned requests==2.25.0",
-      "finding_summary": "Out-of-box self-learning path. The zero-install demo indexes an embedded Flask-style handler and shows how Iridium keeps reachable sinks while suppressing CVE noise.",
-      "file_path": "app.py",
-      "line_number": 12,
-      "scanner_name": "iridium-client demo",
-      "verification_status": "OUT_OF_BOX",
-      "report": {
-        "title": "SYSOP BRIEF // iridium-client demo",
-        "prompt": "uvx iridium-client demo",
-        "blocks": [
-          {"type": "banner", "text": "OUT OF BOX · SELF-LEARNING PATH"},
-          {"type": "kv", "k": "target", "v": "embedded Flask-style handler"},
-          {"type": "kv", "k": "deps", "v": "requests==2.25.0 · flask==2.0.0"},
-          {"type": "kv", "k": "sink", "v": "app.py:12 fetch_url → requests.get"},
-          {"type": "p", "text": "Iridium materializes a tiny workspace, extracts AST + dependency graph locally, then asks the cloud reachability layer which CVE edges are attacker-reachable — not every advisory in the database."},
-          {"type": "cmd", "text": "uvx iridium-client demo"},
-          {"type": "out", "text": "✓ Scan complete · dependencies analyzed · API entrypoints mapped"},
-          {"type": "ok", "text": "reachable path isolated · scanner noise suppressed"}
-        ]
-      },
-      "poc": null
-    },
-    {
       "id": "llama",
       "app_name": "llama.cpp",
       "repo_url": "https://github.com/ggml-org/llama.cpp",

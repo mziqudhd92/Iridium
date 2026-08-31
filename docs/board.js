@@ -22,13 +22,6 @@
     return Number(stars).toLocaleString("en-US");
   }
 
-  function statusClass(status) {
-    const value = String(status || "").toUpperCase();
-    if (value === "VERIFIED" || value === "OUT_OF_BOX") return "ok";
-    if (value === "SUBMISSION_READY") return "accent";
-    return "";
-  }
-
   function repoCell(entry) {
     const url = entry.repo_url || "";
     if (url.startsWith("http")) {
@@ -185,12 +178,10 @@
   }
 
   function renderRow(entry) {
-    const status = String(entry.verification_status || "").replaceAll("_", " ");
     return `<tr>
       <td>
         <div class="board-app">${esc(entry.app_name)}</div>
         <div class="board-repo">${repoCell(entry)}</div>
-        <span class="board-status ${statusClass(entry.verification_status)}">${esc(status)}</span>
       </td>
       <td class="board-stars">${formatStars(entry.stars)}</td>
       <td>
