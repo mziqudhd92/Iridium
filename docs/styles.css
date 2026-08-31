@@ -864,6 +864,59 @@ body.modal-open {
   color: #fbbf24;
 }
 
+.crt-h {
+  margin: 16px 0 8px;
+  color: #6ee7b7;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 12px;
+}
+
+.crt-list {
+  margin: 8px 0 0;
+  padding-left: 1.2rem;
+  color: #bbf7d0;
+}
+
+.crt-list li {
+  margin: 4px 0;
+}
+
+.crt-p code,
+.crt-list code,
+.crt-h code,
+.crt-banner code {
+  color: #67e8f9;
+}
+
+.crt-code {
+  margin: 12px 0;
+  overflow-x: auto;
+  border: 1px solid rgba(110, 231, 183, 0.18);
+  border-radius: 10px;
+  padding: 10px 12px;
+  background: rgba(0, 0, 0, 0.28);
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.crt-code-line {
+  display: grid;
+  grid-template-columns: 2.4em 1fr;
+  gap: 12px;
+  white-space: pre;
+}
+
+.crt-code-line .n {
+  color: #365f4a;
+  user-select: none;
+}
+
+.crt-code-line .src {
+  color: #d1fae5;
+}
+
 .crt-cursor {
   display: inline-block;
   width: 8px;

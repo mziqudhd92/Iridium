@@ -7,6 +7,7 @@
   const screenEl = modal.querySelector("[data-crt-screen]");
   const closeEls = modal.querySelectorAll("[data-crt-close]");
   let lastFocus = null;
+  const fileCache = new Map();
 
   function esc(value) {
     return String(value)
@@ -42,6 +43,70 @@
     return file ? `${file}${line}` : "—";
   }
 
+  function inlineFmt(text) {
+    return esc(text)
+      .replace(/`([^`]+)`/g, "<code>$1</code>")
+      .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+  }
+
+  function promptLine(command) {
+    return `<div class="crt-line"><span class="crt-prompt">sysop@iridium:~$</span> ${esc(command)}</div>`;
+  }
+
+  function cursorLine() {
+    return `<div class="crt-line"><span class="crt-cursor" aria-hidden="true"></span></div>`;
+  }
+
+  function renderCode(src) {
+    const lines = String(src).replace(/\n$/, "").split("\n");
+    const body = lines
+      .map((line, i) => {
+        const n = String(i + 1).padStart(3, " ");
+        return `<div class="crt-code-line"><span class="n">${n}</span><span class="src">${esc(line) || " "}</span></div>`;
+      })
+      .join("");
+    return `<pre class="crt-code">${body}</pre>`;
+  }
+
+  function renderMdText(text) {
+    const chunks = String(text).trim().split(/\n{2,}/);
+    return chunks
+      .map((chunk) => {
+        const lines = chunk.split("\n");
+        const first = lines[0] || "";
+        if (first.startsWith("# ")) {
+          return `<div class="crt-banner">${inlineFmt(first.replace(/^#\s+/, ""))}</div>`;
+        }
+        if (first.startsWith("## ")) {
+          const rest = lines.slice(1).join("\n");
+          const head = `<div class="crt-h">${inlineFmt(first.replace(/^##\s+/, ""))}</div>`;
+          return rest ? `${head}<div class="crt-p">${rest.split("\n").map(inlineFmt).join("<br>")}</div>` : head;
+        }
+        if (lines.every((line) => /^[-*]\s+/.test(line))) {
+          const items = lines
+            .map((line) => `<li>${inlineFmt(line.replace(/^[-*]\s+/, ""))}</li>`)
+            .join("");
+          return `<ul class="crt-list">${items}</ul>`;
+        }
+        return `<div class="crt-p">${lines.map(inlineFmt).join("<br>")}</div>`;
+      })
+      .join("");
+  }
+
+  function renderMarkdown(md) {
+    const parts = [];
+    const re = /```[^\n]*\n([\s\S]*?)```/g;
+    let last = 0;
+    let match;
+    while ((match = re.exec(md))) {
+      parts.push(renderMdText(md.slice(last, match.index)));
+      parts.push(renderCode(match[1]));
+      last = match.index + match[0].length;
+    }
+    parts.push(renderMdText(md.slice(last)));
+    return parts.join("");
+  }
+
   function renderBlock(block) {
     const type = block.type || "p";
     if (type === "banner") return `<div class="crt-banner">${esc(block.text)}</div>`;
@@ -49,7 +114,7 @@
       return `<div class="crt-kv"><span>${esc(block.k)}</span>${esc(block.v)}</div>`;
     }
     if (type === "cmd") {
-      return `<div class="crt-line"><span class="crt-prompt">sysop@iridium:~$</span> ${esc(block.text)}</div>`;
+      return promptLine(block.text);
     }
     if (type === "out") return `<div class="crt-line crt-dim">${esc(block.text)}</div>`;
     if (type === "ok") return `<div class="crt-line crt-ok">✔ ${esc(block.text)}</div>`;
@@ -57,19 +122,39 @@
     return `<div class="crt-p">${esc(block.text)}</div>`;
   }
 
-  function openTerminal(doc) {
+  async function loadFile(path) {
+    if (fileCache.has(path)) return fileCache.get(path);
+    const response = await fetch(path);
+    if (!response.ok) throw new Error(`failed to load ${path}`);
+    const text = await response.text();
+    fileCache.set(path, text);
+    return text;
+  }
+
+  async function openTerminal(doc) {
     lastFocus = document.activeElement;
     titleEl.textContent = doc.title || "SYSOP TTY";
-    const blocks = doc.blocks || [];
-    const skipPrompt = blocks[0] && blocks[0].type === "cmd";
-    const prompt = !skipPrompt && doc.prompt
-      ? `<div class="crt-line"><span class="crt-prompt">sysop@iridium:~$</span> ${esc(doc.prompt)}</div>`
-      : "";
-    const body = blocks.map(renderBlock).join("");
-    screenEl.innerHTML = `${prompt}${body}<div class="crt-line"><span class="crt-cursor" aria-hidden="true"></span></div>`;
+    screenEl.innerHTML = `<div class="crt-line crt-dim">loading…</div>`;
     modal.hidden = false;
     document.body.classList.add("modal-open");
     modal.querySelector("[data-crt-close]").focus();
+
+    try {
+      if (doc.file) {
+        const text = await loadFile(doc.file);
+        const name = doc.file.split("/").pop();
+        const command = doc.kind === "code" ? `cat ${name}` : `less ${name}`;
+        const body = doc.kind === "code" ? renderCode(text) : renderMarkdown(text);
+        screenEl.innerHTML = `${promptLine(command)}${body}${cursorLine()}`;
+        return;
+      }
+      const blocks = doc.blocks || [];
+      const skipPrompt = blocks[0] && blocks[0].type === "cmd";
+      const prompt = !skipPrompt && doc.prompt ? promptLine(doc.prompt) : "";
+      screenEl.innerHTML = `${prompt}${blocks.map(renderBlock).join("")}${cursorLine()}`;
+    } catch (err) {
+      screenEl.innerHTML = `<div class="crt-line crt-warn">! ${esc(err.message || err)}</div>${cursorLine()}`;
+    }
   }
 
   function closeTerminal() {
@@ -120,7 +205,7 @@
         btn.addEventListener("click", () => {
           const entry = entries.find((item) => item.id === btn.getAttribute("data-id"));
           const kind = btn.getAttribute("data-open");
-          if (entry && entry[kind]) openTerminal(entry[kind]);
+          if (entry && entry[kind]) void openTerminal(entry[kind]);
         });
       });
     } catch (err) {
