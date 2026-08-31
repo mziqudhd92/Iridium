@@ -3,6 +3,29 @@
   "source": "iridium verified board · out-of-box discovery path",
   "entries": [
     {
+      "id": "ligguf",
+      "app_name": "ligguf",
+      "repo_url": "https://github.com/matrixsmaster/ligguf",
+      "stars": 9,
+      "severity": "low",
+      "finding_title": "UBSan division-by-zero in GGUF parser when n_heads=0 (zero-day)",
+      "finding_summary": "matrixsmaster/ligguf @ master — malformed GGUF leaves n_heads=0; read_gguf divides at c/ligguf.c:263 (UBSan DoS). Zero-day from Iridium targeted research, JOB-9C48EC.",
+      "file_path": "c/ligguf.c",
+      "line_number": 263,
+      "scanner_name": "targeted-research",
+      "verification_status": "CONFIRMED_TARGET_SNIPPET",
+      "report": {
+        "title": "report.md // zero-day ligguf",
+        "file": "findings/ligguf/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.c // read_gguf",
+        "file": "findings/ligguf/poc.c",
+        "kind": "code"
+      }
+    },
+    {
       "id": "llama",
       "app_name": "llama.cpp",
       "repo_url": "https://github.com/ggml-org/llama.cpp",
