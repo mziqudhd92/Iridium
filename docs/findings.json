@@ -88,31 +88,14 @@
       "scanner_name": "hunter-verify",
       "verification_status": "VERIFIED",
       "report": {
-        "title": "SYSOP BRIEF // CVE-2025-48889",
-        "prompt": "iridium report --finding 15499",
-        "blocks": [
-          {"type": "banner", "text": "VERIFIED · GRADIO FILEDATA COPY"},
-          {"type": "kv", "k": "type", "v": "route-sink:gradio.flagging_copy:/gradio_api/run/predict"},
-          {"type": "kv", "k": "location", "v": "gradio/data_classes.py"},
-          {"type": "kv", "k": "cvss", "v": "5.3 MEDIUM  CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:L"},
-          {"type": "kv", "k": "status", "v": "verified"},
-          {"type": "p", "text": "Unauthenticated POST /gradio_api/run/predict can drive flagging / FileData.path into FileData._copy_to_dir → shutil.copy(self.path, dir) with no allowlist on absolute paths (gradio>=5.25.2,<5.31.0)."},
-          {"type": "p", "text": "Iridium isolated the sink from AST, synthesized a harness, and confirmed the copy of an attacker-controlled absolute path into the flagging directory under Docker isolation."},
-          {"type": "ok", "text": "sandbox proof accepted · ASan not required · submission board updated"}
-        ]
+        "title": "report.md // CVE-2025-48889",
+        "file": "findings/gradio/report.md",
+        "kind": "markdown"
       },
       "poc": {
-        "title": "SANDBOX TTY // poc.py",
-        "prompt": "iridium sandbox exec --job JOB-0ACEFB --poc poc.py",
-        "blocks": [
-          {"type": "cmd", "text": "iridium sandbox exec --job JOB-0ACEFB --poc poc.py"},
-          {"type": "out", "text": "[triage] FileData._copy_to_dir located in gradio/data_classes.py"},
-          {"type": "out", "text": "[harness] bind real sink · shutil.copy(self.path, dir) has no allowlist"},
-          {"type": "out", "text": "[execute] isolated Docker · drive absolute path outside flagging dest"},
-          {"type": "ok", "text": "IRIDIUM_PROOF_CREATED"},
-          {"type": "ok", "text": "IRIDIUM_GRADIO_CVE_2025_48889"},
-          {"type": "p", "text": "Proof is a sandbox transcript, not a downloadable exploit kit. The live harness stays on the private verification node."}
-        ]
+        "title": "poc.py // CVE-2025-48889",
+        "file": "findings/gradio/poc.py",
+        "kind": "code"
       }
     },
     {
@@ -143,31 +126,14 @@
       "scanner_name": "targeted-research",
       "verification_status": "VERIFIED",
       "report": {
-        "title": "SYSOP BRIEF // CVE-2026-34070",
-        "prompt": "iridium report --finding 15782",
-        "blocks": [
-          {"type": "banner", "text": "VERIFIED · LOAD_PROMPT PATH TRAVERSAL"},
-          {"type": "kv", "k": "type", "v": "ai.prompt.load_prompt"},
-          {"type": "kv", "k": "location", "v": "libs/core/langchain_core/prompts/loading.py:56"},
-          {"type": "kv", "k": "function", "v": "_load_template()"},
-          {"type": "kv", "k": "hit", "v": "template = template_path.read_text(encoding=\"utf-8\")"},
-          {"type": "kv", "k": "cvss", "v": "9.3 CRITICAL"},
-          {"type": "p", "text": "Configuration-driven prompt loaders treat attacker-controlled fields such as template_path as local files. Without resolve/commonpath guards they expose arbitrary files."},
-          {"type": "p", "text": "Hunter next step that Iridium executed: confirm Path.resolve / realpath + commonpath is missing before open/read, then prove the leak under isolation."},
-          {"type": "ok", "text": "verified · no commonpath/realpath on cited _load_template"}
-        ]
+        "title": "report.md // CVE-2026-34070",
+        "file": "findings/langchain/report.md",
+        "kind": "markdown"
       },
       "poc": {
-        "title": "SANDBOX TTY // poc.py",
-        "prompt": "iridium sandbox exec --job JOB-6D4253 --poc poc.py",
-        "blocks": [
-          {"type": "cmd", "text": "iridium sandbox exec --job JOB-6D4253 --poc poc.py"},
-          {"type": "out", "text": "[triage] rule ai.prompt.load_prompt · loading.py:56"},
-          {"type": "out", "text": "[harness] isolate _load_template · no commonpath / realpath guard"},
-          {"type": "out", "text": "[execute] config template_path → local secret file"},
-          {"type": "ok", "text": "PROOF OK: load_prompt path traversal read local file"},
-          {"type": "p", "text": "Proof is a sandbox transcript, not a downloadable exploit kit. The live harness stays on the private verification node."}
-        ]
+        "title": "poc.py // CVE-2026-34070",
+        "file": "findings/langchain/poc.py",
+        "kind": "code"
       }
     },
     {
@@ -183,30 +149,14 @@
       "scanner_name": "hunter-verify",
       "verification_status": "CONFIRMED_TARGET_SNIPPET",
       "report": {
-        "title": "SYSOP BRIEF // CVE-2026-5194",
-        "prompt": "iridium report --finding 15500",
-        "blocks": [
-          {"type": "banner", "text": "CONFIRMED · WC_SIGNATUREVERIFY BOUNDS"},
-          {"type": "kv", "k": "type", "v": "sink:wc_SignatureVerify"},
-          {"type": "kv", "k": "status", "v": "confirmed_target_snippet"},
-          {"type": "kv", "k": "cvss", "v": "8.7 HIGH  CVSS:4.0/AV:N/AC:L/AT:N/PR:N/UI:N/VC:H"},
-          {"type": "p", "text": "wc_SignatureVerifyHash accepts an undersized digest (hash_len=1) instead of rejecting truncated signature input. Iridium compiled a native harness against v5.9.0-stable and exercised the API under isolation."},
-          {"type": "warn", "text": "compiler note: timing resistance / harden options not enabled in the target build"},
-          {"type": "ok", "text": "target API called · proof file written in sandbox"}
-        ]
+        "title": "report.md // CVE-2026-5194",
+        "file": "findings/wolfssl/report.md",
+        "kind": "markdown"
       },
       "poc": {
-        "title": "SANDBOX TTY // poc.c",
-        "prompt": "iridium sandbox exec --job JOB-5E2B86 --poc poc.c --asan",
-        "blocks": [
-          {"type": "cmd", "text": "iridium sandbox exec --job JOB-5E2B86 --poc poc.c --asan"},
-          {"type": "out", "text": "[triage] sink wc_SignatureVerifyHash"},
-          {"type": "out", "text": "[harness] native C · hash_len=1 undersized digest"},
-          {"type": "out", "text": "[execute] isolated Docker · wolfssl v5.9.0-stable"},
-          {"type": "ok", "text": "IRIDIUM_TARGET_API_CALLED"},
-          {"type": "ok", "text": "IRIDIUM_PROOF_CREATED"},
-          {"type": "p", "text": "Proof is a sandbox transcript, not a downloadable exploit kit. The live harness stays on the private verification node."}
-        ]
+        "title": "poc.c // CVE-2026-5194",
+        "file": "findings/wolfssl/poc.c",
+        "kind": "code"
       }
     }
   ]
