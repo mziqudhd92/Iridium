@@ -93,6 +93,16 @@
       .join("");
   }
 
+  function stripReportSections(md) {
+    return String(md).replace(
+      /\n## Standalone Proof of Concept[^\n]*[\s\S]*?(?=\n## |\s*$)/i,
+      "",
+    ).replace(
+      /\n## AddressSanitizer Backtrace[^\n]*[\s\S]*?(?=\n## |\s*$)/i,
+      "",
+    ).trim();
+  }
+
   function renderMarkdown(md) {
     const parts = [];
     const re = /```[^\n]*\n([\s\S]*?)```/g;
@@ -141,7 +151,8 @@
 
     try {
       if (doc.file) {
-        const text = await loadFile(doc.file);
+        const raw = await loadFile(doc.file);
+        const text = doc.kind === "code" ? raw : stripReportSections(raw);
         const name = doc.file.split("/").pop();
         const command = doc.kind === "code" ? `cat ${name}` : `less ${name}`;
         const body = doc.kind === "code" ? renderCode(text) : renderMarkdown(text);
