@@ -126,6 +126,10 @@ schema/client-scan-payload-v1.json
 
 Repository: [github.com/mziqudhd92/Iridium](https://github.com/mziqudhd92/Iridium)
 
+## Versioning
+
+Release version is defined once in [`VERSION`](VERSION). Hatch reads that file for package metadata; runtime `__version__` / `CLIENT_VERSION` resolve from installed metadata (with a `VERSION` fallback in the source tree). Bump by editing `VERSION` only.
+
 ## API contract
 
 Stable paths under `{IRIDIUM_API_URL}/api/v1/client/*`:
