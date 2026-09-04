@@ -1,7 +1,7 @@
 {"version": 2, "width": 80, "height": 24, "timestamp": 1788074701, "env": {"SHELL": "/bin/bash", "TERM": "dumb"}, "title": "Iridium client demo"}
 [0.089046, "o", "\r\n$ pip install iridium-client\r\n"]
 [1.622917, "o", "Name: iridium-client\r\n"]
-[1.622965, "o", "Version: 0.5.0\r\n"]
+[1.622965, "o", "Version: 0.6.0\r\n"]
 [1.642399, "o", "\r\n$ uvx iridium-client demo\r\n"]
 [6.999913, "o", "Downloading pygments (1.2MiB)\r\n"]
 [7.086955, "o", "Downloading pydantic-core (1.8MiB)\r\n"]

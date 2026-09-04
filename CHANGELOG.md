@@ -4,6 +4,13 @@ All notable changes to the Iridium public OSS packages are documented here.
 
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.6.0] - 2026-09-04
+
+### Changed
+
+- Single source of truth for package versions: root `VERSION` file drives Hatch metadata and runtime `__version__`.
+- Release version bumped to `0.6.0` across `iridium-core`, `iridium-client`, and `iridium-mcp-server`.
+
 ## [0.5.0] - 2026-08-30
 
 ### Added
@@ -48,6 +55,7 @@ Phase 1 initial release — client-side scanning libraries and CLI.
 - MCP server is a skeleton — no stdio transport or tools yet.
 - SaaS API host defaults to placeholder `https://api.iridium.example.com`.
 
+[0.6.0]: https://github.com/mziqudhd92/Iridium/releases/tag/v0.6.0
 [0.5.0]: https://github.com/mziqudhd92/Iridium/releases/tag/v0.5.0
 [0.2.0]: https://github.com/mziqudhd92/Iridium/releases/tag/v0.2.0
 [0.1.0]: https://github.com/mziqudhd92/Iridium/releases/tag/v0.1.0

@@ -7,8 +7,10 @@ from typing import Any
 
 import httpx
 
+from iridium_mcp import __version__
+
 DEFAULT_API_URL = "https://api.iridium.example.com"
-CLIENT_VERSION = "0.5.0"
+CLIENT_VERSION = __version__
 REQUEST_TIMEOUT = 2.0
 
 _DEGRADED_VALIDATE = {

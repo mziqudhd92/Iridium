@@ -8,13 +8,14 @@ import time
 
 from mcp.server.mcpserver import MCPServer
 
+from iridium_mcp import __version__
 from iridium_mcp.indexer import start_background_index
 from iridium_mcp.tools.reachability_context import run_get_reachability_context
 from iridium_mcp.tools.refresh_workspace_graph import run_refresh_workspace_graph
 from iridium_mcp.tools.validate_dependency import run_validate_dependency_addition
 from iridium_mcp.workspace import append_audit, workspace_root
 
-mcp = MCPServer("iridium-mcp-server", version="0.5.0")
+mcp = MCPServer("iridium-mcp-server", version=__version__)
 
 
 def _start_parent_heartbeat() -> threading.Thread:

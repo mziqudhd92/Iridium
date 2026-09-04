@@ -8,8 +8,10 @@ from typing import Any
 
 import httpx
 
+from iridium_client import __version__
+
 DEFAULT_API_URL = "https://api.iridium.example.com"
-CLIENT_VERSION = "0.5.0"
+CLIENT_VERSION = __version__
 POLL_INTERVAL_SECONDS = 2.0
 MAX_POLL_SECONDS = 300.0
 REQUEST_TIMEOUT = 30.0
