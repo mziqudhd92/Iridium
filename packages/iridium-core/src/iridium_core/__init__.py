@@ -19,6 +19,6 @@ def _resolve_version() -> str:
 
 __version__ = _resolve_version()
 
-from iridium_core.workspace.indexer import WorkspaceIndexer  # noqa: E402
+from iridium_core.workspace.indexer import WorkspaceIndexer
 
 __all__ = ["WorkspaceIndexer"]
