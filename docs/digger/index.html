@@ -3,30 +3,151 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Iridium — A.I Cyber Reasoning System · Client Layer</title>
-  <meta name="description" content="Open-source Iridium client layer: local AST extraction, CLI scanning, MCP guardrails, and cloud reachability. pip install iridium-client." />
-  <meta name="theme-color" content="#050816" />
-  <meta property="og:title" content="Iridium — A.I Cyber Reasoning System" />
-  <meta property="og:description" content="Open-source client layer for the Iridium offensive research platform. Local AST/graph, CLI scan, MCP guardrails, cloud reachability." />
+  <title>Iridium — Digger Edition · A.I Cyber Reasoning System</title>
+  <meta name="description" content="Classic 1983 Digger CGA arcade edition of the open-source Iridium client layer: local AST extraction, CLI scanning, MCP guardrails, and cloud reachability." />
+  <meta name="theme-color" content="#000000" />
+  <meta property="og:title" content="Iridium — Digger Arcade Edition" />
+  <meta property="og:description" content="Open-source client layer for the Iridium offensive research platform in 1983 CGA Digger graphics and arcade style." />
   <meta property="og:type" content="website" />
   <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <a class="skip" href="#main">Skip to content</a>
-  <main id="main" class="wrap">
-    <section class="hero">
-      <div class="kicker">
-        <span class="pill">Iridium Client Layer</span>
-        <span class="pill live">Oss Online</span>
-        <span class="pill mute">Apache-2.0</span>
-        <a class="pill" href="https://github.com/mziqudhd92/Iridium" target="_blank" rel="noopener noreferrer">GitHub</a>
-        <a class="pill" href="digger/">🕹️ Digger Mode</a>
-      </div>
+  <!-- Inline SVG sprites for Digger, Emeralds, Gold Bags, Nobbins -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none;" shape-rendering="crispEdges">
+    <defs>
+      <symbol id="spr-digger" viewBox="0 0 16 16">
+        <rect x="3" y="1" width="8" height="2" fill="#ffff55"/>
+        <rect x="2" y="3" width="10" height="9" fill="#ffff55"/>
+        <rect x="7" y="3" width="4" height="4" fill="#ffffff"/>
+        <rect x="9" y="4" width="2" height="2" fill="#000000"/>
+        <rect x="8" y="7" width="6" height="4" fill="#000000"/>
+        <rect x="8" y="8" width="3" height="2" fill="#ff5555"/>
+        <rect x="13" y="6" width="3" height="2" fill="#ffffff"/>
+        <rect x="13" y="10" width="3" height="2" fill="#ffffff"/>
+        <rect x="1" y="12" width="13" height="3" fill="#55ffff"/>
+        <rect x="2" y="13" width="2" height="1" fill="#000000"/>
+        <rect x="6" y="13" width="2" height="1" fill="#000000"/>
+        <rect x="10" y="13" width="2" height="1" fill="#000000"/>
+      </symbol>
+      <symbol id="spr-emerald" viewBox="0 0 16 16">
+        <rect x="5" y="2" width="6" height="12" fill="#00aa00"/>
+        <rect x="3" y="4" width="10" height="8" fill="#55ff55"/>
+        <rect x="2" y="5" width="12" height="6" fill="#55ff55"/>
+        <rect x="3" y="7" width="10" height="4" fill="#00aa00"/>
+        <rect x="4" y="8" width="8" height="2" fill="#005500"/>
+        <rect x="4" y="4" width="3" height="2" fill="#ffffff"/>
+        <rect x="4" y="3" width="2" height="1" fill="#ffffff"/>
+        <rect x="9" y="4" width="2" height="1" fill="#55ffff"/>
+        <rect x="11" y="5" width="1" height="2" fill="#55ffff"/>
+        <rect x="5" y="11" width="6" height="2" fill="#003300"/>
+      </symbol>
+      <symbol id="spr-goldbag" viewBox="0 0 16 16">
+        <rect x="6" y="1" width="4" height="2" fill="#ffaa00"/>
+        <rect x="5" y="3" width="6" height="2" fill="#aa5500"/>
+        <rect x="3" y="5" width="10" height="9" fill="#ffff55"/>
+        <rect x="2" y="6" width="12" height="7" fill="#ffff55"/>
+        <rect x="3" y="13" width="10" height="2" fill="#aa5500"/>
+        <rect x="2" y="9" width="1" height="3" fill="#aa5500"/>
+        <rect x="13" y="9" width="1" height="3" fill="#aa5500"/>
+        <rect x="7" y="6" width="2" height="7" fill="#000000"/>
+        <rect x="6" y="7" width="4" height="1" fill="#000000"/>
+        <rect x="6" y="9" width="4" height="1" fill="#000000"/>
+        <rect x="6" y="11" width="4" height="1" fill="#000000"/>
+        <rect x="4" y="6" width="2" height="2" fill="#ffffff"/>
+      </symbol>
+      <symbol id="spr-nobbin" viewBox="0 0 16 16">
+        <rect x="4" y="2" width="8" height="11" fill="#ff5555"/>
+        <rect x="2" y="4" width="12" height="7" fill="#ff5555"/>
+        <rect x="3" y="3" width="10" height="9" fill="#ff5555"/>
+        <rect x="4" y="11" width="8" height="2" fill="#aa0000"/>
+        <rect x="4" y="5" width="3" height="4" fill="#ffffff"/>
+        <rect x="9" y="5" width="3" height="4" fill="#ffffff"/>
+        <rect x="5" y="6" width="2" height="2" fill="#000000"/>
+        <rect x="10" y="6" width="2" height="2" fill="#000000"/>
+        <rect x="3" y="13" width="3" height="2" fill="#ff5555"/>
+        <rect x="10" y="13" width="3" height="2" fill="#ff5555"/>
+      </symbol>
+      <symbol id="spr-cherry" viewBox="0 0 16 16">
+        <rect x="9" y="2" width="4" height="2" fill="#55ff55"/>
+        <rect x="8" y="4" width="2" height="3" fill="#00aa00"/>
+        <rect x="5" y="6" width="2" height="3" fill="#00aa00"/>
+        <rect x="11" y="6" width="2" height="3" fill="#00aa00"/>
+        <rect x="2" y="9" width="5" height="5" fill="#ff5555"/>
+        <rect x="3" y="8" width="3" height="7" fill="#ff5555"/>
+        <rect x="3" y="10" width="1" height="1" fill="#ffffff"/>
+        <rect x="3" y="13" width="3" height="1" fill="#aa0000"/>
+        <rect x="9" y="9" width="5" height="5" fill="#ff5555"/>
+        <rect x="10" y="8" width="3" height="7" fill="#ff5555"/>
+        <rect x="10" y="10" width="1" height="1" fill="#ffffff"/>
+        <rect x="10" y="13" width="3" height="1" fill="#aa0000"/>
+      </symbol>
+    </defs>
+  </svg>
 
+  <a class="skip" href="#main">SKIP TO CONTENT</a>
+
+  <!-- TOP DIGGER ARCADE HUD -->
+  <header class="arcade-hud" role="banner">
+    <div class="hud-inner">
+      <div class="hud-group">
+        <div class="hud-item">
+          <span class="hud-label blink">1UP</span>
+          <span class="hud-val cyan" id="hud-score">084620</span>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">HIGH</span>
+          <span class="hud-val yellow">999990</span>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">ROUND</span>
+          <span class="hud-val">06</span>
+        </div>
+      </div>
+      <div class="hud-group">
+        <div class="hud-item">
+          <span class="hud-label">GEMS</span>
+          <svg class="hud-icon"><use href="#spr-emerald"/></svg>
+          <span class="hud-val">×12</span>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">LIVES</span>
+          <div class="hud-lives">
+            <svg class="hud-icon"><use href="#spr-digger"/></svg>
+            <svg class="hud-icon"><use href="#spr-digger"/></svg>
+            <svg class="hud-icon"><use href="#spr-digger"/></svg>
+          </div>
+        </div>
+        <div class="hud-item">
+          <span class="hud-label">BONUS</span>
+          <svg class="hud-icon"><use href="#spr-cherry"/></svg>
+        </div>
+        <button id="sound-toggle" class="hud-btn" type="button" aria-label="Toggle retro sound effects">🔈 SFX: OFF</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    <!-- ARCADE MARQUEE BANNER -->
+    <div class="digger-marquee">
+      <div class="marquee-text">
+        <svg class="hud-icon"><use href="#spr-digger"/></svg>
+        <span>WINDMILL SOFTWARE 1983 × IRIDIUM OFFENSIVE REASONING 2026</span>
+        <svg class="hud-icon"><use href="#spr-goldbag"/></svg>
+      </div>
+    </div>
+
+    <!-- KICKER NAVIGATION -->
+    <div class="kicker">
+      <span class="pill">Iridium Client Layer</span>
+      <span class="pill live">Oss Online</span>
+      <span class="pill mute">Apache-2.0</span>
+      <a class="pill" href="https://github.com/mziqudhd92/Iridium" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <a class="pill digger-exit" href="../">← Classic View</a>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
       <div class="hero-grid">
         <div>
           <h1>A.I Cyber Reasoning System</h1>
@@ -108,6 +229,24 @@
       </div>
     </section>
 
+    <!-- ANIMATED DIGGER TUNNEL STRIP -->
+    <div class="digger-tunnel-track" aria-hidden="true">
+      <div class="tunnel-gems">
+        <svg class="gem-crumb"><use href="#spr-emerald"/></svg>
+        <svg class="gem-crumb"><use href="#spr-emerald"/></svg>
+        <svg class="gem-crumb"><use href="#spr-goldbag"/></svg>
+        <svg class="gem-crumb"><use href="#spr-emerald"/></svg>
+        <svg class="gem-crumb"><use href="#spr-nobbin"/></svg>
+        <svg class="gem-crumb"><use href="#spr-emerald"/></svg>
+        <svg class="gem-crumb"><use href="#spr-emerald"/></svg>
+        <svg class="gem-crumb"><use href="#spr-cherry"/></svg>
+      </div>
+      <div class="digger-cart-anim">
+        <svg width="24" height="24"><use href="#spr-digger"/></svg>
+      </div>
+    </div>
+
+    <!-- [04] SYSOP NOTICE -->
     <section class="panel" aria-labelledby="sysop">
       <div class="panel-head">
         <div>
@@ -116,7 +255,9 @@
         </div>
       </div>
       <div class="sysop">
-        <img src="assets/v32bis-modem.svg" width="220" height="150" alt="SupraFAXModem 14.4 V.32bis style illustration" />
+        <div class="sysop-screen">
+          <img src="../assets/v32bis-modem.svg" width="220" height="150" alt="SupraFAXModem 14.4 V.32bis style illustration" />
+        </div>
         <div>
           <p>
             Access to the Iridium Engine is capped at 14,400 bps (V.32bis standard).
@@ -133,6 +274,7 @@
       </div>
     </section>
 
+    <!-- PACKAGES / MODULES -->
     <section class="modules" aria-label="Packages">
       <article class="module">
         <div class="mono-label">01 / Core</div>
@@ -173,6 +315,7 @@
       </article>
     </section>
 
+    <!-- [02] QUICK START -->
     <section class="panel" aria-labelledby="quickstart">
       <div class="panel-head">
         <div>
@@ -197,7 +340,7 @@ uvx iridium-client demo
 iridium-client scan .
 
 # Local payload dump (zero network)
-iridium-client payload dump . --validate">Copy</button>
+iridium-client payload dump . --validate">COPY</button>
         <pre class="term"><span class="cmd">pip install iridium-client</span>
 
 <span class="cmt"># Zero-install demo (&lt;10s, no API key)</span>
@@ -213,6 +356,7 @@ iridium-client payload dump . --validate">Copy</button>
       </div>
     </section>
 
+    <!-- [03] ARCHITECTURE -->
     <section class="panel" aria-labelledby="architecture">
       <div class="panel-head">
         <div>
@@ -250,6 +394,7 @@ iridium-client payload dump . --validate">Copy</button>
       </div>
     </section>
 
+    <!-- [05] BBS HALL OF FAME -->
     <section class="panel hall-of-fame" aria-labelledby="hall">
       <div class="panel-head">
         <div>
@@ -271,7 +416,7 @@ iridium-client payload dump . --validate">Copy</button>
           </thead>
           <tbody data-findings-rows>
             <tr>
-              <td class="board-empty" colspan="5">Loading website findings board…</td>
+              <td class="board-empty" colspan="5">LOADING ARCADE FINDINGS BOARD…</td>
             </tr>
           </tbody>
         </table>
@@ -285,51 +430,23 @@ iridium-client payload dump . --validate">Copy</button>
         ·
         <a href="https://github.com/mziqudhd92/Iridium/blob/main/SECURITY.md">SECURITY.md</a>
         ·
-        <a href="digger/">🕹️ Digger Mode</a>
+        <a href="../">Classic View</a>
       </span>
     </footer>
   </main>
+
+  <!-- CRT TERMINAL MODAL -->
   <div id="term-modal" class="modal" hidden>
     <div class="crt" role="dialog" aria-modal="true" aria-labelledby="crt-title">
       <div class="crt-bar">
-        <span class="crt-dots" aria-hidden="true"><i></i><i></i><i></i></span>
-        <span id="crt-title" class="crt-title" data-crt-title>SYSOP TTY</span>
+        <span id="crt-title" class="crt-title" data-crt-title>DIGGER TTY // 1983 IBM-PC</span>
         <button type="button" class="crt-x" data-crt-close aria-label="Close terminal">×</button>
       </div>
       <div class="crt-screen" data-crt-screen></div>
     </div>
   </div>
-  <script>
-    async function copyText(text) {
-      try {
-        await navigator.clipboard.writeText(text);
-        return true;
-      } catch {
-        const ta = document.createElement("textarea");
-        ta.value = text;
-        ta.setAttribute("readonly", "");
-        ta.style.position = "fixed";
-        ta.style.left = "-9999px";
-        document.body.appendChild(ta);
-        ta.select();
-        try {
-          return document.execCommand("copy");
-        } finally {
-          ta.remove();
-        }
-      }
-    }
 
-    document.querySelectorAll(".copy").forEach((btn) => {
-      btn.addEventListener("click", async () => {
-        const raw = btn.getAttribute("data-copy") || "";
-        const text = raw.replaceAll("&lt;", "<").replaceAll("&gt;", ">");
-        const ok = await copyText(text);
-        btn.textContent = ok ? "Copied" : "Failed";
-        setTimeout(() => { btn.textContent = "Copy"; }, 1600);
-      });
-    });
-  </script>
+  <script src="audio.js"></script>
   <script src="board.js"></script>
 </body>
 </html>

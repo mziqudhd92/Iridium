@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none;" shape-rendering="crispEdges">
+  <defs>
+    <!-- 1. Digger (16x16) -->
+    <symbol id="spr-digger" viewBox="0 0 16 16">
+      <rect x="3" y="1" width="8" height="2" fill="#ffff55"/>
+      <rect x="2" y="3" width="10" height="9" fill="#ffff55"/>
+      <!-- Eye -->
+      <rect x="7" y="3" width="4" height="4" fill="#ffffff"/>
+      <rect x="9" y="4" width="2" height="2" fill="#000000"/>
+      <!-- Mouth cavity -->
+      <rect x="8" y="7" width="6" height="4" fill="#000000"/>
+      <!-- Tongue / throat -->
+      <rect x="8" y="8" width="3" height="2" fill="#ff5555"/>
+      <!-- Upper & lower shovel scoops -->
+      <rect x="13" y="6" width="3" height="2" fill="#ffffff"/>
+      <rect x="13" y="10" width="3" height="2" fill="#ffffff"/>
+      <!-- Cyan treads / wheels -->
+      <rect x="1" y="12" width="13" height="3" fill="#55ffff"/>
+      <rect x="2" y="13" width="2" height="1" fill="#000000"/>
+      <rect x="6" y="13" width="2" height="1" fill="#000000"/>
+      <rect x="10" y="13" width="2" height="1" fill="#000000"/>
+    </symbol>
+
+    <!-- 2. Digger Chomp (16x16) -->
+    <symbol id="spr-digger-chomp" viewBox="0 0 16 16">
+      <rect x="3" y="1" width="8" height="2" fill="#ffff55"/>
+      <rect x="2" y="3" width="9" height="9" fill="#ffff55"/>
+      <!-- Eye -->
+      <rect x="6" y="3" width="4" height="4" fill="#ffffff"/>
+      <rect x="8" y="4" width="2" height="2" fill="#000000"/>
+      <!-- Wide open mouth -->
+      <rect x="7" y="6" width="8" height="6" fill="#000000"/>
+      <rect x="7" y="8" width="4" height="2" fill="#ff5555"/>
+      <rect x="13" y="4" width="3" height="2" fill="#ffffff"/>
+      <rect x="13" y="11" width="3" height="2" fill="#ffffff"/>
+      <!-- Cyan treads -->
+      <rect x="1" y="12" width="13" height="3" fill="#55ffff"/>
+      <rect x="2" y="13" width="2" height="1" fill="#000000"/>
+      <rect x="6" y="13" width="2" height="1" fill="#000000"/>
+      <rect x="10" y="13" width="2" height="1" fill="#000000"/>
+    </symbol>
+
+    <!-- 3. Emerald Gem (16x16) -->
+    <symbol id="spr-emerald" viewBox="0 0 16 16">
+      <!-- Gem body -->
+      <rect x="5" y="2" width="6" height="12" fill="#00aa00"/>
+      <rect x="3" y="4" width="10" height="8" fill="#55ff55"/>
+      <rect x="2" y="5" width="12" height="6" fill="#55ff55"/>
+      <!-- Facet shading -->
+      <rect x="3" y="7" width="10" height="4" fill="#00aa00"/>
+      <rect x="4" y="8" width="8" height="2" fill="#005500"/>
+      <!-- Bright highlights -->
+      <rect x="4" y="4" width="3" height="2" fill="#ffffff"/>
+      <rect x="4" y="3" width="2" height="1" fill="#ffffff"/>
+      <rect x="9" y="4" width="2" height="1" fill="#55ffff"/>
+      <rect x="11" y="5" width="1" height="2" fill="#55ffff"/>
+      <rect x="5" y="11" width="6" height="2" fill="#003300"/>
+    </symbol>
+
+    <!-- 4. Gold Bag (16x16) -->
+    <symbol id="spr-goldbag" viewBox="0 0 16 16">
+      <!-- Tied top ribbon -->
+      <rect x="6" y="1" width="4" height="2" fill="#ffaa00"/>
+      <rect x="5" y="3" width="6" height="2" fill="#aa5500"/>
+      <!-- Bulging Sack body -->
+      <rect x="3" y="5" width="10" height="9" fill="#ffff55"/>
+      <rect x="2" y="6" width="12" height="7" fill="#ffff55"/>
+      <!-- Sack bottom & fold shading -->
+      <rect x="3" y="13" width="10" height="2" fill="#aa5500"/>
+      <rect x="2" y="9" width="1" height="3" fill="#aa5500"/>
+      <rect x="13" y="9" width="1" height="3" fill="#aa5500"/>
+      <!-- Dollar sign [$] -->
+      <rect x="7" y="6" width="2" height="7" fill="#000000"/>
+      <rect x="6" y="7" width="4" height="1" fill="#000000"/>
+      <rect x="6" y="9" width="4" height="1" fill="#000000"/>
+      <rect x="6" y="11" width="4" height="1" fill="#000000"/>
+      <!-- Highlight -->
+      <rect x="4" y="6" width="2" height="2" fill="#ffffff"/>
+    </symbol>
+
+    <!-- 5. Nobbin (16x16) -->
+    <symbol id="spr-nobbin" viewBox="0 0 16 16">
+      <!-- Round red body -->
+      <rect x="4" y="2" width="8" height="11" fill="#ff5555"/>
+      <rect x="2" y="4" width="12" height="7" fill="#ff5555"/>
+      <rect x="3" y="3" width="10" height="9" fill="#ff5555"/>
+      <!-- Shading -->
+      <rect x="4" y="11" width="8" height="2" fill="#aa0000"/>
+      <!-- Eyes -->
+      <rect x="4" y="5" width="3" height="4" fill="#ffffff"/>
+      <rect x="9" y="5" width="3" height="4" fill="#ffffff"/>
+      <rect x="5" y="6" width="2" height="2" fill="#000000"/>
+      <rect x="10" y="6" width="2" height="2" fill="#000000"/>
+      <!-- Feet -->
+      <rect x="3" y="13" width="3" height="2" fill="#ff5555"/>
+      <rect x="10" y="13" width="3" height="2" fill="#ff5555"/>
+    </symbol>
+
+    <!-- 6. Hobbin (16x16) -->
+    <symbol id="spr-hobbin" viewBox="0 0 16 16">
+      <!-- Angry digging beast -->
+      <rect x="3" y="1" width="10" height="12" fill="#00aa00"/>
+      <rect x="2" y="3" width="12" height="8" fill="#55ff55"/>
+      <!-- Horns / spikes -->
+      <rect x="2" y="1" width="2" height="2" fill="#ff5555"/>
+      <rect x="12" y="1" width="2" height="2" fill="#ff5555"/>
+      <!-- Fierce glowing eyes -->
+      <rect x="4" y="4" width="3" height="3" fill="#ffffff"/>
+      <rect x="9" y="4" width="3" height="3" fill="#ffffff"/>
+      <rect x="5" y="4" width="2" height="2" fill="#ff5555"/>
+      <rect x="10" y="4" width="2" height="2" fill="#ff5555"/>
+      <!-- Snarl mouth with teeth -->
+      <rect x="4" y="8" width="8" height="4" fill="#000000"/>
+      <rect x="5" y="8" width="2" height="2" fill="#ffffff"/>
+      <rect x="9" y="8" width="2" height="2" fill="#ffffff"/>
+      <rect x="7" y="10" width="2" height="2" fill="#ffffff"/>
+      <!-- Digging claws -->
+      <rect x="1" y="12" width="4" height="3" fill="#ffaa00"/>
+      <rect x="11" y="12" width="4" height="3" fill="#ffaa00"/>
+    </symbol>
+
+    <!-- 7. Cherry Bonus (16x16) -->
+    <symbol id="spr-cherry" viewBox="0 0 16 16">
+      <!-- Stem and green leaf -->
+      <rect x="9" y="2" width="4" height="2" fill="#55ff55"/>
+      <rect x="8" y="4" width="2" height="3" fill="#00aa00"/>
+      <rect x="5" y="6" width="2" height="3" fill="#00aa00"/>
+      <rect x="11" y="6" width="2" height="3" fill="#00aa00"/>
+      <!-- Left Cherry -->
+      <rect x="2" y="9" width="5" height="5" fill="#ff5555"/>
+      <rect x="3" y="8" width="3" height="7" fill="#ff5555"/>
+      <rect x="3" y="10" width="1" height="1" fill="#ffffff"/>
+      <rect x="3" y="13" width="3" height="1" fill="#aa0000"/>
+      <!-- Right Cherry -->
+      <rect x="9" y="9" width="5" height="5" fill="#ff5555"/>
+      <rect x="10" y="8" width="3" height="7" fill="#ff5555"/>
+      <rect x="10" y="10" width="1" height="1" fill="#ffffff"/>
+      <rect x="10" y="13" width="3" height="1" fill="#aa0000"/>
+    </symbol>
+
+    <!-- 8. Bones / RIP (16x16) -->
+    <symbol id="spr-grave" viewBox="0 0 16 16">
+      <rect x="4" y="2" width="8" height="11" fill="#aaaaaa"/>
+      <rect x="5" y="1" width="6" height="1" fill="#aaaaaa"/>
+      <rect x="7" y="4" width="2" height="5" fill="#000000"/>
+      <rect x="5" y="5" width="6" height="2" fill="#000000"/>
+      <rect x="2" y="13" width="12" height="3" fill="#555555"/>
+    </symbol>
+  </defs>
+</svg>
