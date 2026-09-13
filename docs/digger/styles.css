@@ -959,6 +959,41 @@ img {
   white-space: nowrap;
 }
 
+.board-poc-row {
+  margin-top: 8px;
+}
+
+.board-poc-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--cga-cyan);
+  font-size: 8px;
+  text-decoration: none;
+  border: 1px dotted var(--cga-cyan);
+  padding: 4px 8px;
+  cursor: pointer;
+  background: var(--cga-black);
+  user-select: none;
+  transition: all 0.05s ease;
+}
+.board-poc-link code {
+  color: var(--cga-magenta);
+}
+.board-poc-link:hover {
+  background: var(--cga-cyan);
+  color: var(--cga-black);
+  border-style: solid;
+}
+.board-poc-link:hover code {
+  color: var(--cga-black);
+}
+
+.board-na {
+  color: var(--cga-magenta);
+  font-size: 10px;
+}
+
 .board-empty {
   text-align: center;
   padding: 32px;

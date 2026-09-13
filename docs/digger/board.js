@@ -195,11 +195,11 @@
 
   function actionButton(kind, entry) {
     if (kind === "report") {
-      if (!entry.report) return "";
-      return `<button type="button" class="btn board-btn btn-report" data-open="report" data-id="${esc(entry.id)}"><span class="btn-icon">📜</span> VIEW REPORT</button>`;
+      if (!entry.report) return `<span class="board-na">—</span>`;
+      return `<a href="#" class="btn board-btn btn-report" data-open="report" data-id="${esc(entry.id)}" role="button"><span class="btn-icon">📜</span> VIEW REPORT</a>`;
     }
-    if (!entry.poc) return "";
-    return `<button type="button" class="btn ghost board-btn btn-poc" data-open="poc" data-id="${esc(entry.id)}"><span class="btn-icon">⛏️</span> GET POC</button>`;
+    if (!entry.poc) return `<span class="board-na">—</span>`;
+    return `<a href="#" class="btn ghost board-btn btn-poc" data-open="poc" data-id="${esc(entry.id)}" role="button"><span class="btn-icon">⛏️</span> GET POC</a>`;
   }
 
   function renderSevBadge(sev) {
@@ -230,6 +230,14 @@
   }
 
   function renderRow(entry, idx) {
+    const pocFileName = entry.poc && entry.poc.file ? entry.poc.file.split("/").pop() : "";
+    const pocLinkHtml = entry.poc ? `
+      <div class="board-poc-row">
+        <a href="#" class="board-poc-link" data-open="poc" data-id="${esc(entry.id)}" title="View Proof of Concept">
+          <span>⛏️</span> PROOF OF CONCEPT: <code>${esc(pocFileName)}</code>
+        </a>
+      </div>` : "";
+
     return `<tr>
       <td>
         <div class="board-app-row">
@@ -246,6 +254,7 @@
         ${renderSevBadge(entry.severity)}
         <div class="board-meta">${esc(loc(entry))} · ${esc(entry.scanner_name)}</div>
         <p class="board-sum">${esc(entry.finding_summary)}</p>
+        ${pocLinkHtml}
       </td>
       <td>${actionButton("report", entry)}</td>
       <td>${actionButton("poc", entry)}</td>
@@ -270,7 +279,8 @@
       const entries = Array.isArray(payload.entries) ? payload.entries : [];
       tbody.innerHTML = entries.map((entry, idx) => renderRow(entry, idx)).join("");
       tbody.querySelectorAll("[data-open]").forEach((btn) => {
-        btn.addEventListener("click", () => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
           if (window.DiggerAudio) window.DiggerAudio.playBlip();
           const entry = entries.find((item) => item.id === btn.getAttribute("data-id"));
           const kind = btn.getAttribute("data-open");
