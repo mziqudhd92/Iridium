@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none;" shape-rendering="crispEdges">
+  <defs>
+    <!-- Strict CGA Mode 4 Palette 1: #000000, #ffffff, #55ffff, #ff55ff -->
+
+    <!-- 1. Digger (16x16) -->
+    <symbol id="spr-digger" viewBox="0 0 16 16">
+      <rect x="3" y="1" width="8" height="2" fill="#55ffff"/>
+      <rect x="2" y="3" width="10" height="9" fill="#55ffff"/>
+      <!-- Eye -->
+      <rect x="7" y="3" width="4" height="4" fill="#ffffff"/>
+      <rect x="9" y="4" width="2" height="2" fill="#000000"/>
+      <!-- Mouth cavity -->
+      <rect x="8" y="7" width="6" height="4" fill="#000000"/>
+      <!-- Tongue / throat -->
+      <rect x="8" y="8" width="3" height="2" fill="#ff55ff"/>
+      <!-- Upper & lower shovel scoops -->
+      <rect x="13" y="6" width="3" height="2" fill="#ffffff"/>
+      <rect x="13" y="10" width="3" height="2" fill="#ffffff"/>
+      <!-- Treads / wheels -->
+      <rect x="1" y="12" width="13" height="3" fill="#ffffff"/>
+      <rect x="2" y="13" width="2" height="1" fill="#000000"/>
+      <rect x="6" y="13" width="2" height="1" fill="#000000"/>
+      <rect x="10" y="13" width="2" height="1" fill="#000000"/>
+    </symbol>
+
+    <!-- 2. Emerald Gem (16x16) -->
+    <symbol id="spr-emerald" viewBox="0 0 16 16">
+      <rect x="5" y="2" width="6" height="12" fill="#55ffff"/>
+      <rect x="3" y="4" width="10" height="8" fill="#55ffff"/>
+      <rect x="2" y="5" width="12" height="6" fill="#55ffff"/>
+      <!-- Facet line -->
+      <rect x="3" y="7" width="10" height="3" fill="#000000"/>
+      <!-- Bright highlights -->
+      <rect x="4" y="4" width="3" height="2" fill="#ffffff"/>
+      <rect x="4" y="3" width="2" height="1" fill="#ffffff"/>
+      <rect x="9" y="4" width="3" height="1" fill="#ffffff"/>
+      <rect x="5" y="11" width="6" height="2" fill="#000000"/>
+    </symbol>
+
+    <!-- 3. Gold Bag (16x16) -->
+    <symbol id="spr-goldbag" viewBox="0 0 16 16">
+      <!-- Tied top ribbon -->
+      <rect x="6" y="1" width="4" height="2" fill="#55ffff"/>
+      <rect x="5" y="3" width="6" height="2" fill="#55ffff"/>
+      <!-- Bulging Sack body -->
+      <rect x="3" y="5" width="10" height="9" fill="#ff55ff"/>
+      <rect x="2" y="6" width="12" height="7" fill="#ff55ff"/>
+      <!-- Shading border -->
+      <rect x="3" y="13" width="10" height="2" fill="#000000"/>
+      <!-- Dollar sign [$] -->
+      <rect x="7" y="6" width="2" height="7" fill="#ffffff"/>
+      <rect x="6" y="7" width="4" height="1" fill="#ffffff"/>
+      <rect x="6" y="9" width="4" height="1" fill="#ffffff"/>
+      <rect x="6" y="11" width="4" height="1" fill="#ffffff"/>
+      <!-- Highlight -->
+      <rect x="4" y="6" width="2" height="2" fill="#ffffff"/>
+    </symbol>
+
+    <!-- 4. Nobbin (16x16) -->
+    <symbol id="spr-nobbin" viewBox="0 0 16 16">
+      <rect x="4" y="2" width="8" height="11" fill="#ff55ff"/>
+      <rect x="2" y="4" width="12" height="7" fill="#ff55ff"/>
+      <rect x="3" y="3" width="10" height="9" fill="#ff55ff"/>
+      <!-- Eyes -->
+      <rect x="4" y="5" width="3" height="4" fill="#ffffff"/>
+      <rect x="9" y="5" width="3" height="4" fill="#ffffff"/>
+      <rect x="5" y="6" width="2" height="2" fill="#000000"/>
+      <rect x="10" y="6" width="2" height="2" fill="#000000"/>
+      <!-- Feet -->
+      <rect x="3" y="13" width="3" height="2" fill="#55ffff"/>
+      <rect x="10" y="13" width="3" height="2" fill="#55ffff"/>
+    </symbol>
+
+    <!-- 5. Cherry Bonus (16x16) -->
+    <symbol id="spr-cherry" viewBox="0 0 16 16">
+      <!-- Stems -->
+      <rect x="9" y="2" width="4" height="2" fill="#55ffff"/>
+      <rect x="8" y="4" width="2" height="3" fill="#55ffff"/>
+      <rect x="5" y="6" width="2" height="3" fill="#55ffff"/>
+      <rect x="11" y="6" width="2" height="3" fill="#55ffff"/>
+      <!-- Cherries -->
+      <rect x="2" y="9" width="5" height="5" fill="#ff55ff"/>
+      <rect x="3" y="8" width="3" height="7" fill="#ff55ff"/>
+      <rect x="3" y="10" width="1" height="1" fill="#ffffff"/>
+      <rect x="9" y="9" width="5" height="5" fill="#ff55ff"/>
+      <rect x="10" y="8" width="3" height="7" fill="#ff55ff"/>
+      <rect x="10" y="10" width="1" height="1" fill="#ffffff"/>
+    </symbol>
+  </defs>
+</svg>
