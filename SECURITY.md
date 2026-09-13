@@ -35,7 +35,9 @@ Graph payloads are zero-knowledge regardless of analytics setting.
 
 | Version | Supported |
 | --- | --- |
-| 0.1.x | ✅ Active development |
+| 0.6.x | ✅ Active development |
+| 0.5.x | ❌ Unsupported |
+| 0.1.x | ❌ Unsupported |
 
 ## API authentication
 

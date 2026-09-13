@@ -1,6 +1,6 @@
 [project]
 name = "iridium-mcp-server"
-version = "0.5.0"
+dynamic = ["version"]
 description = "Iridium MCP server for AI agent security guardrails"
 readme = "README.md"
 license = { text = "Apache-2.0" }
@@ -8,7 +8,7 @@ requires-python = ">=3.11"
 authors = [{ name = "Iridium Contributors" }]
 dependencies = [
     "httpx>=0.28.1",
-    "iridium-core==0.5.0",
+    "iridium-core",
     "mcp>=2.1.1",
 ]
 
@@ -23,6 +23,10 @@ Documentation = "https://github.com/mziqudhd92/Iridium#readme"
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"
+
+[tool.hatch.version]
+path = "../../VERSION"
+pattern = "(?P<version>\\S+)"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/iridium_mcp"]
