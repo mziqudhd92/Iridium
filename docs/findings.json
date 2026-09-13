@@ -1,7 +1,76 @@
 {
-  "generated_at": "2026-08-31",
+  "generated_at": "2026-09-13",
   "source": "iridium verified board · out-of-box discovery path",
   "entries": [
+    {
+      "id": "frontend-admin",
+      "app_name": "Frontend Admin",
+      "repo_url": "https://wordpress.org/plugins/acf-frontend-form-element/",
+      "stars": 9000,
+      "severity": "critical",
+      "finding_title": "Unauthenticated _acf_objects user_1 account takeover (CVE-2026-75816)",
+      "finding_summary": "acf-frontend-form-element <= 3.29.12 — encrypted _acf_objects with post=user_1 skips current_user_can(edit_post); unauth form_submit overwrites administrator login (finding 63518, JOB-8B1ABB).",
+      "file_path": "main/frontend/forms/actions/post.php",
+      "line_number": 0,
+      "scanner_name": "wp.auth.numeric_cap_bypass",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-75816",
+        "file": "findings/frontend-admin/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-75816",
+        "file": "findings/frontend-admin/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "really-simple-ssl-rce",
+      "app_name": "Really Simple Security",
+      "repo_url": "https://wordpress.org/plugins/really-simple-ssl/",
+      "stars": 3000000,
+      "severity": "critical",
+      "finding_title": "Plugin_Upgrader custom-role plugin ZIP install RCE (CVE-2026-81766)",
+      "finding_summary": "really-simple-ssl @ 9.1.1.1 — rsp_upgrade_install_plugin installs attacker download_link ZIP via Plugin_Upgrader without install_plugins (finding 63511, JOB-EAE9E9).",
+      "file_path": "upgrade/upgrade-to-pro.php",
+      "line_number": 657,
+      "scanner_name": "wp.fs.plugin_install_url",
+      "verification_status": "SUBMISSION_READY",
+      "report": {
+        "title": "report.md // CVE-2026-81766",
+        "file": "findings/really-simple-ssl-rce/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-81766",
+        "file": "findings/really-simple-ssl-rce/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "really-simple-ssl-2fa",
+      "app_name": "Really Simple Security",
+      "repo_url": "https://wordpress.org/plugins/really-simple-ssl/",
+      "stars": 3000000,
+      "severity": "critical",
+      "finding_title": "Unauth REST 2FA skip_onboarding auth bypass (CVE-2024-10924)",
+      "finding_summary": "really-simple-ssl @ 9.1.1.1 — POST /wp-json/reallysimplessl/v1/two_fa/skip_onboarding ignores login-nonce failure and issues wp_set_auth_cookie (finding 26431, JOB-89A956).",
+      "file_path": "security/wordpress/two-fa/class-rsssl-two-factor-on-board-api.php",
+      "line_number": 453,
+      "scanner_name": "wp.auth.2fa_bypass",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2024-10924",
+        "file": "findings/really-simple-ssl-2fa/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2024-10924",
+        "file": "findings/really-simple-ssl-2fa/poc.sh",
+        "kind": "code"
+      }
+    },
     {
       "id": "ligguf",
       "app_name": "ligguf",
