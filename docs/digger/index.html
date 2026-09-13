@@ -95,25 +95,6 @@
   <a class="skip" href="#main">SKIP TO CONTENT</a>
 
   <main id="main" class="wrap">
-    <!-- ARCADE HEADER / STATUS BAR -->
-    <header class="digger-header" role="banner">
-      <div class="header-inner">
-        <div class="header-score-item">
-          <span class="arcade-blink">1UP</span>
-          <span class="header-num">084620</span>
-        </div>
-        <div class="header-score-item">
-          <span class="header-label">HIGH</span>
-          <span class="header-num">999990</span>
-        </div>
-        <div class="header-title">
-          <svg class="hud-icon"><use href="#spr-digger"/></svg>
-          <span>DIGGER CGA MODE 4 (1983)</span>
-          <svg class="hud-icon"><use href="#spr-goldbag"/></svg>
-        </div>
-      </div>
-    </header>
-
     <!-- KICKER NAVIGATION -->
     <div class="kicker">
       <span class="pill">Iridium Client Layer</span>
@@ -225,39 +206,32 @@
       </div>
     </div>
 
-    <!-- [04] SYSOP NOTICE -->
-    <section class="panel" aria-labelledby="sysop">
+    <!-- [05] BBS HALL OF FAME -->
+    <section class="panel hall-of-fame" aria-labelledby="hall">
       <div class="panel-head">
         <div>
-          <div class="mono-label">[04] SysOp Notice</div>
-          <h2 id="sysop">V.32bis standard · 14,400 bps <span class="terminal-cursor arcade-blink">█</span></h2>
+          <div class="mono-label">[05] BBS Hall Of Fame</div>
+          <h2 id="hall">out of box discovery / self-learning path</h2>
+          <p>verified findings / training path · report links only when a .md briefing exists</p>
         </div>
       </div>
-      <div class="sysop">
-        <div class="sysop-screen">
-          <pre class="modem-ascii" aria-label="SupraFAXModem 14.4 V.32bis ASCII Art">
-  .-------------------------------------.
- /  [==] SUPRA FAXMODEM 14.4 V.32BIS   /|
-+-------------------------------------+ |
-|  (o) (o) (o) (o) (o) (o) (o) (o)   | |
-|  RD  TD  CD  AA  HS  SD  TR  MR   | |
-|  =================================  |/
-'-------------------------------------'</pre>
-          <img class="pixel-modem" src="../assets/v32bis-modem.svg" width="220" height="150" alt="SupraFAXModem 14.4 V.32bis style illustration" />
-        </div>
-        <div>
-          <p>
-            Access to the Iridium Engine is capped at 14,400 bps (V.32bis standard).
-            V.42bis compression enabled for hardware acceleration.<span class="terminal-cursor arcade-blink">_</span>
-          </p>
-          <pre class="nfo" aria-hidden="true">  ██╗██████╗ ██╗██████╗ ██╗██╗   ██╗███╗   ███╗
-  ██║██╔══██╗██║██╔══██╗██║██║   ██║████╗ ████║
-  ██║██████╔╝██║██║  ██║██║██║   ██║██╔████╔██║
-  ██║██╔══██╗██║██║  ██║██║██║   ██║██║╚██╔╝██║
-  ██║██║  ██║██║██████╔╝██║╚██████╔╝██║ ╚═╝ ██║
-  ╚═╝╚═╝  ╚═╝╚═╝╚═════╝ ╚═╝ ╚═════╝ ╚═╝     ╚═╝
-  local AST/graph  ·  CLI scan  ·  MCP guardrails  ·  cloud reachability</pre>
-        </div>
+      <div class="board-wrap" data-findings-board>
+        <table class="board">
+          <thead>
+            <tr>
+              <th>App Name</th>
+              <th>Amount Of Stars</th>
+              <th>Finding</th>
+              <th>Report</th>
+              <th>PoC</th>
+            </tr>
+          </thead>
+          <tbody data-findings-rows>
+            <tr>
+              <td class="board-empty" colspan="5"><span class="arcade-blink">LOADING ARCADE FINDINGS...</span></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </section>
 
@@ -378,35 +352,6 @@ iridium-client payload dump . --validate">COPY</button>
           <strong>Iridium SaaS API</strong>
           <p>Reachability analysis. Poll findings with GET /api/v1/client/scan/{scan_id}.</p>
         </div>
-      </div>
-    </section>
-
-    <!-- [05] BBS HALL OF FAME -->
-    <section class="panel hall-of-fame" aria-labelledby="hall">
-      <div class="panel-head">
-        <div>
-          <div class="mono-label">[05] BBS Hall Of Fame</div>
-          <h2 id="hall">out of box discovery / self-learning path</h2>
-          <p>verified findings / training path · report links only when a .md briefing exists</p>
-        </div>
-      </div>
-      <div class="board-wrap" data-findings-board>
-        <table class="board">
-          <thead>
-            <tr>
-              <th>App Name</th>
-              <th>Amount Of Stars</th>
-              <th>Finding</th>
-              <th>Report</th>
-              <th>PoC</th>
-            </tr>
-          </thead>
-          <tbody data-findings-rows>
-            <tr>
-              <td class="board-empty" colspan="5"><span class="arcade-blink">LOADING ARCADE FINDINGS...</span></td>
-            </tr>
-          </tbody>
-        </table>
       </div>
     </section>
 
