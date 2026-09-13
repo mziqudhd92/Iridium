@@ -47,7 +47,7 @@
   }
 
   function cursorLine() {
-    return `<div class="crt-line"><span class="crt-cursor" aria-hidden="true"></span></div>`;
+    return `<div class="crt-line"><span class="crt-cursor arcade-blink" aria-hidden="true">█</span></div>`;
   }
 
   function renderCode(src) {
@@ -157,7 +157,7 @@
   async function openTerminal(doc) {
     lastFocus = document.activeElement;
     titleEl.textContent = doc.title || "DIGGER TTY // 1983 IBM-PC";
-    screenEl.innerHTML = `<div class="crt-line crt-dim">READING SECTOR DISK…</div>`;
+    screenEl.innerHTML = `<div class="crt-line crt-dim"><span class="arcade-blink">READING SECTOR DISK…</span></div>`;
     modal.hidden = false;
     document.body.classList.add("modal-open");
     const closeBtn = modal.querySelector("[data-crt-close]");
@@ -278,7 +278,7 @@
         });
       });
     } catch (err) {
-      tbody.innerHTML = `<tr><td colspan="5" class="board-empty">UNABLE TO LOAD FINDINGS TABLE. ${esc(err.message || err)}</td></tr>`;
+      tbody.innerHTML = `<tr><td colspan="5" class="board-empty"><span class="arcade-blink">UNABLE TO LOAD FINDINGS TABLE.</span> ${esc(err.message || err)}</td></tr>`;
     }
   }
 
