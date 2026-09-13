@@ -219,10 +219,23 @@
     return `<div class="board-sev ${badgeClass}"><span class="sev-icon">${icon}</span> ${esc(sev)}</div>`;
   }
 
-  function renderRow(entry) {
+  function renderRankBadge(idx) {
+    const rank = idx + 1;
+    let rankClass = "rank-other";
+    let icon = "⛏️";
+    if (rank === 1) { rankClass = "rank-1st"; icon = "👑"; }
+    else if (rank === 2) { rankClass = "rank-2nd"; icon = "🥈"; }
+    else if (rank === 3) { rankClass = "rank-3rd"; icon = "🥉"; }
+    return `<span class="board-rank ${rankClass}"><span class="rank-ico">${icon}</span> #${String(rank).padStart(2, "0")}</span>`;
+  }
+
+  function renderRow(entry, idx) {
     return `<tr>
       <td>
-        <div class="board-app">${esc(entry.app_name)}</div>
+        <div class="board-app-row">
+          ${renderRankBadge(idx)}
+          <span class="board-app">${esc(entry.app_name)}</span>
+        </div>
         <div class="board-repo">${repoCell(entry)}</div>
       </td>
       <td class="board-stars">
@@ -255,9 +268,10 @@
       }
       if (!payload) throw new Error("Could not load findings.json");
       const entries = Array.isArray(payload.entries) ? payload.entries : [];
-      tbody.innerHTML = entries.map(renderRow).join("");
+      tbody.innerHTML = entries.map((entry, idx) => renderRow(entry, idx)).join("");
       tbody.querySelectorAll("[data-open]").forEach((btn) => {
         btn.addEventListener("click", () => {
+          if (window.DiggerAudio) window.DiggerAudio.playBlip();
           const entry = entries.find((item) => item.id === btn.getAttribute("data-id"));
           const kind = btn.getAttribute("data-open");
           if (entry && entry[kind]) void openTerminal(entry[kind]);
