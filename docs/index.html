@@ -50,7 +50,7 @@
             </div>
             <div class="stat">
               <span>Release</span>
-              <strong class="accent">0.6.0</strong>
+              <strong class="accent">0.5.0</strong>
             </div>
             <div class="stat">
               <span>Python</span>
@@ -110,7 +110,7 @@
     <section class="panel" aria-labelledby="sysop">
       <div class="panel-head">
         <div>
-          <div class="mono-label">[05] SysOp Notice</div>
+          <div class="mono-label">[04] SysOp Notice</div>
           <h2 id="sysop">V.32bis standard · 14,400 bps</h2>
         </div>
       </div>
@@ -249,62 +249,10 @@ iridium-client payload dump . --validate">Copy</button>
       </div>
     </section>
 
-    <section class="panel" aria-labelledby="env">
-      <div class="panel-head">
-        <div>
-          <div class="mono-label">[04] Environment</div>
-          <h2 id="env">privacy defaults / opt-in telemetry</h2>
-          <p>graph payloads contain syntactic structure only — string literals and secrets are stripped client-side</p>
-        </div>
-      </div>
-      <table class="env">
-        <thead>
-          <tr>
-            <th>Variable</th>
-            <th>Default</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><code>IRIDIUM_API_URL</code></td>
-            <td>api.iridium.example.com</td>
-            <td>SaaS API base URL (no trailing slash)</td>
-          </tr>
-          <tr>
-            <td><code>IRIDIUM_API_KEY</code></td>
-            <td>—</td>
-            <td>Optional. Sent as X-API-Key for authenticated tiers</td>
-          </tr>
-          <tr>
-            <td><code>DO_NOT_TRACK</code></td>
-            <td>unset</td>
-            <td>Set to 1 to block analytics even when opted in</td>
-          </tr>
-          <tr>
-            <td><code>IRIDIUM_TELEMETRY</code></td>
-            <td>0</td>
-            <td>Set to 1 to opt in to anonymized product analytics</td>
-          </tr>
-          <tr>
-            <td><code>IRIDIUM_ANON_KEY</code></td>
-            <td>—</td>
-            <td>HMAC key for --anonymize blind-graphing mode</td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="chips">
-        <span class="chip">Analytics off by default</span>
-        <span class="chip">--anonymize HMAC-hashes symbols</span>
-        <span class="chip">MCP audit log · .iridium/audit.log</span>
-        <span class="chip">Report vulns via GitHub Security Advisories</span>
-      </div>
-    </section>
-
     <section class="panel hall-of-fame" aria-labelledby="hall">
       <div class="panel-head">
         <div>
-          <div class="mono-label">[06] BBS Hall Of Fame</div>
+          <div class="mono-label">[05] BBS Hall Of Fame</div>
           <h2 id="hall">out of box discovery / self-learning path</h2>
           <p>verified findings / training path · report links only when a .md briefing exists</p>
         </div>
