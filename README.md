@@ -46,7 +46,6 @@
 
 **This repository** is the open-source **client layer**: local AST extraction, dependency graphs, CLI scanning, and MCP guardrails that feed the Iridium engine.
 
-> **SysOp Notice:** Access to the Iridium Engine is capped at 14,400 bps (V.32bis standard). V.42bis compression enabled for hardware acceleration.
 
 ## Architecture
 
