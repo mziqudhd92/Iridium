@@ -2,14 +2,43 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import platform
 from typing import Any
 
 from pydantic import BaseModel, Field
 
-from iridium_core.models.enums import NodeKind
-from iridium_core.models.fragment import GraphFragment
+from iridium_core.models.enums import EdgeType, NodeKind
+from iridium_core.models.fragment import GraphFragment, GraphNode
+
+DEFAULT_API_URL = "https://api.iridium.example.com"
+
+DEGRADED_VALIDATE_RESPONSE: dict[str, Any] = {
+    "allowed": True,
+    "degraded": True,
+    "warning": "Iridium rate-limit reached; proceeding without reachability gate",
+}
+
+DEGRADED_CONTEXT_RESPONSE: dict[str, Any] = {
+    "entrypoints": [],
+    "call_path_compressed": [],
+    "call_path_full": [],
+    "rewrite_hints": [],
+    "secure_interface_stub": "",
+    "secure_interface_docstring": "",
+    "patch_available": False,
+    "patch_registry_hit": False,
+    "degraded": True,
+    "warning": "Iridium API unavailable; proceeding without reachability context",
+}
+
+
+def _anon_token(prefix: str, value: str, salt: str) -> str:
+    if not value:
+        return ""
+    digest = hashlib.sha256(f"{salt}:{value}".encode()).hexdigest()[:12]
+    return f"{prefix}:{digest}"
 
 
 class DependencyNode(BaseModel):
@@ -49,12 +78,53 @@ class ClientScanPayload(BaseModel):
     def from_dict(cls, data: dict[str, Any]) -> ClientScanPayload:
         return cls.model_validate(data)
 
+    def anonymize(self) -> ClientScanPayload:
+        """Return a copy with local file paths and internal symbol names hashed."""
+        salt = self.repo_fingerprint
+        anon_fragments: list[GraphFragment] = []
+        for fragment in self.fragments:
+            anon_nodes: list[GraphNode] = []
+            for node in fragment.nodes:
+                anon_file = _anon_token("file", node.file, salt)
+                # Preserve third-party package/import names needed for CVE matching
+                if node.kind in (NodeKind.DEPENDENCY, NodeKind.IMPORT, NodeKind.TYPE_ONLY_IMPORT):
+                    anon_symbol = node.symbol
+                else:
+                    anon_symbol = _anon_token("sym", node.symbol, salt) if node.symbol else ""
+                anon_nodes.append(
+                    GraphNode(
+                        id=node.id,
+                        kind=node.kind,
+                        file=anon_file,
+                        line=node.line,
+                        language=node.language,
+                        symbol=anon_symbol,
+                    )
+                )
+            anon_fragments.append(
+                GraphFragment(
+                    file=_anon_token("file", fragment.file, salt) if fragment.file else "",
+                    nodes=anon_nodes,
+                    edges=list(fragment.edges),
+                    # Drop warnings — they often embed local absolute/relative paths.
+                    warnings=[],
+                )
+            )
+        return self.model_copy(
+            update={
+                "fragments": anon_fragments,
+                "supply_chain_warnings": [],
+                "determinism_warnings": [],
+            }
+        )
+
     def to_api_dict(self) -> dict[str, Any]:
         """Flatten fragments into backend /api/v1/client/scan wire format."""
         nodes: list[dict[str, Any]] = []
         edges: list[dict[str, Any]] = []
         entrypoints: list[str] = []
         seen_node_ids: set[str] = set()
+        seen_edges: set[tuple[str, str, EdgeType]] = set()
 
         for fragment in self.fragments:
             for node in fragment.nodes:
@@ -76,6 +146,10 @@ class ClientScanPayload(BaseModel):
                     entrypoints.append(node.id)
 
             for edge in fragment.edges:
+                edge_key = (edge.source, edge.target, edge.edge_type)
+                if edge_key in seen_edges:
+                    continue
+                seen_edges.add(edge_key)
                 edges.append(
                     {
                         "source": edge.source,

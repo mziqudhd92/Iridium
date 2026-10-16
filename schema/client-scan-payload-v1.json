@@ -75,6 +75,7 @@
     "GraphFragment": {
       "type": "object",
       "properties": {
+        "file": { "type": "string", "default": "" },
         "nodes": { "type": "array", "items": { "$ref": "#/$defs/GraphNode" } },
         "edges": { "type": "array", "items": { "$ref": "#/$defs/GraphEdge" } },
         "warnings": { "type": "array", "items": { "type": "string" } }

@@ -4,12 +4,12 @@ MUTATION = '....//....//etc/hosts'
 print('applying mutation', MUTATION)
 import os as _ir_boot_os
 import sys as _ir_sys
-_IR_REPO_ROOT = _ir_boot_os.environ.get('IRIDIUM_REPO_PATH', '/scan_data/JOB-6D4253')
-_IR_BIND_SYS_PATH = '/scan_data/JOB-6D4253'
-_IR_TARGET_DIR = '/scan_data/JOB-6D4253/libs/core/langchain_core/prompts'
+_IR_REPO_ROOT = _ir_boot_os.environ.get('IRIDIUM_REPO_PATH', '/workspace')
+_IR_BIND_SYS_PATH = '/workspace'
+_IR_TARGET_DIR = '/workspace/libs/core/langchain_core/prompts'
 _IR_REL_ROOTS = ['']
 _IR_BOOTSTRAP_PATHS = [
-    '/scan_data/JOB-6D4253',
+    '/workspace',
     _ir_boot_os.getcwd(),
     _IR_TARGET_DIR,
 ]
@@ -46,7 +46,7 @@ import os
 import types
 from pathlib import Path
 _ir_rel = 'libs/core/langchain_core/prompts/loading.py'
-_ir_repo = os.environ.get('IRIDIUM_REPO_PATH') or os.environ.get('IRIDIUM_REPO_PATH', os.environ.get('IRIDIUM_REPO_PATH', os.environ.get('IRIDIUM_REPO_PATH', '/scan_data/JOB-6D4253')))
+_ir_repo = os.environ.get('IRIDIUM_REPO_PATH') or os.environ.get('IRIDIUM_REPO_PATH', os.environ.get('IRIDIUM_REPO_PATH', os.environ.get('IRIDIUM_REPO_PATH', '/workspace')))
 target = Path(_ir_repo) / _ir_rel
 if not target.is_file():
     raise SystemExit(f'PROOF FAILED: target missing: {target}')

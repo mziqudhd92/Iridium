@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import re
+import tomllib
 from pathlib import Path
 
 from iridium_core.models.payload import DependencyNode
@@ -12,7 +13,7 @@ DETERMINISM_PATTERNS = (r"\*", r"latest", r"^$")
 
 
 def parse_uv_lock(repo: Path) -> tuple[list[DependencyNode], list[str]]:
-    """Parse uv.lock TOML-like format (basic)."""
+    """Parse uv.lock TOML format using stdlib tomllib (with line fallback)."""
     lock_path = repo / "uv.lock"
     if not lock_path.is_file():
         return [], []
@@ -24,19 +25,42 @@ def parse_uv_lock(repo: Path) -> tuple[list[DependencyNode], list[str]]:
     except OSError:
         return [], []
 
-    current_name: str | None = None
-    current_version: str | None = None
-    for line in text.splitlines():
-        stripped = line.strip()
-        if stripped.startswith("name ="):
-            current_name = stripped.split("=", 1)[1].strip().strip('"')
-        elif stripped.startswith("version =") and current_name:
-            current_version = stripped.split("=", 1)[1].strip().strip('"')
-            deps.append(
-                DependencyNode(name=current_name, version=current_version, ecosystem="pypi")
-            )
-            current_name = None
-            current_version = None
+    parsed_toml = False
+    try:
+        data = tomllib.loads(text)
+        packages = data.get("package")
+        if isinstance(packages, list):
+            parsed_toml = True
+            for pkg in packages:
+                if not isinstance(pkg, dict):
+                    continue
+                pkg_name = pkg.get("name")
+                pkg_version = pkg.get("version")
+                if isinstance(pkg_name, str) and pkg_name and pkg_version is not None:
+                    deps.append(
+                        DependencyNode(
+                            name=pkg_name,
+                            version=str(pkg_version),
+                            ecosystem="pypi",
+                        )
+                    )
+    except tomllib.TOMLDecodeError:
+        parsed_toml = False
+
+    if not parsed_toml:
+        current_name: str | None = None
+        for line in text.splitlines():
+            stripped = line.strip()
+            if stripped == "[[package]]":
+                current_name = None
+            elif stripped.startswith("name =") and current_name is None:
+                current_name = stripped.split("=", 1)[1].strip().strip('"')
+            elif stripped.startswith("version =") and current_name:
+                current_version = stripped.split("=", 1)[1].strip().strip('"')
+                deps.append(
+                    DependencyNode(name=current_name, version=current_version, ecosystem="pypi")
+                )
+                current_name = None
 
     for dep in deps:
         if dep.version and any(

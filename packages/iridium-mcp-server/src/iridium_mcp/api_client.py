@@ -6,30 +6,19 @@ import os
 from typing import Any
 
 import httpx
+from iridium_core.models.payload import (
+    DEFAULT_API_URL,
+    DEGRADED_CONTEXT_RESPONSE,
+    DEGRADED_VALIDATE_RESPONSE,
+)
 
 from iridium_mcp import __version__
 
-DEFAULT_API_URL = "https://api.iridium.example.com"
 CLIENT_VERSION = __version__
 REQUEST_TIMEOUT = 2.0
 
-_DEGRADED_VALIDATE = {
-    "allowed": True,
-    "degraded": True,
-    "warning": "Iridium rate-limit reached; proceeding without reachability gate",
-}
-_DEGRADED_CONTEXT = {
-    "entrypoints": [],
-    "call_path_compressed": [],
-    "call_path_full": [],
-    "rewrite_hints": [],
-    "secure_interface_stub": "",
-    "secure_interface_docstring": "",
-    "patch_available": False,
-    "patch_registry_hit": False,
-    "degraded": True,
-    "warning": "Iridium API unavailable; proceeding without reachability context",
-}
+_DEGRADED_VALIDATE = DEGRADED_VALIDATE_RESPONSE
+_DEGRADED_CONTEXT = DEGRADED_CONTEXT_RESPONSE
 
 
 class QueryApiClient:

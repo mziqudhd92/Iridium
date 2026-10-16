@@ -81,7 +81,17 @@ class AstCache:
             "WHERE git_tree_hash=? AND file_path=? AND content_hash=?",
             (git_tree_hash, file_path, file_content_hash),
         ).fetchone()
-        return row[0] if row else None
+        if row:
+            return row[0]
+        # Fallback: content_hash is SHA-256 of file bytes, so unchanged files
+        # with the same relative path are valid across commits/branches.
+        fallback = self._conn.execute(
+            "SELECT fragment_json FROM ast_cache "
+            "WHERE file_path=? AND content_hash=? "
+            "ORDER BY updated_at DESC LIMIT 1",
+            (file_path, file_content_hash),
+        ).fetchone()
+        return fallback[0] if fallback else None
 
     def put(
         self,
@@ -98,6 +108,15 @@ class AstCache:
             (git_tree_hash, file_path, file_content_hash, commit_hash, fragment_json),
         )
         self._conn.commit()
+
+    def prune(self, *, max_age_days: int = 30) -> int:
+        """Delete stale cache entries older than max_age_days."""
+        cursor = self._conn.execute(
+            "DELETE FROM ast_cache WHERE updated_at < datetime('now', ?)",
+            (f"-{int(max_age_days)} days",),
+        )
+        self._conn.commit()
+        return cursor.rowcount
 
     def close(self) -> None:
         self._conn.close()

@@ -92,6 +92,76 @@ def test_to_api_dict_includes_determinism_warnings():
     assert api["determinism_warnings"] == ["DETERMINISM_WARNING: uv.lock unpinned"]
 
 
+def test_to_api_dict_deduplicates_edges():
+    from iridium_core.models.enums import EdgeType, NodeKind
+    from iridium_core.models.fragment import GraphEdge, GraphFragment, GraphNode
+
+    edge = GraphEdge(source="a", target="b", edge_type=EdgeType.CALLS)
+    payload = ClientScanPayload(
+        repo_fingerprint="abc12345",
+        git_tree_hash="tree45678",
+        fragments=[
+            GraphFragment(
+                nodes=[
+                    GraphNode(
+                        id="a",
+                        kind=NodeKind.FUNCTION,
+                        file="a.py",
+                        line=1,
+                        language="python",
+                        symbol="a",
+                    ),
+                    GraphNode(
+                        id="b",
+                        kind=NodeKind.FUNCTION,
+                        file="b.py",
+                        line=1,
+                        language="python",
+                        symbol="b",
+                    ),
+                ],
+                edges=[edge, edge],
+            )
+        ],
+    )
+    api = payload.to_api_dict()
+    assert len(api["edges"]) == 1
+
+
+def test_anonymize_clears_path_bearing_warnings():
+    from iridium_core.models.enums import NodeKind
+    from iridium_core.models.fragment import GraphFragment, GraphNode
+
+    payload = ClientScanPayload(
+        repo_fingerprint="abc12345",
+        git_tree_hash="tree45678",
+        supply_chain_warnings=["read error /Users/me/secret.py: boom"],
+        determinism_warnings=["DETERMINISM_WARNING: /tmp/proj/uv.lock"],
+        fragments=[
+            GraphFragment(
+                file="secret.py",
+                nodes=[
+                    GraphNode(
+                        id="n1",
+                        kind=NodeKind.FUNCTION,
+                        file="secret.py",
+                        line=1,
+                        language="python",
+                        symbol="handler",
+                    )
+                ],
+                warnings=["syntax error secret.py: unexpected EOF"],
+            )
+        ],
+    )
+    anon = payload.anonymize()
+    assert anon.supply_chain_warnings == []
+    assert anon.determinism_warnings == []
+    assert anon.fragments[0].warnings == []
+    assert anon.fragments[0].file.startswith("file:")
+    assert anon.fragments[0].nodes[0].symbol.startswith("sym:")
+
+
 def test_indexer_uv_lock_determinism_warning(tmp_path: Path):
     (tmp_path / "app.py").write_text("x = 1\n", encoding="utf-8")
     (tmp_path / "uv.lock").write_text(

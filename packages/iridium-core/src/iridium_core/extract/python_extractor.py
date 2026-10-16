@@ -7,7 +7,7 @@ import hashlib
 import re
 from pathlib import Path
 
-from iridium_core.extract.base import ImportMap, LanguageExtractor
+from iridium_core.extract.base import ImportMap, LanguageExtractor, relative_file_path
 from iridium_core.models.enums import EdgeType, NodeKind
 from iridium_core.models.fragment import GraphEdge, GraphFragment, GraphNode
 from iridium_core.sanitize.scrubber import scrub_source
@@ -243,36 +243,40 @@ class PythonExtractor(LanguageExtractor):
                 mapping[parts[-1]] = rel
         return mapping
 
-    def parse_batch_safe(self, paths: list[Path]) -> list[GraphFragment]:
+    def parse_batch_safe(
+        self,
+        paths: list[Path],
+        repo: Path | None = None,
+    ) -> list[GraphFragment]:
         fragments: list[GraphFragment] = []
         for path in paths:
-            fragment = self._parse_file(path)
+            fragment = self._parse_file(path, repo=repo)
             if fragment.nodes or fragment.edges or fragment.warnings:
                 fragments.append(fragment)
         return fragments
 
-    def _parse_file(self, path: Path) -> GraphFragment:
+    def _parse_file(self, path: Path, repo: Path | None = None) -> GraphFragment:
         warnings: list[str] = []
+        rel = relative_file_path(path, repo)
 
         try:
             raw = path.read_bytes()
         except OSError as exc:
-            return GraphFragment(warnings=[f"read error {path}: {exc}"])
+            return GraphFragment(file=rel, warnings=[f"read error {rel}: {exc}"])
 
         if len(raw) > MAX_FILE_BYTES:
-            return GraphFragment(warnings=[f"skipped oversized file: {path.name}"])
+            return GraphFragment(file=rel, warnings=[f"skipped oversized file: {path.name}"])
 
         source = raw.decode("utf-8", errors="ignore")
         if _is_generated_or_minified(source):
-            return GraphFragment(warnings=[f"skipped generated/minified: {path.name}"])
+            return GraphFragment(file=rel, warnings=[f"skipped generated/minified: {path.name}"])
 
         source = scrub_source(source)
-        rel = path.as_posix()
 
         try:
             tree = ast.parse(source)
         except SyntaxError as exc:
-            return GraphFragment(warnings=[f"syntax error {path.name}: {exc.msg}"])
+            return GraphFragment(file=rel, warnings=[f"syntax error {path.name}: {exc.msg}"])
 
         _annotate_parents(tree)
         if _ast_depth(tree) > MAX_AST_DEPTH:
@@ -281,4 +285,9 @@ class PythonExtractor(LanguageExtractor):
         visitor = _PythonFileVisitor(rel=rel, source=source, language=self.language)
         visitor.visit(tree)
         visitor.finalize()
-        return GraphFragment(nodes=visitor.nodes, edges=visitor.edges, warnings=warnings)
+        return GraphFragment(
+            file=rel,
+            nodes=visitor.nodes,
+            edges=visitor.edges,
+            warnings=warnings,
+        )

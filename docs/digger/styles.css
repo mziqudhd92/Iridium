@@ -961,6 +961,55 @@ img {
 
 .board-poc-row {
   margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.digger-board-toolbar {
+  margin-top: 16px;
+  padding: 12px;
+  border: 2px solid var(--cga-magenta);
+  background: var(--cga-black);
+  display: grid;
+  gap: 10px;
+}
+
+.digger-kpis {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.digger-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.digger-search {
+  flex: 1 1 220px;
+  background: var(--cga-black);
+  border: 2px solid var(--cga-cyan);
+  color: var(--cga-white);
+  font-family: inherit;
+  font-size: 8px;
+  padding: 6px 10px;
+  outline: none;
+}
+
+.digger-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.digger-board-footer {
+  margin-top: 14px;
+  display: flex;
+  justify-content: center;
 }
 
 .board-poc-link {
