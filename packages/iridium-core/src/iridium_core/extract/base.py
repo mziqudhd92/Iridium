@@ -18,7 +18,11 @@ class LanguageExtractor(ABC):
     language: str
 
     @abstractmethod
-    def parse_batch_safe(self, paths: list[Path]) -> list[GraphFragment]:
+    def parse_batch_safe(
+        self,
+        paths: list[Path],
+        repo: Path | None = None,
+    ) -> list[GraphFragment]:
         """Parse a batch of source files into graph fragments."""
 
     @abstractmethod
@@ -27,3 +31,15 @@ class LanguageExtractor(ABC):
 
     def supported_extensions(self) -> set[str]:
         return set()
+
+
+def relative_file_path(path: Path, repo: Path | None = None) -> str:
+    """Return a repo-relative POSIX path without leaking local absolute directories."""
+    if repo is not None:
+        try:
+            return path.resolve().relative_to(repo.resolve()).as_posix()
+        except ValueError:
+            pass
+    if not path.is_absolute():
+        return path.as_posix()
+    return path.name

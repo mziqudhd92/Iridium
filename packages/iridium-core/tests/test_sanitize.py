@@ -21,3 +21,22 @@ MIIEpAIBAAKCAQEA
 def test_preserves_low_entropy_literals() -> None:
     source = 'message = "hello-world-short-literal"\n'
     assert scrub_source(source) == source
+
+
+def test_scrubbed_python_remains_valid_ast_and_preserves_line_numbers() -> None:
+    import ast
+
+    source = '''# line 1
+API_KEY = "fake_test_secret_key_32chars_long"
+CONFIG = {"secret_key": "another_secret_value_16chars"}
+PEM = """-----BEGIN RSA PRIVATE KEY-----
+MIIEpAIBAAKCAQEA
+-----END RSA PRIVATE KEY-----"""
+def handler():
+    return 42
+'''
+    scrubbed = scrub_source(source)
+    tree = ast.parse(scrubbed)
+    funcs = [n for n in ast.walk(tree) if isinstance(n, ast.FunctionDef)]
+    assert len(funcs) == 1
+    assert funcs[0].lineno == 7

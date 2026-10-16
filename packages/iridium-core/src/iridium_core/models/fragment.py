@@ -23,13 +23,30 @@ class GraphEdge(BaseModel):
 
 
 class GraphFragment(BaseModel):
+    file: str = ""
     nodes: list[GraphNode] = Field(default_factory=list)
     edges: list[GraphEdge] = Field(default_factory=list)
     warnings: list[str] = Field(default_factory=list)
 
     def merge(self, other: GraphFragment) -> GraphFragment:
+        seen_nodes: set[str] = set()
+        merged_nodes: list[GraphNode] = []
+        for node in self.nodes + other.nodes:
+            if node.id not in seen_nodes:
+                seen_nodes.add(node.id)
+                merged_nodes.append(node)
+
+        seen_edges: set[tuple[str, str, EdgeType]] = set()
+        merged_edges: list[GraphEdge] = []
+        for edge in self.edges + other.edges:
+            key = (edge.source, edge.target, edge.edge_type)
+            if key not in seen_edges:
+                seen_edges.add(key)
+                merged_edges.append(edge)
+
         return GraphFragment(
-            nodes=self.nodes + other.nodes,
-            edges=self.edges + other.edges,
-            warnings=self.warnings + other.warnings,
+            file=self.file or other.file,
+            nodes=merged_nodes,
+            edges=merged_edges,
+            warnings=list(dict.fromkeys(self.warnings + other.warnings)),
         )

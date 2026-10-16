@@ -177,17 +177,60 @@
     return `<button type="button" class="btn ghost board-btn" data-open="poc" data-id="${esc(entry.id)}">Get PoC</button>`;
   }
 
+  function extractCves(entry) {
+    const text = `${entry.finding_title || ""} ${entry.finding_summary || ""}`;
+    const matches = text.match(/CVE-\d{4}-\d{4,}/g) || [];
+    return Array.from(new Set(matches));
+  }
+
+  function inferEcosystem(entry) {
+    const rule = String(entry.scanner_name || "").toLowerCase();
+    const repo = String(entry.repo_url || "").toLowerCase();
+    const file = String(entry.file_path || "").toLowerCase();
+    if (
+      rule.startsWith("wp.") ||
+      repo.includes("wordpress") ||
+      file.endsWith(".php")
+    ) {
+      return "wordpress";
+    }
+    if (
+      rule.startsWith("native.") ||
+      rule.startsWith("evm.") ||
+      file.endsWith(".c") ||
+      file.endsWith(".cpp") ||
+      file.endsWith(".sol")
+    ) {
+      return "native";
+    }
+    return "python";
+  }
+
   function renderRow(entry) {
+    const cves = extractCves(entry);
+    const cveBadges = cves
+      .map(
+        (cve) =>
+          `<button type="button" class="board-cve-pill" data-open="report" data-id="${esc(entry.id)}" title="Open briefing for ${esc(cve)}">${esc(cve)}</button>`
+      )
+      .join("");
+    const statusBadge = entry.verification_status
+      ? `<span class="board-status ${entry.verification_status === "SUBMISSION_READY" ? "accent" : ""}">${esc(entry.verification_status)}</span>`
+      : "";
     return `<tr>
       <td>
         <div class="board-app">${esc(entry.app_name)}</div>
         <div class="board-repo">${repoCell(entry)}</div>
+        ${statusBadge}
       </td>
       <td class="board-stars">${formatStars(entry.stars)}</td>
       <td>
         <div class="board-title">${esc(entry.finding_title)}</div>
-        <div class="board-sev">${esc(entry.severity)}</div>
-        <div class="board-meta">${esc(loc(entry))} · ${esc(entry.scanner_name)}</div>
+        <div class="board-badges-row">
+          <span class="board-sev sev-${esc(String(entry.severity || "high").toLowerCase())}">${esc(entry.severity)}</span>
+          ${cveBadges}
+        </div>
+        <div class="board-meta">${esc(loc(entry))} · <code>${esc(entry.scanner_name)}</code></div>
         <p class="board-sum">${esc(entry.finding_summary)}</p>
       </td>
       <td>${actionButton("report", entry)}</td>
@@ -202,14 +245,121 @@
       if (!response.ok) throw new Error(`status ${response.status}`);
       const payload = await response.json();
       const entries = Array.isArray(payload.entries) ? payload.entries : [];
-      tbody.innerHTML = entries.map(renderRow).join("");
-      tbody.querySelectorAll("[data-open]").forEach((btn) => {
+
+      const allCves = new Set();
+      entries.forEach((e) => extractCves(e).forEach((c) => allCves.add(c)));
+      const critCount = entries.filter((e) => String(e.severity).toLowerCase() === "critical").length;
+      const highCount = entries.filter((e) => String(e.severity).toLowerCase() === "high").length;
+
+      let activeFilter = "all";
+      let searchQuery = "";
+      let showAll = false;
+      const INITIAL_LIMIT = 25;
+
+      const toolbar = document.createElement("div");
+      toolbar.className = "board-toolbar";
+      toolbar.innerHTML = `
+        <div class="board-kpis">
+          <span class="board-kpi"><strong>${entries.length}</strong> Verified Findings</span>
+          <span class="board-kpi"><strong>${allCves.size}</strong> Unique CVEs Indexed</span>
+          <span class="board-kpi"><strong>${critCount}</strong> Critical · <strong>${highCount}</strong> High</span>
+          <span class="board-kpi ok">100% Report + PoC Artifacts</span>
+        </div>
+        <div class="board-controls">
+          <input
+            type="search"
+            class="board-search"
+            placeholder="Search CVE (e.g. CVE-2026-75816), app, plugin, rule, or file path…"
+            aria-label="Filter verified findings and CVEs"
+            data-board-search
+          />
+          <div class="board-filters" role="group" aria-label="Filter by severity or ecosystem">
+            <button type="button" class="board-filter active" data-filter="all">All (${entries.length})</button>
+            <button type="button" class="board-filter" data-filter="critical">Critical (${critCount})</button>
+            <button type="button" class="board-filter" data-filter="high">High (${highCount})</button>
+            <button type="button" class="board-filter" data-filter="wordpress">WordPress</button>
+            <button type="button" class="board-filter" data-filter="python">Python / AI</button>
+            <button type="button" class="board-filter" data-filter="native">Native C / EVM</button>
+          </div>
+        </div>
+      `;
+      board.parentNode.insertBefore(toolbar, board);
+
+      const footerWrap = document.createElement("div");
+      footerWrap.className = "board-footer";
+      board.parentNode.insertBefore(footerWrap, board.nextSibling);
+
+      function bindOpenButtons() {
+        tbody.querySelectorAll("[data-open]").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const entry = entries.find((item) => item.id === btn.getAttribute("data-id"));
+            const kind = btn.getAttribute("data-open");
+            if (entry && entry[kind]) void openTerminal(entry[kind]);
+          });
+        });
+      }
+
+      function updateView() {
+        const q = searchQuery.trim().toLowerCase();
+        const filtered = entries.filter((entry) => {
+          const sev = String(entry.severity || "").toLowerCase();
+          const eco = inferEcosystem(entry);
+          if (activeFilter === "critical" && sev !== "critical") return false;
+          if (activeFilter === "high" && sev !== "high") return false;
+          if (activeFilter === "wordpress" && eco !== "wordpress") return false;
+          if (activeFilter === "python" && eco !== "python") return false;
+          if (activeFilter === "native" && eco !== "native") return false;
+          if (!q) return true;
+          const hay = `${entry.app_name} ${entry.finding_title} ${entry.finding_summary} ${entry.file_path} ${entry.scanner_name} ${entry.repo_url}`.toLowerCase();
+          return hay.includes(q);
+        });
+
+        const isFiltering = Boolean(q) || activeFilter !== "all";
+        const visible = isFiltering || showAll ? filtered : filtered.slice(0, INITIAL_LIMIT);
+
+        if (!visible.length) {
+          tbody.innerHTML = `<tr><td colspan="5" class="board-empty">No findings match "${esc(searchQuery)}".</td></tr>`;
+        } else {
+          tbody.innerHTML = visible.map(renderRow).join("");
+          bindOpenButtons();
+        }
+
+        if (!isFiltering && filtered.length > INITIAL_LIMIT) {
+          footerWrap.innerHTML = `
+            <button type="button" class="btn ghost board-more-btn" data-board-toggle>
+              ${showAll ? `Show Featured Top ${INITIAL_LIMIT}` : `Show All ${filtered.length} Verified Findings (${allCves.size} CVEs)`}
+            </button>
+          `;
+          const toggleBtn = footerWrap.querySelector("[data-board-toggle]");
+          if (toggleBtn) {
+            toggleBtn.addEventListener("click", () => {
+              showAll = !showAll;
+              updateView();
+            });
+          }
+        } else {
+          footerWrap.innerHTML = `<span class="board-count-note">Showing ${visible.length} of ${entries.length} verified findings (${allCves.size} unique CVEs)</span>`;
+        }
+      }
+
+      const searchInput = toolbar.querySelector("[data-board-search]");
+      if (searchInput) {
+        searchInput.addEventListener("input", (e) => {
+          searchQuery = e.target.value || "";
+          updateView();
+        });
+      }
+
+      toolbar.querySelectorAll("[data-filter]").forEach((btn) => {
         btn.addEventListener("click", () => {
-          const entry = entries.find((item) => item.id === btn.getAttribute("data-id"));
-          const kind = btn.getAttribute("data-open");
-          if (entry && entry[kind]) void openTerminal(entry[kind]);
+          activeFilter = btn.getAttribute("data-filter") || "all";
+          toolbar.querySelectorAll("[data-filter]").forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          updateView();
         });
       });
+
+      updateView();
     } catch (err) {
       tbody.innerHTML = `<tr><td colspan="5" class="board-empty">Unable to load findings board. ${esc(err.message || err)}</td></tr>`;
     }

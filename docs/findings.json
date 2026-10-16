@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-13",
-  "source": "iridium verified board · out-of-box discovery path",
+  "generated_at": "2026-10-16",
+  "source": "iridium verified board \u00b7 out-of-box discovery & CVE regression path",
   "entries": [
     {
       "id": "frontend-admin",
@@ -9,7 +9,7 @@
       "stars": 9000,
       "severity": "critical",
       "finding_title": "Unauthenticated _acf_objects user_1 account takeover (CVE-2026-75816)",
-      "finding_summary": "acf-frontend-form-element <= 3.29.12 — encrypted _acf_objects with post=user_1 skips current_user_can(edit_post); unauth form_submit overwrites administrator login (finding 63518, JOB-8B1ABB).",
+      "finding_summary": "acf-frontend-form-element <= 3.29.12 \u2014 encrypted _acf_objects with post=user_1 skips current_user_can(edit_post); unauth form_submit overwrites administrator login (finding 63518, JOB-8B1ABB).",
       "file_path": "main/frontend/forms/actions/post.php",
       "line_number": 0,
       "scanner_name": "wp.auth.numeric_cap_bypass",
@@ -32,7 +32,7 @@
       "stars": 3000000,
       "severity": "critical",
       "finding_title": "Plugin_Upgrader custom-role plugin ZIP install RCE (CVE-2026-81766)",
-      "finding_summary": "really-simple-ssl @ 9.1.1.1 — rsp_upgrade_install_plugin installs attacker download_link ZIP via Plugin_Upgrader without install_plugins (finding 63511, JOB-EAE9E9).",
+      "finding_summary": "really-simple-ssl @ 9.1.1.1 \u2014 rsp_upgrade_install_plugin installs attacker download_link ZIP via Plugin_Upgrader without install_plugins (finding 63511, JOB-EAE9E9).",
       "file_path": "upgrade/upgrade-to-pro.php",
       "line_number": 657,
       "scanner_name": "wp.fs.plugin_install_url",
@@ -55,7 +55,7 @@
       "stars": 3000000,
       "severity": "critical",
       "finding_title": "Unauth REST 2FA skip_onboarding auth bypass (CVE-2024-10924)",
-      "finding_summary": "really-simple-ssl @ 9.1.1.1 — POST /wp-json/reallysimplessl/v1/two_fa/skip_onboarding ignores login-nonce failure and issues wp_set_auth_cookie (finding 26431, JOB-89A956).",
+      "finding_summary": "really-simple-ssl @ 9.1.1.1 \u2014 POST /wp-json/reallysimplessl/v1/two_fa/skip_onboarding ignores login-nonce failure and issues wp_set_auth_cookie (finding 26431, JOB-89A956).",
       "file_path": "security/wordpress/two-fa/class-rsssl-two-factor-on-board-api.php",
       "line_number": 453,
       "scanner_name": "wp.auth.2fa_bypass",
@@ -78,7 +78,7 @@
       "stars": 9,
       "severity": "low",
       "finding_title": "UBSan division-by-zero in GGUF parser when n_heads=0 (zero-day)",
-      "finding_summary": "matrixsmaster/ligguf @ master — malformed GGUF leaves n_heads=0; read_gguf divides at c/ligguf.c:263 (UBSan DoS). Zero-day from Iridium targeted research, JOB-9C48EC.",
+      "finding_summary": "matrixsmaster/ligguf @ master \u2014 malformed GGUF leaves n_heads=0; read_gguf divides at c/ligguf.c:263 (UBSan DoS). Zero-day from Iridium targeted research, JOB-9C48EC.",
       "file_path": "c/ligguf.c",
       "line_number": 263,
       "scanner_name": "targeted-research",
@@ -147,7 +147,7 @@
       "stars": 54266,
       "severity": "high",
       "finding_title": "TOCTOU in extract_zipped_paths (CVE-2026-25645)",
-      "finding_summary": "psf/requests @ v2.32.3 — race in extract_zipped_paths lets a zip member path change between validate and extract (CVE-2026-25645).",
+      "finding_summary": "psf/requests @ v2.32.3 \u2014 race in extract_zipped_paths lets a zip member path change between validate and extract (CVE-2026-25645).",
       "file_path": "src/requests/utils.py",
       "line_number": 0,
       "scanner_name": "bug_hunter",
@@ -170,7 +170,7 @@
       "stars": 51930,
       "severity": "high",
       "finding_title": "Insecure shared /tmp cache dir TOCTOU (CVE-2025-7647)",
-      "finding_summary": "run-llama/llama_index @ v0.12.44 — get_cache_dir() uses predictable /tmp/llama_index without isolation; symlink pre-creation enables cache poisoning (CVE-2025-7647, JOB-8F5BD8).",
+      "finding_summary": "run-llama/llama_index @ v0.12.44 \u2014 get_cache_dir() uses predictable /tmp/llama_index without isolation; symlink pre-creation enables cache poisoning (CVE-2025-7647, JOB-8F5BD8).",
       "file_path": "llama-index-core/llama_index/core/utils.py",
       "line_number": 419,
       "scanner_name": "targeted-research",
@@ -193,7 +193,7 @@
       "stars": 43438,
       "severity": "medium",
       "finding_title": "Unauthenticated arbitrary file copy via FileData._copy_to_dir (CVE-2025-48889)",
-      "finding_summary": "gradio@5.30.0 — unauthenticated POST /gradio_api/run/predict / flagging drives FileData.path into shutil.copy with no allowlist (CVE-2025-48889).",
+      "finding_summary": "gradio@5.30.0 \u2014 unauthenticated POST /gradio_api/run/predict / flagging drives FileData.path into shutil.copy with no allowlist (CVE-2025-48889).",
       "file_path": "gradio/data_classes.py",
       "line_number": 0,
       "scanner_name": "hunter-verify",
@@ -216,13 +216,21 @@
       "stars": 29182,
       "severity": "critical",
       "finding_title": "trust_remote_code RCE via UPDATE_COLLECTION (CVE-2026-45833)",
-      "finding_summary": "chroma-core/chroma @ 0.6.3 — UPDATE_COLLECTION forwards trust_remote_code into SentenceTransformerEmbeddingFunction, enabling remote code load (CVE-2026-45833).",
+      "finding_summary": "chroma-core/chroma @ 0.6.3 \u2014 UPDATE_COLLECTION forwards trust_remote_code into SentenceTransformerEmbeddingFunction, enabling remote code load (CVE-2026-45833).",
       "file_path": "chromadb/utils/embedding_functions/sentence_transformer_embedding_function.py",
       "line_number": 0,
       "scanner_name": "bug_hunter",
       "verification_status": "SUBMISSION_READY",
-      "report": null,
-      "poc": null
+      "report": {
+        "title": "report.md // CVE-2026-45833",
+        "file": "findings/chroma/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.py // CVE-2026-45833",
+        "file": "findings/chroma/poc.py",
+        "kind": "code"
+      }
     },
     {
       "id": "langchain",
@@ -231,7 +239,7 @@
       "stars": 118000,
       "severity": "high",
       "finding_title": "load_prompt path traversal (CVE-2026-34070)",
-      "finding_summary": "langchain-ai/langchain @ langchain-core==1.2.21 — load_prompt/_load_template reads attacker-controlled paths without boundary checks (CVE-2026-34070).",
+      "finding_summary": "langchain-ai/langchain @ langchain-core==1.2.21 \u2014 load_prompt/_load_template reads attacker-controlled paths without boundary checks (CVE-2026-34070).",
       "file_path": "libs/core/langchain_core/prompts/loading.py",
       "line_number": 56,
       "scanner_name": "targeted-research",
@@ -254,7 +262,7 @@
       "stars": 2923,
       "severity": "high",
       "finding_title": "Missing digest bounds check in cert verification (CVE-2026-5194)",
-      "finding_summary": "wolfSSL/wolfssl @ v5.9.0-stable — wc_SignatureVerify accepts undersized digest buffers without rejecting truncated signatures (CVE-2026-5194).",
+      "finding_summary": "wolfSSL/wolfssl @ v5.9.0-stable \u2014 wc_SignatureVerify accepts undersized digest buffers without rejecting truncated signatures (CVE-2026-5194).",
       "file_path": "wolfcrypt/src/signature.c",
       "line_number": 0,
       "scanner_name": "hunter-verify",
@@ -267,6 +275,3364 @@
       "poc": {
         "title": "poc.c // CVE-2026-5194",
         "file": "findings/wolfssl/poc.c",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "mapster-wp-maps-cve-2023-3957",
+      "app_name": "ACF Photo Gallery / Mapster WP Maps",
+      "repo_url": "https://wordpress.org/plugins/mapster-wp-maps/",
+      "stars": 100000,
+      "severity": "critical",
+      "finding_title": "ACF Photo Gallery profile_update POST-controlled usermeta key \u2192 capabilities PE (CVE-2023-3957 / Mapster class)",
+      "finding_summary": "A subscriber POSTs `/wp-admin/profile.php` with `acf-photo-gallery-groups[]=<meta_key>` and `<meta_key>[]=<value>`. The bundled ACF Photo Gallery `profile_update` handler calls `update_user_meta($user_id, $item, implode(',', $_POST[$item]))` with no meta-key allowlist. Setting `{prefix}capabilities` to a serialized administrator capability map escalates the subscriber to admin. Verified by Iridium (CVE-2023-3957, finding 0, JOB-WP-VERIFY).",
+      "file_path": "includes/acf-photo-gallery-field/includes/acf_photo_gallery_save.php",
+      "line_number": 0,
+      "scanner_name": "wp.user.role_assignment",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2023-3957",
+        "file": "findings/mapster-wp-maps-cve-2023-3957/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2023-3957",
+        "file": "findings/mapster-wp-maps-cve-2023-3957/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "action-scheduler-cve-2023-51694",
+      "app_name": "Action Scheduler",
+      "repo_url": "https://wordpress.org/plugins/action-scheduler/",
+      "stars": 100000,
+      "severity": "high",
+      "finding_title": "Action Scheduler / WP-Cron queue argument pollution (deferred privileged exec) (CVE-2023-51694)",
+      "finding_summary": "Unauthenticated callers pass attacker-controlled arrays into `as_enqueue_async_action()` / `wp_schedule_single_event()`, so privileged background workers later execute with polluted arguments. Verified by Iridium (CVE-2023-51694, finding 28847, JOB-45259D).",
+      "file_path": "action-scheduler/action-scheduler.php",
+      "line_number": 0,
+      "scanner_name": "wp.cron.arg_pollution",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2023-51694",
+        "file": "findings/action-scheduler-cve-2023-51694/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2023-51694",
+        "file": "findings/action-scheduler-cve-2023-51694/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "all-in-one-wp-migration-cve-2026-19949",
+      "app_name": "All-in-One WP Migration",
+      "repo_url": "https://wordpress.org/plugins/all-in-one-wp-migration/",
+      "stars": 5000000,
+      "severity": "critical",
+      "finding_title": "All-in-One WP Migration second-order SQLi via replace_table_values (CVE-2026-19949)",
+      "finding_summary": "Unauthenticated attackers plant crafted trackback/comment metadata containing a trailing backslash after a site URL token. When an administrator later exports and restores a `.wpress` archive, `Ai1wm_Database::replace_table_values` (\u22647.109) uses the broken regex `/'(.*?)(?<!\\\\)'/S` to rewrite quoted SQL literals. The lookbehind mishandles `\\\\'` boundaries, so unescape\u2192replace\u2192re-escape promotes attacker-controlled bytes into executable SQL during import \u2014 enabling extraction of `ai1wm_secret_key` and follow-on RCE via a malicious archive import. Verified by Iridium (CVE-2026-19949, finding 28540, JOB-B0AEC5).",
+      "file_path": "lib/vendor/servmask/database/class-ai1wm-database.php",
+      "line_number": 0,
+      "scanner_name": "wp.sql.second_order",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-19949",
+        "file": "findings/all-in-one-wp-migration-cve-2026-19949/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-19949",
+        "file": "findings/all-in-one-wp-migration-cve-2026-19949/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "astra-cve-2024-32520",
+      "app_name": "Astra Theme",
+      "repo_url": "https://wordpress.org/themes/astra/",
+      "stars": 1000000,
+      "severity": "high",
+      "finding_title": "Astra unauth theme_mod / customizer mutation (set_theme_mod class) (CVE-2024-32520)",
+      "finding_summary": "Unauthenticated callers hit `wp_ajax_nopriv_astra_*` AJAX handlers that call `set_theme_mod()` (or mutate theme layout options) from request input with no capability or nonce gates, enabling persistent customizer / theme_mod takeover. Verified by Iridium (CVE-2024-32520, finding 28832, JOB-2D90E9).",
+      "file_path": "astra/astra.php",
+      "line_number": 0,
+      "scanner_name": "wp.option.theme_mod",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2024-32520",
+        "file": "findings/astra-cve-2024-32520/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2024-32520",
+        "file": "findings/astra-cve-2024-32520/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "extendify-cve-2026-85679",
+      "app_name": "Extendify WordPress Onboarding",
+      "repo_url": "https://wordpress.org/plugins/extendify/",
+      "stars": 200000,
+      "severity": "high",
+      "finding_title": "Pre-permission styles.blocks keys \u2192 register_block_style stored XSS (CVE-2026-85679)",
+      "finding_summary": "A `rest_request_before_callbacks` handler reads JSON object keys under `styles.blocks` on core `/wp/v2/global-styles` writes and passes them to `register_block_style()` without an `edit_theme_options` gate or `namespace/block` allowlist. Because the filter runs before the route `permission_callback`, unauthenticated POST/PUT/PATCH still registers the attacker-controlled block-type key; WordPress later interpolates it into the editor `registerBlockStyle()` inline script. Verified by Iridium (CVE-2026-85679, finding 0, JOB-WP-VERIFY).",
+      "file_path": "app/Shared/Services/BlockStyleVariations.php",
+      "line_number": 0,
+      "scanner_name": "wp.xss.block_style_key",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-85679",
+        "file": "findings/extendify-cve-2026-85679/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-85679",
+        "file": "findings/extendify-cve-2026-85679/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "breakdance-cve-2024-31390",
+      "app_name": "Breakdance Builder",
+      "repo_url": "https://breakdance.com/",
+      "stars": 80000,
+      "severity": "critical",
+      "finding_title": "Breakdance AJAX server_side_render \u2192 CodeBlock php_code eval (CVE-2024-31390)",
+      "finding_summary": "Authenticated Client Mode users (contributor / edit_posts) POST to `admin-ajax.php` with `action=breakdance_server_side_render`. Attacker-controlled `properties` / `parentProperties` JSON carries `php_code` into EssentialElements\\CodeBlock SSR which `eval()`s the payload. Verified by Iridium (CVE-2024-31390, finding 24341, JOB-0778BE).",
+      "file_path": "plugin/ajax.php",
+      "line_number": 0,
+      "scanner_name": "wp.rce.ajax_eval",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2024-31390",
+        "file": "findings/breakdance-cve-2024-31390/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2024-31390",
+        "file": "findings/breakdance-cve-2024-31390/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "bricks-cve-2024-25600",
+      "app_name": "Bricks Builder",
+      "repo_url": "https://bricksbuilder.io/",
+      "stars": 90000,
+      "severity": "critical",
+      "finding_title": "Bricks REST render_element \u2192 queryEditor eval (CVE-2024-25600)",
+      "finding_summary": "Unauthenticated callers POST to `bricks/v1/render_element`. The route's `permission_callback` only verifies `bricks-nonce` (public on the front end via `bricksData` / meta) and never checks a capability. Attacker-controlled `element.settings.query.queryEditor` is passed into `eval()` inside `Query::prepare_query_vars_from_settings`. Verified by Iridium (CVE-2024-25600, finding 24235, JOB-3491E8).",
+      "file_path": "includes/api.php",
+      "line_number": 0,
+      "scanner_name": "wp.rce.rest_eval",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2024-25600",
+        "file": "findings/bricks-cve-2024-25600/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2024-25600",
+        "file": "findings/bricks-cve-2024-25600/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "bulk-password-reset-cve-2026-14873",
+      "app_name": "Bulk Password Reset",
+      "repo_url": "https://wordpress.org/plugins/bulk-password-reset/",
+      "stars": 3000,
+      "severity": "critical",
+      "finding_title": "Bulk Password Reset load-users.php bulk action \u2014 missing capability before wp_set_password (CVE-2026-14873 class)",
+      "finding_summary": "A low-privilege authenticated caller POSTs `action=<bulk_action>&users[]=<id>` to `/wp-admin/users.php`. `wp-admin/admin.php` fires `do_action(\"load-{$pagenow}\")` BEFORE the screen's `current_user_can('list_users')` gate in `users.php`, so a `load-users.php` list-table bulk handler runs for any logged-in user. The handler gates only on `$wp_list_table->current_action()` (attacker-controlled) and `$_REQUEST['users']`, then calls `wp_set_password()` with no capability check and no nonce \u2014 resetting arbitrary users' passwords. Verified by Iridium (CVE-2026-14873, finding 50387, JOB-E38F01).",
+      "file_path": "bulk-password-reset/bulk_password_reset.php",
+      "line_number": 0,
+      "scanner_name": "wp.user.password_overwrite",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-14873",
+        "file": "findings/bulk-password-reset-cve-2026-14873/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-14873",
+        "file": "findings/bulk-password-reset-cve-2026-14873/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "cfsprefill-cve-2026-4257",
+      "app_name": "Contact Form by Supsystic",
+      "repo_url": "https://wordpress.org/plugins/contact-form-by-supsystic/",
+      "stars": 40000,
+      "severity": "critical",
+      "finding_title": "Contact Form by Supsystic cfsPreFill Twig SSTI RCE (CVE-2026-4257)",
+      "finding_summary": "Unauthenticated visitors can supply cfsPreFill=1 and field GET parameters that overwrite Contact Form field values. Those values are embedded into HTML/CSS that Twig_Environment(new Twig_Loader_String()) renders without a sandbox, enabling Twig SSTI that reaches system/exec via registerUndefinedFilterCallback. Verified by Iridium (CVE-2026-4257, finding 0, JOB-WP-VERIFY).",
+      "file_path": "modules/forms/views/forms.php",
+      "line_number": 0,
+      "scanner_name": "wp.rce.shell_exec",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-4257",
+        "file": "findings/cfsprefill-cve-2026-4257/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-4257",
+        "file": "findings/cfsprefill-cve-2026-4257/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "security-malware-firewall-cve-2026-3392",
+      "app_name": "CleanTalk Security & Malware Scan",
+      "repo_url": "https://wordpress.org/plugins/security-malware-firewall/",
+      "stars": 200000,
+      "severity": "high",
+      "finding_title": "CleanTalk Security sensitive uploads log disclosure (CVE-2026-3392) [CVE-2026-3392, CVE-2026-66593]",
+      "finding_summary": "Unauthenticated callers trigger a debug/request logger that `file_put_contents` dumps raw request data and the site API token (`spbc_key` / `api_key`) into a publicly reachable `/wp-content/uploads/` subdirectory. Fetching the `.log` URL discloses the token without authentication. Verified by Iridium (CVE-2026-3392, CVE-2026-66593, finding 30534, JOB-306DC0).",
+      "file_path": "security-malware-firewall.php",
+      "line_number": 0,
+      "scanner_name": "wp.info.uploads_sensitive_log",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-3392",
+        "file": "findings/security-malware-firewall-cve-2026-3392/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-3392",
+        "file": "findings/security-malware-firewall-cve-2026-3392/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "cm-map-locations-cve-2026-16601",
+      "app_name": "CM Map Locations",
+      "repo_url": "https://wordpress.org/plugins/cm-map-locations/",
+      "stars": 3000,
+      "severity": "critical",
+      "finding_title": "CM Map Locations nopriv arbitrary upload (CVE-2026-16601)",
+      "finding_summary": "Nopriv AJAX `cmloc_route_image_upload` accepts multipart uploads and calls `Attachment::uploadMedia` / `move_uploaded_file` without capability checks or extension allowlists (CVE-2026-16601). Wrong triage class was option_overwrite \u2014 real impact is arbitrary upload. Verified by Iridium (CVE-2026-16601, finding 30898, JOB-E62711).",
+      "file_path": "cm-map-locations.php",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_upload",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-16601",
+        "file": "findings/cm-map-locations-cve-2026-16601/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-16601",
+        "file": "findings/cm-map-locations-cve-2026-16601/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "wordpress-core-xss2shell-cve-2026-64638",
+      "app_name": "WordPress Core (REST API)",
+      "repo_url": "https://github.com/WordPress/WordPress",
+      "stars": 60000000,
+      "severity": "high",
+      "finding_title": "WordPress Core XSS2Shell open REST privileged mutation (CVE-2026-64638 class)",
+      "finding_summary": "Real CVE-2026-64638 is pre-auth XSS on wp-login.php chaining into an active admin session (XSS2Shell). Transferable Iridium signal: unauth REST with `__return_true` that mutates privileged options/usermeta while login reflection remains unescaped. Verified by Iridium (CVE-2026-64638, finding 30841, JOB-F4E725).",
+      "file_path": "wordpress-core-xss2shell.php",
+      "line_number": 0,
+      "scanner_name": "wp.rest.open_permission",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-64638",
+        "file": "findings/wordpress-core-xss2shell-cve-2026-64638/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-64638",
+        "file": "findings/wordpress-core-xss2shell-cve-2026-64638/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "divi-cve-2020-35945",
+      "app_name": "Divi Theme / Builder",
+      "repo_url": "https://www.elegantthemes.com/gallery/divi/",
+      "stars": 700000,
+      "severity": "critical",
+      "finding_title": "Divi Builder et_pb_upload_library_item multipart upload (CVE-2020-35945)",
+      "finding_summary": "Authenticated callers (contributor+) POST multipart to `admin-ajax.php?action=et_pb_upload_library_item`. The library upload path lacks a strong server-side extension allowlist, so attacker-controlled filenames such as `iridium_probe.php` land under `wp-content/uploads/et-pb-library/`. Verified by Iridium (CVE-2020-35945, finding 28835, JOB-5CF69D).",
+      "file_path": "divi-builder.php",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_upload",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2020-35945",
+        "file": "findings/divi-cve-2020-35945/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2020-35945",
+        "file": "findings/divi-cve-2020-35945/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "divi-cve-2023-32238",
+      "app_name": "Divi Theme / Builder",
+      "repo_url": "https://www.elegantthemes.com/gallery/divi/",
+      "stars": 700000,
+      "severity": "critical",
+      "finding_title": "Divi-class theme template override path injection (locate_template / get_template_part) (CVE-2023-32238)",
+      "finding_summary": "Unauthenticated callers pass directory traversal or absolute paths in theme template override parameters (`et_template` / `et_pb_template`), which reach `locate_template()` / `get_template_part()` / `include` without basename or allowlist checks. Verified by Iridium (CVE-2023-32238, finding 28835, JOB-5CF69D).",
+      "file_path": "divi/divi.php",
+      "line_number": 0,
+      "scanner_name": "wp.lfi.user_include",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2023-32238",
+        "file": "findings/divi-cve-2023-32238/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2023-32238",
+        "file": "findings/divi-cve-2023-32238/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "drag-and-drop-multiple-file-upload-contact-form-7-cve-2026-18781",
+      "app_name": "Drag and Drop Multiple File Upload \u2013 CF7",
+      "repo_url": "https://wordpress.org/plugins/drag-and-drop-multiple-file-upload-contact-form-7/",
+      "stars": 400000,
+      "severity": "critical",
+      "finding_title": "DND CF7 control-character filename AFU (CVE-2026-18781)",
+      "finding_summary": "`dnd_codedropz_upload` validates the upload extension before control characters are stripped from the multipart filename. A name such as `\\x01evil.pha\\x01r` passes the denylist as `pha\\x01r`, then becomes `evil.phar` on disk (same path for `.htaccess`). Requires a Contact Form 7 `[mfile]` field with `filetypes:*`. Verified by Iridium (CVE-2026-18781, finding 0, JOB-WP-VERIFY).",
+      "file_path": "inc/dnd-upload-cf7.php",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_upload",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-18781",
+        "file": "findings/drag-and-drop-multiple-file-upload-contact-form-7-cve-2026-18781/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-18781",
+        "file": "findings/drag-and-drop-multiple-file-upload-contact-form-7-cve-2026-18781/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "drag-and-drop-file-upload-for-elementor-forms-cve-2026-18351",
+      "app_name": "Drag and Drop File Upload for Elementor Forms",
+      "repo_url": "https://wordpress.org/plugins/drag-and-drop-file-upload-for-elementor-forms/",
+      "stars": 10000,
+      "severity": "critical",
+      "finding_title": "DND Elementor Forms elementor_file_upload type-param allowlist regex-key bypass (CVE-2026-18351)",
+      "finding_summary": "Unauthenticated callers POST multipart to `admin-ajax.php?action=elementor_file_upload`. `is_file_type_valid()` keys its extension/MIME allowlist map with the attacker-controlled `type` parameter and feeds the result to `wp_check_filetype()`. Sending `type=php.?` makes the regex fragment match `iridium_probe.php?`, so the captured extension `php?` escapes the dangerous-extension blacklist; `sanitize_file_name()` then strips the trailing `?` and `wp_handle_upload()` stores the file as `iridium_probe.php` under `wp-content/uploads/elementor/forms/temp/`. Verified by Iridium (CVE-2026-18351, finding 49557, JOB-17FAE9).",
+      "file_path": "drag-and-drop-file-upload-for-elementor-forms/fields/file_upload.php",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_upload",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-18351",
+        "file": "findings/drag-and-drop-file-upload-for-elementor-forms-cve-2026-18351/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-18351",
+        "file": "findings/drag-and-drop-file-upload-for-elementor-forms-cve-2026-18351/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "dnd-upload-cf7-cve-2025-2941",
+      "app_name": "Drag and Drop Multiple File Upload for WooCommerce",
+      "repo_url": "https://wordpress.org/plugins/drag-and-drop-multiple-file-upload-for-woocommerce/",
+      "stars": 10000,
+      "severity": "critical",
+      "finding_title": "DND WC Arbitrary File Move (CVE-2025-2941)",
+      "finding_summary": "Unauthenticated callers pass directory traversal paths in cart item data parameters, causing `rename()` to move arbitrary server files into public upload directories. Verified by Iridium (CVE-2025-2941, finding 0, JOB-WP-VERIFY).",
+      "file_path": "inc/dnd-upload-cf7.php",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_move",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2025-2941",
+        "file": "findings/dnd-upload-cf7-cve-2025-2941/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2025-2941",
+        "file": "findings/dnd-upload-cf7-cve-2025-2941/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "dynamic-hook-dispatcher-cve-2024-34370",
+      "app_name": "Uncanny Automator / Dynamic Hook Dispatcher",
+      "repo_url": "https://wordpress.org/plugins/uncanny-automator/",
+      "stars": 40000,
+      "severity": "critical",
+      "finding_title": "Dynamic hook dispatcher \u2014 unchecked do_action/apply_filters hook-name injection (CVE-2024-34370)",
+      "finding_summary": "An ungated AJAX handler concatenates attacker-controlled request parameters into WordPress hook names passed to `do_action()` / `apply_filters()` without capability checks, nonces, or an allowlist. Callers can fire privileged internal action callbacks that mutate sensitive options (e.g. `users_can_register`). Verified by Iridium (CVE-2024-34370, finding 28883, JOB-8CA9E7).",
+      "file_path": "dynamic-hook-dispatcher/dynamic-hook-dispatcher.php",
+      "line_number": 0,
+      "scanner_name": "wp.automator.dynamic_action",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2024-34370",
+        "file": "findings/dynamic-hook-dispatcher-cve-2024-34370/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2024-34370",
+        "file": "findings/dynamic-hook-dispatcher-cve-2024-34370/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "elementor-pro-cve-2026-32475",
+      "app_name": "Elementor Pro",
+      "repo_url": "https://elementor.com/pro/",
+      "stars": 5000000,
+      "severity": "critical",
+      "finding_title": "Elementor Pro forms multi_part_array_bypass upload (CVE-2026-32475)",
+      "finding_summary": "Unauthenticated callers POST multipart to `admin-ajax.php?action=elementor_pro_forms_send_form`. Validation iterates `$_FILES['form_fields']` and escapes early on an empty `[0]` part while the unvalidated `[1]` PHP payload is written under `wp-content/uploads/elementor/forms/`. Verified by Iridium (CVE-2026-32475, finding 34174, JOB-3CAF1F).",
+      "file_path": "modules/forms/fields/upload.php",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_upload",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-32475",
+        "file": "findings/elementor-pro-cve-2026-32475/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-32475",
+        "file": "findings/elementor-pro-cve-2026-32475/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "wp-file-manager-cve-2020-25213",
+      "app_name": "WP File Manager",
+      "repo_url": "https://wordpress.org/plugins/wp-file-manager/",
+      "stars": 1000000,
+      "severity": "critical",
+      "finding_title": "WP File Manager exposed elFinder connector.minimal.php arbitrary upload (CVE-2020-25213)",
+      "finding_summary": "Unauthenticated callers POST multipart to the publicly reachable `connector.minimal.php` elFinder endpoint. There is no WordPress auth gate; the connector writes the attacker filename under `lib/files` / uploads. Verified by Iridium (CVE-2020-25213, finding 28409, JOB-3FE701).",
+      "file_path": "lib/php/connector.minimal.php",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_upload",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2020-25213",
+        "file": "findings/wp-file-manager-cve-2020-25213/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2020-25213",
+        "file": "findings/wp-file-manager-cve-2020-25213/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "erp-cve-2026-18080",
+      "app_name": "WP ERP",
+      "repo_url": "https://wordpress.org/plugins/erp/",
+      "stars": 10000,
+      "severity": "critical",
+      "finding_title": "WEDevs ERP GmailSync save_attachments inbound mail AFU (CVE-2026-18080)",
+      "finding_summary": "`GmailSync::save_attachments` (and the IMAP twin path) writes attachment `name` under `wp-content/uploads/crm-attachments/` via `put_contents` without sanitizing `../` traversal. A crafted inbound email attachment name escapes into web-reachable uploads. Verified by Iridium (CVE-2026-18080, finding 0, JOB-WP-VERIFY).",
+      "file_path": "modules/crm/includes/GmailSync.php",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_upload",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-18080",
+        "file": "findings/erp-cve-2026-18080/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-18080",
+        "file": "findings/erp-cve-2026-18080/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "everest-forms-cve-2026-10196",
+      "app_name": "Everest Forms",
+      "repo_url": "https://wordpress.org/plugins/everest-forms/",
+      "stars": 100000,
+      "severity": "critical",
+      "finding_title": "Everest Forms stored entry-meta PHP object injection (CVE-2026-3296) (CVE-2026-10196, CVE-2026-3296, CVE-2026-78175)",
+      "finding_summary": "Public Everest Forms fields are stored in `evf_entrymeta` and later `unserialize($meta_value)`'d in the admin entries view without `allowed_classes` (CVE-2026-3296 / SEOPress stored_meta_poi class). Verified by Iridium (CVE-2026-10196, CVE-2026-3296, CVE-2026-78175, finding 34538, JOB-AFC3BC).",
+      "file_path": "includes/admin/views/html-admin-page-entries-view.php",
+      "line_number": 0,
+      "scanner_name": "wp.deserial.stored_meta_poi",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-10196",
+        "file": "findings/everest-forms-cve-2026-10196/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-10196",
+        "file": "findings/everest-forms-cve-2026-10196/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "fileaway-cve-2025-2512",
+      "app_name": "File Away",
+      "repo_url": "https://wordpress.org/plugins/file-away/",
+      "stars": 15000,
+      "severity": "critical",
+      "finding_title": "File Away fileaway-manager act=upload (CVE-2025-2512)",
+      "finding_summary": "Unauthenticated callers POST multipart to `admin-ajax.php?action=fileaway-manager` with `act=upload`. There is no `current_user_can()`; extension checks miss `.pht`. Verified by Iridium (CVE-2025-2512, finding 0, JOB-WP-VERIFY).",
+      "file_path": "lib/cls/class.fileaway_management.php",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_upload",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2025-2512",
+        "file": "findings/fileaway-cve-2025-2512/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2025-2512",
+        "file": "findings/fileaway-cve-2025-2512/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "flex-qr-code-generator-cve-2025-10041",
+      "app_name": "Flex QR Code Generator",
+      "repo_url": "https://wordpress.org/plugins/flex-qr-code-generator/",
+      "stars": 2000,
+      "severity": "critical",
+      "finding_title": "QR JSON + multipart logo/qr_image AFU (Flex QR CVE-2025-10041 class)",
+      "finding_summary": "Nopriv AJAX (`flexqr_save_qr` / `flexqr_update_qr`) accepts attacker `qrData` JSON then `move_uploaded_file` for `logo` / `qr_image` without a capability gate or executable-extension deny list. Verified by Iridium (CVE-2025-10041, finding 0, JOB-WP-VERIFY).",
+      "file_path": "flex-qr-code-generator/qr-code-generator.php",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_upload",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2025-10041",
+        "file": "findings/flex-qr-code-generator-cve-2025-10041/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2025-10041",
+        "file": "findings/flex-qr-code-generator-cve-2025-10041/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "fancy-product-designer-cve-2024-13845",
+      "app_name": "Fancy Product Designer",
+      "repo_url": "https://fancyproductdesigner.com/",
+      "stars": 25000,
+      "severity": "high",
+      "finding_title": "Fancy Product Designer TOCTOU image-fetch SSRF (CVE-2024-13845)",
+      "finding_summary": "An unauthenticated caller POSTs to `admin-ajax.php?action=fpd_upload_image` with attacker-controlled `image_url`. The handler validates scheme (and optionally snapshots DNS via `gethostbynamel`) in step 1, sleeps, then fetches the original URL in step 2 with `wp_remote_get` without re-pinning the resolved IP \u2014 enabling DNS rebinding / redirect flips to internal targets (CVE-2024-13845 class). Verified by Iridium (CVE-2024-13845, finding 28554, JOB-45B227).",
+      "file_path": "inc/upload-handler.php",
+      "line_number": 0,
+      "scanner_name": "wp.ssrf.toctou",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2024-13845",
+        "file": "findings/fancy-product-designer-cve-2024-13845/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2024-13845",
+        "file": "findings/fancy-product-designer-cve-2024-13845/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "fusion-builder-cve-2026-8713",
+      "app_name": "Avada Fusion Builder",
+      "repo_url": "https://avada.com/",
+      "stars": 150000,
+      "severity": "critical",
+      "finding_title": "Fusion Builder privacy delete (CVE-2026-8713)",
+      "finding_summary": "Unauth `fusion_form_submit_ajax` privacy-delete path calls `wp_delete_file` on attacker-controlled paths (CVE-2026-8713). Verified by Iridium (CVE-2026-8713, finding 38450, JOB-4A89B1).",
+      "file_path": "fusion-builder.php",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_deletion",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-8713",
+        "file": "findings/fusion-builder-cve-2026-8713/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-8713",
+        "file": "findings/fusion-builder-cve-2026-8713/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "geo-my-wp-cve-2026-85200",
+      "app_name": "GEO my WP",
+      "repo_url": "https://wordpress.org/plugins/geo-my-wp/",
+      "stars": 10000,
+      "severity": "critical",
+      "finding_title": "Broken realpath allowlist then include original path (GEO my WP CVE-2026-85200 class)",
+      "finding_summary": "Unauthenticated AJAX callers supply an absolute or traversal path in nested form fields (e.g. `form[info_window_template][content_path]`). The handler validates with `realpath()` / `strpos` allowlisting, then `require`/`include`s the **original** attacker expression \u2014 or builds the allowlist root as `realpath(...).DIRECTORY_SEPARATOR` (false concatenates to `/`). Verified by Iridium (CVE-2026-85200, finding 58832, JOB-99A94A).",
+      "file_path": "plugins/posts-locator/includes/gmw-posts-locator-functions.php",
+      "line_number": 0,
+      "scanner_name": "wp.lfi.user_include",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-85200",
+        "file": "findings/geo-my-wp-cve-2026-85200/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-85200",
+        "file": "findings/geo-my-wp-cve-2026-85200/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "gutenberg-block-ssr-cve-2024-2039",
+      "app_name": "Gutenberg Block SSR Renderer",
+      "repo_url": "https://wordpress.org/plugins/gutenberg/",
+      "stars": 500000,
+      "severity": "high",
+      "finding_title": "Gutenberg block-renderer unsanitized attribute SSR XSS (CVE-2024-2039, CVE-2024-31110, CVE-2024-31111)",
+      "finding_summary": "A dynamic Gutenberg block registers `render_callback` that echoes attacker-controlled block attributes without escaping. Contributors (or higher) can trigger the sink through WordPress core REST `/wp-json/wp/v2/block-renderer/<block>` (ServerSideRender), reflecting raw HTML/JS into the rendered payload. Verified by Iridium (CVE-2024-2039, CVE-2024-31110, CVE-2024-31111, finding 28880, JOB-EE1D33).",
+      "file_path": "gutenberg-block-ssr/gutenberg-block-ssr.php",
+      "line_number": 0,
+      "scanner_name": "wp.block.unescaped_attr",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2024-2039",
+        "file": "findings/gutenberg-block-ssr-cve-2024-2039/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2024-2039",
+        "file": "findings/gutenberg-block-ssr-cve-2024-2039/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "hash-form-cve-2026-81780",
+      "app_name": "Hash Form \u2013 Drag & Drop Form Builder",
+      "repo_url": "https://wordpress.org/plugins/hash-form/",
+      "stars": 5000,
+      "severity": "critical",
+      "finding_title": "Hash Form Fine Uploader XHR qqfile upload (CVE-2026-81780)",
+      "finding_summary": "Unauthenticated callers POST raw octets to `admin-ajax.php?action=hashform_file_upload_action&qqfile=\u2026`. Empty filtered `allowedExtensions` is treated as unrestricted; files land under `wp-content/uploads/hashform/`. Verified by Iridium (CVE-2026-81780, finding 27635, JOB-070A46).",
+      "file_path": "admin/classes/HashFormUploader.php",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_upload",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-81780",
+        "file": "findings/hash-form-cve-2026-81780/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-81780",
+        "file": "findings/hash-form-cve-2026-81780/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "hide-my-wp-cve-2026-81806",
+      "app_name": "Hide My WP Ghost",
+      "repo_url": "https://wordpress.org/plugins/hide-my-wp/",
+      "stars": 200000,
+      "severity": "high",
+      "finding_title": "Hide My WP Ghost unauthenticated file-proxy SSRF via hmwp_url (CVE-2026-81806)",
+      "finding_summary": "Hide My WP Ghost (and siblings) rebuild the request URL from client-controlled `HTTP_HOST` + attacker `hmwp_url` (when dynamic file mapping is enabled) inside `getCurrentURL`, then `showFile` forwards matching `wp-json` paths with `wp_remote_get` / `wp_remote_post`. A Host userinfo breakout (`Host: site@127.0.0.1:8888`) plus path-only `hmwp_url=/wp-json/...` (getValue strips `@`/`:`) makes the WordPress server request arbitrary destinations (CVE-2026-81806). Verified by Iridium (CVE-2026-81806, finding 59981, JOB-97394E).",
+      "file_path": "models/Files.php",
+      "line_number": 0,
+      "scanner_name": "wp.ssrf.user_url",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-81806",
+        "file": "findings/hide-my-wp-cve-2026-81806/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-81806",
+        "file": "findings/hide-my-wp-cve-2026-81806/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "icontrolwp-cve-2026-34901",
+      "app_name": "Shield Security / iControlWP",
+      "repo_url": "https://wordpress.org/plugins/worpit-admin-dashboard-plugin/",
+      "stars": 50000,
+      "severity": "critical",
+      "finding_title": "iControlWP / Worpit Unauthenticated Link\u2192Auth Privilege Escalation (CVE-2026-34901)",
+      "finding_summary": "On a fresh/unlinked install, unauthenticated callers can leak the plugin `auth_key` via `geticwppluginurl=1`, link the site with an attacker-chosen pin through `worpit_link` without an OpenSSL signature, then call `icwpapi` `m=auth` to obtain a WordPress administrator session cookie via `setAuthorizedUser()` in `src/processors/plugin_api.php:1`. Verified by Iridium (CVE-2026-34901, finding 0, JOB-WP-VERIFY).",
+      "file_path": "src/processors/plugin_api.php",
+      "line_number": 0,
+      "scanner_name": "wp.auth.insecure_login",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-34901",
+        "file": "findings/icontrolwp-cve-2026-34901/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-34901",
+        "file": "findings/icontrolwp-cve-2026-34901/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "ai-engine-cve-2026-96561",
+      "app_name": "AI Engine",
+      "repo_url": "https://wordpress.org/plugins/ai-engine/",
+      "stars": 100000,
+      "severity": "high",
+      "finding_title": "Key-canon denylist bypass \u2192 error_log \u2192 advisor stored XSS (CVE-2026-96561)",
+      "finding_summary": "A public chatbot/REST handler strips sensitive keys by exact name (e.g. `model`) before `convert_keys` / snake\u2192camel canonicalization. Trailing-underscore aliases such as `model_` survive the denylist, become `model`, and are embedded in Exception messages that `error_log()` writes with CR/LF intact. An Advisor/dashboard path later echoes log-derived option content without `esc_html`. Verified by Iridium (CVE-2026-96561, finding 0, JOB-WP-VERIFY).",
+      "file_path": "classes/modules/chatbot.php",
+      "line_number": 0,
+      "scanner_name": "wp.xss.key_canon_log",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-96561",
+        "file": "findings/ai-engine-cve-2026-96561/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-96561",
+        "file": "findings/ai-engine-cve-2026-96561/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "kirki-cve-2026-17037",
+      "app_name": "Kirki Customizer Framework",
+      "repo_url": "https://wordpress.org/plugins/kirki/",
+      "stars": 400000,
+      "severity": "high",
+      "finding_title": "Kirki unauthenticated stored XSS via REST kirki-comment (CVE-2026-17037)",
+      "finding_summary": "`handle_post_comment` on REST `KirkiComponentLibrary/v1/kirki-comment` accepts the `comment` parameter, runs `sanitize_text_field` without `html_entity_decode`, and persists into `comment_content` (including raw `$wpdb->update` on edit). Entity-encoded markup survives storage and executes when a user views an injected page/admin comments list (CVE-2026-17037). Patched in 6.2.1. Verified by Iridium (CVE-2026-17037, finding 59370, JOB-30602F).",
+      "file_path": "ComponentLibrary/controller/CompLibFormHandler.php",
+      "line_number": 0,
+      "scanner_name": "wp.meta.unescaped",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-17037",
+        "file": "findings/kirki-cve-2026-17037/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-17037",
+        "file": "findings/kirki-cve-2026-17037/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "kubio-cve-2025-2294",
+      "app_name": "Kubio AI Page Builder",
+      "repo_url": "https://wordpress.org/plugins/kubio/",
+      "stars": 200000,
+      "severity": "critical",
+      "finding_title": "Kubio Page Builder Local File Inclusion (CVE-2025-2294)",
+      "finding_summary": "Unauthenticated callers pass directory traversal sequences in template parameters, reaching `include`/`require` sinks without sanitization. Verified by Iridium (CVE-2025-2294, finding 22697, JOB-EBB8FB).",
+      "file_path": "lib/integrations/third-party-themes/editor-hooks.php",
+      "line_number": 0,
+      "scanner_name": "wp.lfi.user_include",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2025-2294",
+        "file": "findings/kubio-cve-2025-2294/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2025-2294",
+        "file": "findings/kubio-cve-2025-2294/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "litespeed-cve-2024-28000",
+      "app_name": "LiteSpeed Cache",
+      "repo_url": "https://wordpress.org/plugins/litespeed-cache/",
+      "stars": 6000000,
+      "severity": "critical",
+      "finding_title": "LiteSpeed Cache Cookie Role Simulation (CVE-2024-28000)",
+      "finding_summary": "Unauthenticated callers who can supply matching `litespeed.router.hash` cookies (`litespeed_role` + `litespeed_hash`) trigger `is_role_simulation()` in `src/router.cls.php:1`, which calls `wp_set_current_user()` for an attacker-chosen user id without a cryptographic authentication check. Verified by Iridium (CVE-2024-28000, finding 22544, JOB-EC2F87).",
+      "file_path": "src/router.cls.php",
+      "line_number": 0,
+      "scanner_name": "wp.auth.weak_cookie_role_sim",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2024-28000",
+        "file": "findings/litespeed-cve-2024-28000/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2024-28000",
+        "file": "findings/litespeed-cve-2024-28000/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "live-composer-cve-2026-16502",
+      "app_name": "Live Composer Page Builder",
+      "repo_url": "https://wordpress.org/plugins/live-composer-page-builder/",
+      "stars": 50000,
+      "severity": "critical",
+      "finding_title": "Live Composer contributor shortcode PHP object injection (CVE-2026-16502)",
+      "finding_summary": "A Contributor (or higher) can plant a shortcode whose body is a serialized PHP object. The registered callback calls `unserialize($content)` / `unserialize($atts)` without `allowed_classes => false`, so rendering the post instantiates the object (CVE-2026-16502 class). Wordfence rates this High because a POP chain in another plugin/theme/core can escalate to RCE or file operations. Verified by Iridium (CVE-2026-16502, finding 63411, JOB-B2B332).",
+      "file_path": "modules/blog/module.php",
+      "line_number": 0,
+      "scanner_name": "wp.deserial.shortcode_body",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-16502",
+        "file": "findings/live-composer-cve-2026-16502/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-16502",
+        "file": "findings/live-composer-cve-2026-16502/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "master-addons-cve-2026-62089",
+      "app_name": "Master Addons for Elementor",
+      "repo_url": "https://wordpress.org/plugins/master-addons/",
+      "stars": 50000,
+      "severity": "high",
+      "finding_title": "Master Addons popup_id post object BAC (CVE-2026-62089)",
+      "finding_summary": "Authenticated AJAX handlers accept attacker-controlled post/popup IDs and call wp_delete_post / wp_update_post after only check_ajax_referer \u2014 no current_user_can('edit_post'|'delete_post', $id). Verified by Iridium (CVE-2026-62089, finding 0, JOB-WP-VERIFY).",
+      "file_path": "inc/admin/popup-builder/class-popup-admin.php",
+      "line_number": 0,
+      "scanner_name": "wp.ajax.post_object_bac",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-62089",
+        "file": "findings/master-addons-cve-2026-62089/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-62089",
+        "file": "findings/master-addons-cve-2026-62089/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "masteriyo-cve-2026-73996",
+      "app_name": "Masteriyo LMS",
+      "repo_url": "https://wordpress.org/plugins/learning-management-system/",
+      "stars": 20000,
+      "severity": "critical",
+      "finding_title": "Masteriyo LMS REST chunked import create_file AFU (CVE-2026-73996)",
+      "finding_summary": "A low-privilege authenticated user who can create courses can POST multipart to the Masteriyo REST courses/import endpoint with attacker-controlled fileName + chunkIndex/totalChunks. FileHandler::create_file writes under wp-content/uploads/masteriyo/import/courses/ before the JSON-only allowlist that applies only to the non-chunked path. Verified by Iridium (CVE-2026-73996, finding 0, JOB-WP-VERIFY).",
+      "file_path": "learning-management-system/includes/RestApi/Controllers/Version1/CoursesImportExportController.php",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_upload",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-73996",
+        "file": "findings/masteriyo-cve-2026-73996/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-73996",
+        "file": "findings/masteriyo-cve-2026-73996/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "mime-filter-injection-cve-2023-40000",
+      "app_name": "WordPress Upload Mime Filter Class",
+      "repo_url": "https://wordpress.org/plugins/",
+      "stars": 25000,
+      "severity": "critical",
+      "finding_title": "Upload mime filter injection \u2014 add_filter(upload_mimes / wp_check_filetype_and_ext) (CVE-2023-40000)",
+      "finding_summary": "An ungated AJAX (or shortcode init) handler calls `add_filter('upload_mimes', \u2026)` and/or `add_filter('wp_check_filetype_and_ext', \u2026)` without capability or nonce checks. Once planted, these filters globally relax WordPress extension policy so `.php` uploads succeed via the handler and on standard media endpoints. Verified by Iridium (CVE-2023-40000, finding 28887, JOB-EF5AB5).",
+      "file_path": "mime-filter-injection/mime-filter-injection.php",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_upload",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2023-40000",
+        "file": "findings/mime-filter-injection-cve-2023-40000/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2023-40000",
+        "file": "findings/mime-filter-injection-cve-2023-40000/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "ms-switch-blog-bac-cve-2026-65640",
+      "app_name": "WordPress Multisite switch_to_blog Class",
+      "repo_url": "https://github.com/WordPress/WordPress",
+      "stars": 60000000,
+      "severity": "critical",
+      "finding_title": "Multisite switch_to_blog BAC \u2014 missing current_user_can_for_blog (CVE-2026-65640 class)",
+      "finding_summary": "A low-privilege authenticated caller POSTs to `admin-ajax.php?action=iridium_ms_switch_mutate` (or equivalent network/sub-site management AJAX) with attacker-controlled `blog_id`. The handler calls `switch_to_blog($blog_id)` then creates/promotes an administrator / mutates options without `current_user_can_for_blog()` or `current_user_can_for_site()` \u2014 Site A abusing context switching against Site B. Verified by Iridium (CVE-2026-65640, finding 28890, JOB-A5553F).",
+      "file_path": "ms-switch-blog-bac/ms-switch-blog-bac.php",
+      "line_number": 0,
+      "scanner_name": "wp.user.role_assignment",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-65640",
+        "file": "findings/ms-switch-blog-bac-cve-2026-65640/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-65640",
+        "file": "findings/ms-switch-blog-bac-cve-2026-65640/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "ninja-forms-uploads-cve-2026-0740",
+      "app_name": "Ninja Forms File Uploads",
+      "repo_url": "https://ninjaforms.com/extensions/file-uploads/",
+      "stars": 50000,
+      "severity": "critical",
+      "finding_title": "Ninja Forms Uploads nf_fu_upload arbitrary upload (CVE-2026-0740 class)",
+      "finding_summary": "Unauthenticated callers POST multipart to `admin-ajax.php?action=nf_fu_upload` with no capability/nonce/extension gate; files land under `uploads/ninja-forms/`. Verified by Iridium (CVE-2026-0740, finding 0, JOB-WP-VERIFY).",
+      "file_path": "ninja-forms-uploads.php",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_upload",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-0740",
+        "file": "findings/ninja-forms-uploads-cve-2026-0740/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-0740",
+        "file": "findings/ninja-forms-uploads-cve-2026-0740/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "nokri-cve-2023-32243",
+      "app_name": "Nokri Job Board Theme",
+      "repo_url": "https://themeforest.net/item/nokri-job-board-wordpress-theme/22520956",
+      "stars": 8000,
+      "severity": "critical",
+      "finding_title": "Nokri empty reset token ATO (CVE-2026-18550) (CVE-2023-32243, CVE-2026-18350, CVE-2026-18550)",
+      "finding_summary": "`nokri_reset_password` accepts an empty reset token and calls `reset_password` without `check_password_reset_key` (CVE-2026-18550; sometimes miscited as CVE-2026-18350). Same class as Essential Addons CVE-2023-32243. Verified by Iridium (CVE-2023-32243, CVE-2026-18350, CVE-2026-18550, finding 37241, JOB-D2E84D).",
+      "file_path": "nokri.php",
+      "line_number": 0,
+      "scanner_name": "wp.auth.insecure_login",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2023-32243",
+        "file": "findings/nokri-cve-2023-32243/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2023-32243",
+        "file": "findings/nokri-cve-2023-32243/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "perfmatters-cve-2026-4350",
+      "app_name": "Perfmatters",
+      "repo_url": "https://perfmatters.io/",
+      "stars": 150000,
+      "severity": "critical",
+      "finding_title": "Perfmatters PMCS delete unlink (CVE-2026-4350)",
+      "finding_summary": "`PMCS::action_handler` / AJAX passes `$_GET['delete']` to `unlink` without uploads confinement (Perfmatters CVE-2026-4350). Verified by Iridium (CVE-2026-4350, finding 38450, JOB-4A89B1).",
+      "file_path": "perfmatters.php",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_deletion",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-4350",
+        "file": "findings/perfmatters-cve-2026-4350/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-4350",
+        "file": "findings/perfmatters-cve-2026-4350/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "php-everywhere-cve-2022-24663",
+      "app_name": "PHP Everywhere",
+      "repo_url": "https://wordpress.org/plugins/php-everywhere/",
+      "stars": 30000,
+      "severity": "critical",
+      "finding_title": "PHP Everywhere block attr eval (CVE-2022-24663)",
+      "finding_summary": "Low-privileged users (subscriber+) can execute arbitrary PHP through the `[php_everywhere]` shortcode and/or the PHP Everywhere Gutenberg block. `shortcode.php` `eval()`s shortcode content and `php_everywhere_code` post meta; `block/front/block.php` `eval()`s `urldecode(base64_decode($attributes['code']))`. PoC must write content then render \u2014 not a public-nonce REST eval claim. Verified by Iridium (CVE-2022-24663, finding 24330, JOB-2BD170).",
+      "file_path": "block/front/block.php",
+      "line_number": 0,
+      "scanner_name": "wp.rce.ajax_eval",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2022-24663",
+        "file": "findings/php-everywhere-cve-2022-24663/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2022-24663",
+        "file": "findings/php-everywhere-cve-2022-24663/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "pie-forms-for-wp-cve-2025-12528",
+      "app_name": "Pie Forms for WordPress",
+      "repo_url": "https://wordpress.org/plugins/pie-forms-for-wp/",
+      "stars": 5000,
+      "severity": "critical",
+      "finding_title": "Pie Forms format_classic control-flow upload (CVE-2025-12528)",
+      "finding_summary": "Unauthenticated visitors submit a public Pie Forms page with a file field. `validate_classic` / `validate_extension` populate `task->errors` for disallowed extensions, but `format_classic` still calls `move_uploaded_file` \u2014 so `.pht`/dangerous extensions land under `wp-content/uploads/pieforms/`. Verified by Iridium (CVE-2025-12528, finding 27928, JOB-750FB5).",
+      "file_path": "includes/fields/fileupload.php",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_upload",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2025-12528",
+        "file": "findings/pie-forms-for-wp-cve-2025-12528/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2025-12528",
+        "file": "findings/pie-forms-for-wp-cve-2025-12528/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "gf-multi-uploader-cve-2026-87796",
+      "app_name": "Gravity Forms Multi-Uploader",
+      "repo_url": "https://wordpress.org/plugins/gf-multi-uploader/",
+      "stars": 3000,
+      "severity": "critical",
+      "finding_title": "Plupload chunked assemble-before-validate arbitrary file upload (CVE-2026-87796)",
+      "finding_summary": "An unauthenticated nopriv AJAX Plupload handler assembles chunks with fopen(wb/ab)+fwrite / move_file copy into a web-accessible uploads tmp directory before validateUploadedFile. The non-chunked branch validates first (safe). An empty filtered allowedExtensions list combined with PHP `and !in_array` skips the extension gate; a JPEG+PHP polyglot named .php then passes the post-write mime fallback against get_allowed_mime_types(). Verified by Iridium (CVE-2026-87796, finding 0, JOB-WP-VERIFY).",
+      "file_path": "FileUploader.php",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_upload",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-87796",
+        "file": "findings/gf-multi-uploader-cve-2026-87796/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-87796",
+        "file": "findings/gf-multi-uploader-cve-2026-87796/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "popup-maker-cve-2026-87915",
+      "app_name": "Popup Maker",
+      "repo_url": "https://wordpress.org/plugins/popup-maker/",
+      "stars": 700000,
+      "severity": "critical",
+      "finding_title": "Popup Maker unauthenticated stored XSS via values[Name] (CVE-2026-87915)",
+      "finding_summary": "Unauthenticated AJAX `pum_sub_form` (or sibling) accepts nested `values[Name]`. Sanitization only hardens lowercase `$values['name']` via `sanitize_text_field`, while `wp_parse_args` keeps the mixed-case key and `array_change_key_case` on DB insert folds it into the canonical `name` column. The subscribers admin ListTable later renders the stored value (wp_kses post is insufficient for attribute/entity breakouts) \u2014 CVE-2026-87915 / Wordfence \u22641.24.0, patched 1.25.0. Verified by Iridium (CVE-2026-87915, finding 54377, JOB-9ED201).",
+      "file_path": "classes/Newsletters.php",
+      "line_number": 0,
+      "scanner_name": "wp.xss.case_key_store",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-87915",
+        "file": "findings/popup-maker-cve-2026-87915/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-87915",
+        "file": "findings/popup-maker-cve-2026-87915/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "quick-playground-cve-2026-1830",
+      "app_name": "Quick Playground",
+      "repo_url": "https://wordpress.org/plugins/quick-playground/",
+      "stars": 2000,
+      "severity": "high",
+      "finding_title": "Quick Playground REST Open Permission Bypass (CVE-2026-1830)",
+      "finding_summary": "Unauthenticated callers access administrative REST routes because `permission_callback` returns `__return_true` or checks spoofable headers. Verified by Iridium (CVE-2026-1830, finding 22632, JOB-A85854).",
+      "file_path": "includes/api.php",
+      "line_number": 0,
+      "scanner_name": "wp.rest.open_permission",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-1830",
+        "file": "findings/quick-playground-cve-2026-1830/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-1830",
+        "file": "findings/quick-playground-cve-2026-1830/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "breeze-cve-2026-3535",
+      "app_name": "Breeze WordPress Cache",
+      "repo_url": "https://wordpress.org/plugins/breeze/",
+      "stars": 200000,
+      "severity": "medium",
+      "finding_title": "Unauthenticated remote download_url \u2192 filesystem write AFU (CVE-2026-3535, CVE-2026-3844)",
+      "finding_summary": "When a store-locally / font-cache option is enabled, unauthenticated page renders invoke a filter/handler that calls `download_url()` (or streamed `wp_remote_get`) on attacker-controlled remote URLs and persists the response under a web-reachable cache path without `wp_check_filetype` allowlisting. Verified by Iridium (CVE-2026-3535, CVE-2026-3844, finding 48424, JOB-097545).",
+      "file_path": "inc/class-breeze-cache-cronjobs.php",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_upload",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-3535",
+        "file": "findings/breeze-cve-2026-3535/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-3535",
+        "file": "findings/breeze-cve-2026-3535/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "responsive-woo-shortcode-exec-cve-2025-15488",
+      "app_name": "Responsive Plus \u2013 Starter Templates",
+      "repo_url": "https://wordpress.org/plugins/responsive-add-ons/",
+      "stars": 40000,
+      "severity": "critical",
+      "finding_title": "Unauthenticated AJAX arbitrary shortcode execution (Responsive Add-Ons Woo free-shipping) (CVE-2025-15488)",
+      "finding_summary": "An unauthenticated caller can POST content_rech_data to admin-ajax action update_responsive_woo_free_shipping_left_shortcode. The handler feeds that string into woo_free_shipping_shortcode \u2192 woo_free_shipping_left, which runs do_shortcode($content_reached) when WooCommerce free-shipping min_amount is configured and the cart total meets it. Any registered shortcode (including privileged plugin shortcodes) executes in the site context. Verified by Iridium (CVE-2025-15488, finding 0, JOB-WP-VERIFY).",
+      "file_path": "includes/customizer/helper.php",
+      "line_number": 0,
+      "scanner_name": "wp.rce.second_order",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2025-15488",
+        "file": "findings/responsive-woo-shortcode-exec-cve-2025-15488/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2025-15488",
+        "file": "findings/responsive-woo-shortcode-exec-cve-2025-15488/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "reviewx-cve-2024-43288",
+      "app_name": "ReviewX \u2013 Multi-Criteria Rating & Reviews",
+      "repo_url": "https://wordpress.org/plugins/reviewx/",
+      "stars": 10000,
+      "severity": "high",
+      "finding_title": "ReviewX CSV formula injection via fputcsv (CVE-2024-43288)",
+      "finding_summary": "Attacker-controlled review/comment fields are stored, then written via `fputcsv()` during export without neutralizing leading `=`, `+`, `-`, or `@`. Spreadsheet apps execute the formula when an operator opens the CSV. Verified by Iridium (CVE-2024-43288, finding 28549, JOB-044BDC).",
+      "file_path": "reviewx.php",
+      "line_number": 0,
+      "scanner_name": "wp.csv.formula_injection",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2024-43288",
+        "file": "findings/reviewx-cve-2024-43288/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2024-43288",
+        "file": "findings/reviewx-cve-2024-43288/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "royal-elementor-addons-cve-2023-5360",
+      "app_name": "Royal Elementor Addons",
+      "repo_url": "https://wordpress.org/plugins/royal-elementor-addons/",
+      "stars": 300000,
+      "severity": "critical",
+      "finding_title": "Royal Elementor wpr_addons_upload_file user-controlled allowlist (CVE-2023-5360)",
+      "finding_summary": "Unauthenticated callers POST multipart to `admin-ajax.php?action=wpr_addons_upload_file`. `file_validity()` builds the extension allowlist from `$_POST['allowed_file_types']` instead of a hardcoded server array. With `allowed_file_types=phar` and `triggering_event=click`, `.phar` bypasses the exclusion list and lands under `wp-content/uploads/wpr-addons/forms/`. Verified by Iridium (CVE-2023-5360, finding 27686, JOB-FCBC8B).",
+      "file_path": "classes/modules/forms/wpr-file-upload.php",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_upload",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2023-5360",
+        "file": "findings/royal-elementor-addons-cve-2023-5360/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2023-5360",
+        "file": "findings/royal-elementor-addons-cve-2023-5360/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "buddypress-media-cve-2026-16482",
+      "app_name": "rtMedia for WordPress, BuddyPress & bbPress",
+      "repo_url": "https://wordpress.org/plugins/buddypress-media/",
+      "stars": 30000,
+      "severity": "critical",
+      "finding_title": "rtMedia nested compare SQLi via shortcode REQUEST merge (CVE-2026-16482) [CVE-2026-16482, CVE-2026-66592]",
+      "finding_summary": "Unauthenticated attackers can inject SQL through nested `compare` values on public pages that render a `buddypress-media` gallery/media shortcode. When a shortcode gate parameter is present, the query layer merges `$_REQUEST` into internal query vars while only validating top-level keys, so `privacy[compare]` (or similar) reaches a custom WHERE builder that interpolates the operator after `esc_sql` only. Verified by Iridium (CVE-2026-16482, CVE-2026-66592, finding 0, JOB-WP-VERIFY).",
+      "file_path": "app/helper/RTMediaModel.php",
+      "line_number": 0,
+      "scanner_name": "wp.sql.nested_compare",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-16482",
+        "file": "findings/buddypress-media-cve-2026-16482/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-16482",
+        "file": "findings/buddypress-media-cve-2026-16482/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "seopress-cve-2024-5488",
+      "app_name": "SEOPress",
+      "repo_url": "https://wordpress.org/plugins/wp-seopress/",
+      "stars": 300000,
+      "severity": "critical",
+      "finding_title": "SEOPress REST PHP Object Injection (CVE-2024-5488)",
+      "finding_summary": "Authenticated users pass serialized payloads into REST parameters which are directly fed to `unserialize()` without safe allowed_classes restrictions. Verified by Iridium (CVE-2024-5488, finding 0, JOB-WP-VERIFY).",
+      "file_path": "inc/admin/api.php",
+      "line_number": 0,
+      "scanner_name": "wp.deserial.rest_object_injection",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2024-5488",
+        "file": "findings/seopress-cve-2024-5488/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2024-5488",
+        "file": "findings/seopress-cve-2024-5488/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "shortpixel-cve-2026-39471",
+      "app_name": "ShortPixel Image Optimizer",
+      "repo_url": "https://wordpress.org/plugins/shortpixel-image-optimiser/",
+      "stars": 300000,
+      "severity": "critical",
+      "finding_title": "ShortPixel nested JSON post_content PHP object injection (CVE-2026-39471)",
+      "finding_summary": "An Author (or higher) can publish `post_content` that is JSON embedding a nested PHP serialized object. ShortPixel's `Replacer::replaceContent` applies `allowed_classes => false` only at the top level (`strict_check`); recursive nested values use `in_deep=true` with default `strict_check=false` and therefore `allowed_classes => true`, so URL replace / optimize flows instantiate the object (CVE-2026-39471 / Wordfence nested-JSON class). Verified by Iridium (CVE-2026-39471, finding 0, JOB-WP-VERIFY).",
+      "file_path": "build/shortpixel/replacer2/src/Replacer.php",
+      "line_number": 0,
+      "scanner_name": "wp.deserial.second_order",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-39471",
+        "file": "findings/shortpixel-cve-2026-39471/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-39471",
+        "file": "findings/shortpixel-cve-2026-39471/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "sigma-forms-cve-2025-6463",
+      "app_name": "Sigma Forms Pro",
+      "repo_url": "https://wordpress.org/plugins/sigma-forms/",
+      "stars": 2000,
+      "severity": "critical",
+      "finding_title": "Sigma Forms Pro delete_submission_files (CVE-2026-78657) (CVE-2025-6463, CVE-2025-6691, CVE-2026-78657)",
+      "finding_summary": "Attacker-controlled file paths reach `wp_delete_file` / `unlink` without uploads-dir confinement (Sigma Forms CVE-2026-78657 class; public descriptions often say file read \u2014 sink is deletion). Verified by Iridium (CVE-2025-6463, CVE-2025-6691, CVE-2026-78657, finding 38437, JOB-8EB03A).",
+      "file_path": "sigma-forms.php",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_deletion",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2025-6463",
+        "file": "findings/sigma-forms-cve-2025-6463/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2025-6463",
+        "file": "findings/sigma-forms-cve-2025-6463/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "sneeit-cve-2025-6389",
+      "app_name": "Sneeit Framework",
+      "repo_url": "https://sneeit.com/",
+      "stars": 10000,
+      "severity": "critical",
+      "finding_title": "Sneeit Framework nopriv AJAX call_user_func callback (CVE-2025-6389)",
+      "finding_summary": "Unauthenticated callers POST to `admin-ajax.php` with `action=sneeit_articles_pagination`. Attacker-controlled `callback` / `args` are passed into `call_user_func()` (dynamic-invoke execution sink). Verified by Iridium (CVE-2025-6389, finding 0, JOB-WP-VERIFY).",
+      "file_path": "sneeit-framework.php",
+      "line_number": 0,
+      "scanner_name": "wp.rce.ajax_eval",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2025-6389",
+        "file": "findings/sneeit-cve-2025-6389/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2025-6389",
+        "file": "findings/sneeit-cve-2025-6389/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "star-review-manager-cve-2026-1076",
+      "app_name": "Star Review Manager",
+      "repo_url": "https://wordpress.org/plugins/star-review-manager/",
+      "stars": 1500,
+      "severity": "high",
+      "finding_title": "Star Review Manager unsanitized CSS settings \u2192 attribute-selector nonce exfil (CVE-2026-1076)",
+      "finding_summary": "An unauthenticated (or CSRF) AJAX settings handler stores attacker-controlled CSS and echoes it into `<style>` / `admin_head` without sanitization. CSS attribute selectors such as `input[name=\"_wpnonce\"][value^=\"a\"] { background: url(//attacker/a); }` exfiltrate administrative nonces character-by-character from an admin browser session. Verified by Iridium (CVE-2026-1076, finding 28865, JOB-2128E5).",
+      "file_path": "star-review-manager/star-review-manager.php",
+      "line_number": 0,
+      "scanner_name": "wp.ajax.unescaped_param",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-1076",
+        "file": "findings/star-review-manager-cve-2026-1076/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-1076",
+        "file": "findings/star-review-manager-cve-2026-1076/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "make-search-request-cve-2025-26974",
+      "app_name": "WP Multi Store Locator",
+      "repo_url": "https://wordpress.org/plugins/wp-multi-store-locator/",
+      "stars": 3000,
+      "severity": "critical",
+      "finding_title": "Unauth AJAX store-locator radius / lat-lng SQLi (CVE-2025-26974, CVE-2026-15275)",
+      "finding_summary": "An unauthenticated AJAX action (make_search_request / maps sibling) concatenates request parameters such as store_locatore_search_radius, lat, or lng into a $wpdb query without prepare. In a numeric/unquoted SQL context, addslashes does not block injection. Verified by Iridium (CVE-2025-26974, CVE-2026-15275, finding 0, JOB-WP-VERIFY).",
+      "file_path": "class-stores-frontend.php",
+      "line_number": 0,
+      "scanner_name": "wp.sql.unprepared",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2025-26974",
+        "file": "findings/make-search-request-cve-2025-26974/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2025-26974",
+        "file": "findings/make-search-request-cve-2025-26974/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "stored-name-shortcode-exec-cve-2026-92966",
+      "app_name": "LatePoint Booking & Appointment",
+      "repo_url": "https://latepoint.com/",
+      "stars": 25000,
+      "severity": "critical",
+      "finding_title": "Stored public name \u2192 shortcode callback nested arbitrary shortcode execution (CVE-2026-92966)",
+      "finding_summary": "Unauthenticated callers can plant shortcode markup in public first_name/last_name fields (sanitize_text_field does not strip brackets). A registered shortcode later echoes that name into HTML returned into the_content. Core do_shortcode then executes the planted shortcodes. Patched siblings encode shortcode delimiters on the callback return (encode_shortcode_delimiters) or strip_shortcodes on plant/render. Verified by Iridium (CVE-2026-92966, finding 0, JOB-WP-VERIFY).",
+      "file_path": "lib/helpers/shortcodes_helper.php",
+      "line_number": 0,
+      "scanner_name": "wp.rce.second_order",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-92966",
+        "file": "findings/stored-name-shortcode-exec-cve-2026-92966/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-92966",
+        "file": "findings/stored-name-shortcode-exec-cve-2026-92966/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "super-forms-cve-2026-14894",
+      "app_name": "Super Forms",
+      "repo_url": "https://codecanyon.net/item/super-forms-drag-drop-form-builder/13979866",
+      "stars": 20000,
+      "severity": "critical",
+      "finding_title": "Super Forms nopriv superforms_upload arbitrary upload (CVE-2026-14894 class)",
+      "finding_summary": "Unauthenticated callers POST multipart to `admin-ajax.php?action=superforms_upload`. There is no capability/nonce/filetype gate; `move_uploaded_file` keeps the attacker extension under `uploads/superforms/`. Verified by Iridium (CVE-2026-14894, finding 0, JOB-WP-VERIFY).",
+      "file_path": "super-forms.php",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_upload",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-14894",
+        "file": "findings/super-forms-cve-2026-14894/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-14894",
+        "file": "findings/super-forms-cve-2026-14894/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "support-genix-cve-2026-11614",
+      "app_name": "Support Genix Helpdesk",
+      "repo_url": "https://wordpress.org/plugins/support-genix-lite/",
+      "stars": 4000,
+      "severity": "medium",
+      "finding_title": "Support Genix guest_ticket_login weak AES (CVE-2026-19806) (CVE-2026-11614, CVE-2026-19806)",
+      "finding_summary": "`guest_ticket_login` decrypts attacker-controlled `?p=` with a weak/default AES key then calls `wp_set_auth_cookie` (Support Genix CVE-2026-19806; sometimes miscited as CVE-2026-11614). Verified by Iridium (CVE-2026-11614, CVE-2026-19806, finding 38461, JOB-072201).",
+      "file_path": "modules/Apbd_wps_settings.php",
+      "line_number": 0,
+      "scanner_name": "wp.auth.sso_token_bypass",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-11614",
+        "file": "findings/support-genix-cve-2026-11614/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-11614",
+        "file": "findings/support-genix-cve-2026-11614/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "tatsu-cve-2021-25094",
+      "app_name": "Tatsu Page Builder",
+      "repo_url": "https://tatsubuilder.com/",
+      "stars": 25000,
+      "severity": "critical",
+      "finding_title": "Tatsu Builder zip/font import extract-into-uploads before validation (race RCE) (CVE-2021-25094)",
+      "finding_summary": "Unauthenticated AJAX font/asset import accepts a zip and extracts it under `wp-content/uploads/` before extension validation. Dot-prefixed `.php` shells bypass post-extract filters, creating a high-yield execution window via concurrent HTTP requests. Verified by Iridium (CVE-2021-25094, finding 28855, JOB-645F00).",
+      "file_path": "tatsu/tatsu.php",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_upload",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2021-25094",
+        "file": "findings/tatsu-cve-2021-25094/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2021-25094",
+        "file": "findings/tatsu-cve-2021-25094/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "the-events-calendar-cve-2026-78265",
+      "app_name": "The Events Calendar",
+      "repo_url": "https://wordpress.org/plugins/the-events-calendar/",
+      "stars": 700000,
+      "severity": "critical",
+      "finding_title": "The Events Calendar widget-types encode/render rehash \u2192 widget_classes_map unserialize RCE (CVE-2026-78265)",
+      "finding_summary": "A `rest_pre_dispatch` filter (`enable_widget_copy_paste`) matches `/wp/v2/widget-types/{{tribe-widget-*}}/(encode|render)`, base64-decodes attacker `instance.encoded`, and overwrites `instance.hash` with `wp_hash($serialized)` so WordPress core's `hash_equals` check accepts the blob and `unserialize()`s it. Core's widget factory then invokes `widget_classes_map` callables on the injected object graph. No capability check sits on the rehash. The sink is core unserialize after a forged integrity hash, not `eval()`. Verified by Iridium (CVE-2026-78265, finding 58267, JOB-ED9BC4).",
+      "file_path": "src/Tribe/Views/V2/Widgets/Service_Provider.php",
+      "line_number": 0,
+      "scanner_name": "wp.rce.rest_eval",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-78265",
+        "file": "findings/the-events-calendar-cve-2026-78265/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-78265",
+        "file": "findings/the-events-calendar-cve-2026-78265/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "transient-cache-poison-cve-2024-30422",
+      "app_name": "WordPress Object Cache / Transient Class",
+      "repo_url": "https://github.com/WordPress/WordPress",
+      "stars": 60000000,
+      "severity": "high",
+      "finding_title": "Object cache / transient poisoning via set_transient user key (CVE-2024-30422 class)",
+      "finding_summary": "An ungated AJAX handler accepts attacker-controlled `key`/`value` and calls `set_transient($key, $value)` (and optionally `wp_cache_set` / `$wp_object_cache->set`) without capability or nonce checks. Attackers collide with system-critical transient keys (e.g. `active_plugins`, security-header caches) so subsequent cache-hit evaluations trust poisoned values. Verified by Iridium (CVE-2024-30422, finding 28901, JOB-02ABAD).",
+      "file_path": "transient-cache-poison/transient-cache-poison.php",
+      "line_number": 0,
+      "scanner_name": "wp.transient.unauth_write",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2024-30422",
+        "file": "findings/transient-cache-poison-cve-2024-30422/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2024-30422",
+        "file": "findings/transient-cache-poison-cve-2024-30422/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "trx-addons-cve-2024-13448",
+      "app_name": "ThemeREX Addons",
+      "repo_url": "https://themerex.net/",
+      "stars": 45000,
+      "severity": "critical",
+      "finding_title": "ThemeREX Addons AI Helper upload_voice AFU (CVE-2026-1969) (CVE-2024-13448, CVE-2026-1969)",
+      "finding_summary": "Nopriv AJAX `trx_addons_ai_helper_agenerator` accepts multipart `upload_voice` and writes attacker filenames (including `.php`) under `wp-content/uploads/trx_addons/ai/` when ThemeREX theme + OpenAI/ModelsLab API token are configured. Public nonce is exposed as `TRX_ADDONS_STORAGE.ajax_nonce` (incorrect fix of CVE-2024-13448). Verified by Iridium (CVE-2024-13448, CVE-2026-1969, finding 0, JOB-WP-VERIFY).",
+      "file_path": "includes/ai-helper/agenerator.php",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_upload",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2024-13448",
+        "file": "findings/trx-addons-cve-2024-13448/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2024-13448",
+        "file": "findings/trx-addons-cve-2024-13448/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "tutor-cve-2026-16759",
+      "app_name": "Tutor LMS",
+      "repo_url": "https://wordpress.org/plugins/tutor/",
+      "stars": 100000,
+      "severity": "critical",
+      "finding_title": "Tutor LMS extract() template shadow \u2192 $method_map[$context]() (CVE-2026-16759) [CVE-2026-16759, CVE-2026-19092]",
+      "finding_summary": "Unauthenticated `tutor_course_filter_ajax` merges `$_POST` into `tutor_load_template()`, where `extract()` overwrites `$template`. Loading `single-content-loader` then lets attacker-controlled `$data` overwrite `$method_map` / `$context`, invoking `$method_map[$context]()` with no arguments. Verified by Iridium (CVE-2026-16759, CVE-2026-19092, finding 58595, JOB-7D31F5).",
+      "file_path": "classes/Course_Filter.php",
+      "line_number": 0,
+      "scanner_name": "wp.rce.ajax_eval",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-16759",
+        "file": "findings/tutor-cve-2026-16759/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-16759",
+        "file": "findings/tutor-cve-2026-16759/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "ultimate-addons-for-contact-form-7-cve-2026-82901",
+      "app_name": "Ultimate Addons for Contact Form 7",
+      "repo_url": "https://wordpress.org/plugins/ultimate-addons-for-contact-form-7/",
+      "stars": 70000,
+      "severity": "critical",
+      "finding_title": "Ultra Addons CF7 signature/PDF AFU (CVE-2026-84750) (CVE-2026-82901, CVE-2026-84750)",
+      "finding_summary": "`uacf7_wpcf7_mail_components` / signature PDF path copies `WPCF7_Submission::uploaded_files()` into `uacf7-uploads` via `WP_Filesystem->copy` / `copy()` before any extension allowlist. An unauthenticated CF7 submission (or lab bridge mirroring that write) plants `iridium_probe.php` under uploads. Verified by Iridium (CVE-2026-82901, CVE-2026-84750, finding 0, JOB-WP-VERIFY).",
+      "file_path": "addons/pdf-generator/pdf-generator.php",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_upload",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-82901",
+        "file": "findings/ultimate-addons-for-contact-form-7-cve-2026-82901/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-82901",
+        "file": "findings/ultimate-addons-for-contact-form-7-cve-2026-82901/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "vigilante-cve-2026-81754",
+      "app_name": "Vigilant Security",
+      "repo_url": "https://wordpress.org/plugins/vigilante/",
+      "stars": 2000,
+      "severity": "high",
+      "finding_title": "Vigilant unauthenticated stored XSS via failed-login User-Agent (CVE-2026-81754)",
+      "finding_summary": "Unauthenticated visitors can poison `$_SERVER['HTTP_USER_AGENT']` on a failed `wp-login.php` attempt. The plugin stores the UA into its activity/audit log (`insert_activity_log` / equivalent) using only `sanitize_text_field`, which preserves quotes. When an administrator opens the Security Audit / activity log, admin JS builds `data-details='\u2026JSON\u2026'` (and related attributes) from the stored UA \u2014 a single-quote breakout executes script in the admin browser (CVE-2026-81754 Vigilant class). Verified by Iridium (CVE-2026-81754, finding 59371, JOB-993495).",
+      "file_path": "includes/class-database.php",
+      "line_number": 0,
+      "scanner_name": "wp.log.header_sink",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-81754",
+        "file": "findings/vigilante-cve-2026-81754/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-81754",
+        "file": "findings/vigilante-cve-2026-81754/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "visualizer-cve-2026-14939",
+      "app_name": "Visualizer: Tables and Charts",
+      "repo_url": "https://wordpress.org/plugins/visualizer/",
+      "stars": 40000,
+      "severity": "critical",
+      "finding_title": "Visualizer JSON import SSRF via visualizer-json-get-roots (CVE-2026-14939)",
+      "finding_summary": "A contributor (or stronger) POSTs to `admin-ajax.php?action=visualizer-json-get-roots` with a valid nonce (`visualizer-json-get-roots` + plugin VERSION). Attacker-controlled `params[url]` is fetched by `Visualizer_Source_Json::connect` via `wp_remote_get` / `wp_safe_remote_request` without blocking cloud metadata / loopback OOB targets. Verified by Iridium (CVE-2026-14939, finding 28472, JOB-73F453).",
+      "file_path": "classes/Visualizer/Source/Json.php",
+      "line_number": 0,
+      "scanner_name": "wp.ssrf.user_url",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-14939",
+        "file": "findings/visualizer-cve-2026-14939/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-14939",
+        "file": "findings/visualizer-cve-2026-14939/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "wp-file-upload-cve-2024-11635",
+      "app_name": "WordPress File Upload",
+      "repo_url": "https://wordpress.org/plugins/wp-file-upload/",
+      "stars": 30000,
+      "severity": "critical",
+      "finding_title": "WordPress File Upload wfu_ABSPATH cookie override (CVE-2024-11635)",
+      "finding_summary": "Unauthenticated callers hit the standalone `wfu_file_downloader.php` with `handler=dboption` and `dboption_base=cookies`. User-state helpers then read `$_COOKIE['wfu_ABSPATH']` and concatenate it into download paths / `require_once \u2026 wp-load.php`, so an attacker-controlled base directory yields local file disclosure (and planted `wp-load.php` RCE). Verified by Iridium (CVE-2024-11635, finding 28770, JOB-4FE928).",
+      "file_path": "wfu_file_downloader.php",
+      "line_number": 0,
+      "scanner_name": "wp.lfi.user_include",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2024-11635",
+        "file": "findings/wp-file-upload-cve-2024-11635/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2024-11635",
+        "file": "findings/wp-file-upload-cve-2024-11635/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "woc-order-alert-cve-2025-15484",
+      "app_name": "Order Notification for WooCommerce",
+      "repo_url": "https://wordpress.org/plugins/woc-order-alert/",
+      "stars": 3000,
+      "severity": "high",
+      "finding_title": "WooCommerce REST Permission Filter Bypass (CVE-2025-15484) [CVE-2025-15484, CVE-2026-1830]",
+      "finding_summary": "A `woocommerce_rest_check_permissions` filter returns `$permission` (or `true`) without denying unauthenticated create/edit, opening `/wp-json/wc/v3/products` (CVE-2025-15484 class). Verified by Iridium (CVE-2025-15484, CVE-2026-1830, finding 0, JOB-WP-VERIFY).",
+      "file_path": "includes/class-hooks.php",
+      "line_number": 0,
+      "scanner_name": "wp.rest.open_permission",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2025-15484",
+        "file": "findings/woc-order-alert-cve-2025-15484/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2025-15484",
+        "file": "findings/woc-order-alert-cve-2025-15484/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "woocommerce-payments-cve-2023-28121",
+      "app_name": "WooCommerce Payments",
+      "repo_url": "https://wordpress.org/plugins/woocommerce-payments/",
+      "stars": 800000,
+      "severity": "critical",
+      "finding_title": "WooCommerce Payments Header User Impersonation (CVE-2023-28121) [CVE-2023-28121, CVE-2024-28000]",
+      "finding_summary": "Unauthenticated callers who set the `X-WCPAY-PLATFORM-CHECKOUT-USER` HTTP header reach `determine_current_user_for_platform_checkout()` in `includes/platform-checkout/class-platform-checkout-session.php:1`, which returns the attacker-chosen numeric user id from `$_SERVER['HTTP_X_WCPAY_PLATFORM_CHECKOUT_USER']` without authentication. Verified by Iridium (CVE-2023-28121, CVE-2024-28000, finding 26089, JOB-A8F879).",
+      "file_path": "includes/platform-checkout/class-platform-checkout-session.php",
+      "line_number": 0,
+      "scanner_name": "wp.auth.weak_cookie_role_sim",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2023-28121",
+        "file": "findings/woocommerce-payments-cve-2023-28121/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2023-28121",
+        "file": "findings/woocommerce-payments-cve-2023-28121/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "wordpress-core-cve-2026-60137",
+      "app_name": "WordPress Core",
+      "repo_url": "https://github.com/WordPress/WordPress",
+      "stars": 60000000,
+      "severity": "critical",
+      "finding_title": "WordPress Core REST batch/v1 route confusion (CVE-2026-63030) (CVE-2026-60137, CVE-2026-63030)",
+      "finding_summary": "Unauthenticated callers POST to `/wp-json/batch/v1`. When a sub-request path fails to parse (`http://`), Core appends a `WP_Error` to `$requests`/`$validation` but skips `$matches`. Later sub-requests are permission-checked under another route's `permission_callback`, so a privileged handler (for example create-admin) runs without `manage_options`. Verified by Iridium (CVE-2026-60137, CVE-2026-63030, finding 28797, JOB-B0122E).",
+      "file_path": "wordpress-core.php",
+      "line_number": 0,
+      "scanner_name": "wp.rest.batch_confusion",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-60137",
+        "file": "findings/wordpress-core-cve-2026-60137/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-60137",
+        "file": "findings/wordpress-core-cve-2026-60137/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "wordpress-core-i18n-cve-2023-2745",
+      "app_name": "WordPress Core (i18n)",
+      "repo_url": "https://github.com/WordPress/WordPress",
+      "stars": 60000000,
+      "severity": "critical",
+      "finding_title": "WordPress Core i18n wp_lang path traversal (load_textdomain) (CVE-2023-2745)",
+      "finding_summary": "Unauthenticated callers supply directory traversal in the `wp_lang` query parameter. Core internationalization (`load_textdomain` / locale path construction) loads the attacker-controlled translation path without basename or directory confinement, disclosing local files (e.g. `/etc/passwd`, `wp-config.php`). Verified by Iridium (CVE-2023-2745, finding 28868, JOB-17F406).",
+      "file_path": "wordpress-core-i18n/wordpress-core-i18n.php",
+      "line_number": 0,
+      "scanner_name": "wp.lfi.user_include",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2023-2745",
+        "file": "findings/wordpress-core-i18n-cve-2023-2745/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2023-2745",
+        "file": "findings/wordpress-core-i18n-cve-2023-2745/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "wordpress-core-tax-query-cve-2022-21661",
+      "app_name": "WordPress Core (WP_Query)",
+      "repo_url": "https://github.com/WordPress/WordPress",
+      "stars": 60000000,
+      "severity": "critical",
+      "finding_title": "WordPress Core WP_Query tax_query array SQLi (CVE-2022-21661)",
+      "finding_summary": "Untrusted nested `tax_query` arrays are passed through the clean ORM wrapper `$query->set('tax_query', $input)` / `WP_Query`. When `field=term_taxonomy_id` and taxonomy is empty, terms are not run through `wp_parse_id_list`, so attacker-controlled values land in a raw `IN (...)` clause (WordPress Core \u22645.8.2 / CVE-2022-21661 class). Verified by Iridium (CVE-2022-21661, finding 28828, JOB-B778DF).",
+      "file_path": "wordpress-core-tax-query/wordpress-core-tax-query.php",
+      "line_number": 0,
+      "scanner_name": "wp.sql.tax_query_array",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2022-21661",
+        "file": "findings/wordpress-core-tax-query-cve-2022-21661/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2022-21661",
+        "file": "findings/wordpress-core-tax-query-cve-2022-21661/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "wp-all-import-cve-2021-24762",
+      "app_name": "WP All Import",
+      "repo_url": "https://wordpress.org/plugins/wp-all-import/",
+      "stars": 100000,
+      "severity": "high",
+      "finding_title": "WP All Import XXE via libxml entity loader (CVE-2021-24762)",
+      "finding_summary": "Unauthenticated callers POST attacker-controlled XML to `admin-ajax.php?action=wai_parse_xml`. The parser calls `libxml_disable_entity_loader(false)` and loads XML with `LIBXML_NOENT|LIBXML_DTDLOAD`, allowing external entity resolution (file disclosure / OOB). Verified by Iridium (CVE-2021-24762, finding 28537, JOB-E878C3).",
+      "file_path": "classes/xml-parser.php",
+      "line_number": 0,
+      "scanner_name": "wp.xxe.xml_parse",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2021-24762",
+        "file": "findings/wp-all-import-cve-2021-24762/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2021-24762",
+        "file": "findings/wp-all-import-cve-2021-24762/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "wp-automatic-cve-2024-27956",
+      "app_name": "ValvePress WP Automatic",
+      "repo_url": "https://codecanyon.net/item/wordpress-automatic-plugin/1904470",
+      "stars": 40000,
+      "severity": "critical",
+      "finding_title": "WP Automatic /inc/csv.php unauth SQLi (CVE-2024-27956)",
+      "finding_summary": "Unauthenticated callers can hit the exposed `wp-automatic` helper `/wp-content/plugins/wp-automatic/inc/csv.php` and pass the full SQL string through the `q` query parameter into `$wpdb->query()` with no `$wpdb->prepare()`, capability check, or nonce. Verified by Iridium (CVE-2024-27956, finding 28413, JOB-1B294A).",
+      "file_path": "inc/csv.php",
+      "line_number": 0,
+      "scanner_name": "wp.sql.unprepared",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2024-27956",
+        "file": "findings/wp-automatic-cve-2024-27956/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2024-27956",
+        "file": "findings/wp-automatic-cve-2024-27956/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "payment-gateway-pix-for-woocommerce-cve-2026-3891",
+      "app_name": "Payment Gateway Pix for WooCommerce",
+      "repo_url": "https://wordpress.org/plugins/payment-gateway-pix-for-woocommerce/",
+      "stars": 10000,
+      "severity": "critical",
+      "finding_title": "Unauthenticated AJAX WP_Filesystem->copy of $_FILES (CVE-2026-3891)",
+      "finding_summary": "Unauthenticated callers POST multipart to a nopriv `admin-ajax.php` settings handler. The handler copies `$_FILES` with `$wp_filesystem->copy` using `sanitize_file_name` only \u2014 no capability check and no pre-write `wp_check_filetype` allowlist. Verified by Iridium (CVE-2026-3891, finding 0, JOB-WP-VERIFY).",
+      "file_path": "plugin.php",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_upload",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-3891",
+        "file": "findings/payment-gateway-pix-for-woocommerce-cve-2026-3891/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-3891",
+        "file": "findings/payment-gateway-pix-for-woocommerce-cve-2026-3891/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "wp-maps-cve-2026-18466",
+      "app_name": "WP Maps (FlipperCode)",
+      "repo_url": "https://wordpress.org/plugins/wp-google-map-plugin/",
+      "stars": 100000,
+      "severity": "critical",
+      "finding_title": "WP Maps / unconstrained AJAX add_option autoload DoS (Subscriber+) (CVE-2026-18466)",
+      "finding_summary": "Low-privilege AJAX handlers call `add_option()` / `update_option()` without fixed key constraints or autoload flags, so attackers can plant arbitrary autoloaded options that WordPress loads on every request. Verified by Iridium (CVE-2026-18466, finding 28852, JOB-ECFE19).",
+      "file_path": "wp-maps/wp-maps.php",
+      "line_number": 0,
+      "scanner_name": "wp.option.unconstrained_update",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-18466",
+        "file": "findings/wp-maps-cve-2026-18466/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-18466",
+        "file": "findings/wp-maps-cve-2026-18466/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "wp2epub-cve-2026-4375",
+      "app_name": "wp2epub",
+      "repo_url": "https://wordpress.org/plugins/wp2epub/",
+      "stars": 1000,
+      "severity": "critical",
+      "finding_title": "wp2epub / DoLeads unauth shell_exec RCE (CVE-2026-4375 class)",
+      "finding_summary": "Unauthenticated AJAX/POST handlers concatenate attacker `cmd` into `shell_exec`/`exec` without `escapeshellarg`, or dynamically `include` unconstrained paths (DoLeads/wp2epub backdoor class). Verified by Iridium (CVE-2026-4375, finding 30844, JOB-E63016).",
+      "file_path": "wp2epub.php",
+      "line_number": 0,
+      "scanner_name": "wp.rce.shell_exec",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-4375",
+        "file": "findings/wp2epub-cve-2026-4375/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-4375",
+        "file": "findings/wp2epub-cve-2026-4375/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "wp-extra-cve-2023-46132",
+      "app_name": "WP EXtra",
+      "repo_url": "https://wordpress.org/plugins/wp-extra/",
+      "stars": 30000,
+      "severity": "critical",
+      "finding_title": "WP EXtra shell_exec command injection via wpex_run_cmd (CVE-2023-46132 class) [CVE-2023-46132, CVE-2023-7002]",
+      "finding_summary": "An unauthenticated caller POSTs to `admin-ajax.php?action=wpex_run_cmd` with attacker-controlled `cmd`. The handler concatenates the value into `shell_exec(\"echo \" . $cmd)` without `escapeshellarg`, enabling OS command injection (CVE-2023-46132 / system-command-exec class). Verified by Iridium (CVE-2023-46132, CVE-2023-7002, finding 28557, JOB-320976).",
+      "file_path": "inc/shell-runner.php",
+      "line_number": 0,
+      "scanner_name": "wp.rce.shell_exec",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2023-46132",
+        "file": "findings/wp-extra-cve-2023-46132/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2023-46132",
+        "file": "findings/wp-extra-cve-2023-46132/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "gdpr-cookie-consent-cve-2026-75865",
+      "app_name": "WP Cookie Consent (WPLP)",
+      "repo_url": "https://wordpress.org/plugins/gdpr-cookie-consent/",
+      "stars": 300000,
+      "severity": "critical",
+      "finding_title": "WPLP Cookie Consent REST JSON/base64 upload-logo (CVE-2026-75865)",
+      "finding_summary": "Unauthenticated callers POST JSON to `/wp-json/wplp-react-gdpr/v1/upload-logo`. `saas_upload_logo()` takes attacker `image_base64` and `file_name`, `base64_decode`s the body, and `file_put_contents`s it under `wp_upload_dir()` before `wp_check_filetype()`. A `.php` filename lands in a web-reachable uploads directory. The REST `permission_callback` does not call `current_user_can` (remote SaaS JWT + shared master_key is not WordPress authorization). Verified by Iridium (CVE-2026-75865, finding 0, JOB-WP-VERIFY).",
+      "file_path": "gdpr-cookie-consent/admin/class-gdpr-cookie-consent-admin.php",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_upload",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-75865",
+        "file": "findings/gdpr-cookie-consent-cve-2026-75865/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-75865",
+        "file": "findings/gdpr-cookie-consent-cve-2026-75865/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "wp-user-frontend-cve-2026-17563",
+      "app_name": "WP User Frontend",
+      "repo_url": "https://wordpress.org/plugins/wp-user-frontend/",
+      "stars": 100000,
+      "severity": "critical",
+      "finding_title": "WP User Frontend subscription gate skip on submit (CVE-2026-17563)",
+      "finding_summary": "Render-time subscription / capability checks gate the form UI, but the AJAX/REST submit handlers omit the same authorization and mutate privileged state (posts / options / profile). Verified by Iridium (CVE-2026-17563, finding 30827, JOB-4631D8).",
+      "file_path": "includes/frontend-form.php",
+      "line_number": 0,
+      "scanner_name": "wp.ajax.missing_capability",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-17563",
+        "file": "findings/wp-user-frontend-cve-2026-17563/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-17563",
+        "file": "findings/wp-user-frontend-cve-2026-17563/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "woocommerce-wholesale-lead-capture-cve-2026-27540",
+      "app_name": "WooCommerce Wholesale Lead Capture",
+      "repo_url": "https://wholesalesuiteplugin.com/",
+      "stars": 15000,
+      "severity": "critical",
+      "finding_title": "WWLC file_settings allowlist upload (CVE-2026-27540 class)",
+      "finding_summary": "Unauthenticated callers POST multipart to `admin-ajax.php?action=wwlc_file_upload_handler` with attacker-controlled `file_settings` allowlist; `move_uploaded_file` keeps the attacker extension under uploads. Verified by Iridium (CVE-2026-27540, finding 0, JOB-WP-VERIFY).",
+      "file_path": "woocommerce-wholesale-lead-capture.php",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_upload",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-27540",
+        "file": "findings/woocommerce-wholesale-lead-capture-cve-2026-27540/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-27540",
+        "file": "findings/woocommerce-wholesale-lead-capture-cve-2026-27540/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "bit-form-cve-2025-6679",
+      "app_name": "Bit Form Builder",
+      "repo_url": "https://wordpress.org/plugins/bit-form/",
+      "stars": 30000,
+      "severity": "critical",
+      "finding_title": "Unauthenticated arbitrary file upload via public advanced/temp upload handlers (CVE-2025-6679)",
+      "finding_summary": "bit-form @ 2.20.4 \u2014 Unauthenticated arbitrary file upload via public advanced/temp upload handlers (missing filetype validation \u2192 .php under uploads/bitforms). Sink: nopriv bitforms_adv_file_upload / FileHandler::moveUploadedFiles without near-sink filetype allowlist (CVE-2025-6679).",
+      "file_path": "nopriv",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_upload",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2025-6679",
+        "file": "findings/bit-form-cve-2025-6679/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2025-6679",
+        "file": "findings/bit-form-cve-2025-6679/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "wc-frontend-manager-cve-2026-81286",
+      "app_name": "WCFM Marketplace",
+      "repo_url": "https://wordpress.org/plugins/wc-frontend-manager/",
+      "stars": 15000,
+      "severity": "critical",
+      "finding_title": "Cross-store SQLi: checkout POST \u2192 WC session \u2192 global \u2192 {$radius} brace-interp S (CVE-2026-81286)",
+      "finding_summary": "wc-frontend-manager @ 3.8.1 \u2014 Cross-store SQLi: checkout POST \u2192 WC session \u2192 global \u2192 {$radius} brace-interp SQL. Sink: WC session radius \u2192 $wpdb query brace interpolation (CVE-2026-81286).",
+      "file_path": "WC",
+      "line_number": 0,
+      "scanner_name": "wp.sql.second_order",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-81286",
+        "file": "findings/wc-frontend-manager-cve-2026-81286/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-81286",
+        "file": "findings/wc-frontend-manager-cve-2026-81286/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "yith-woocommerce-ajax-search-cve-2024-47350",
+      "app_name": "YITH WooCommerce Ajax Search",
+      "repo_url": "https://wordpress.org/plugins/yith-woocommerce-ajax-search/",
+      "stars": 100000,
+      "severity": "critical",
+      "finding_title": "Unauthenticated SQL injection via unprepared $wpdb token/lang queries (CVE-2024-47350)",
+      "finding_summary": "yith-woocommerce-ajax-search @ 2.8.0 \u2014 Unauthenticated SQL injection via unprepared $wpdb token/lang queries (get_tokens concat / implode IN (...)) reachable from ajax/REST search. Sink: YITH_WCAS_Data_Index_Token::get_tokens \u2014 SELECT \u2026 IN ('\u2026') AND lang like ''.$lang (CVE-2024-47350).",
+      "file_path": "YITH_WCAS_Data_Index_Token::get_tokens",
+      "line_number": 0,
+      "scanner_name": "wp.sql.unprepared",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2024-47350",
+        "file": "findings/yith-woocommerce-ajax-search-cve-2024-47350/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2024-47350",
+        "file": "findings/yith-woocommerce-ajax-search-cve-2024-47350/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "yith-woocommerce-waiting-list-cve-2023-36506",
+      "app_name": "YITH WooCommerce Waiting List",
+      "repo_url": "https://wordpress.org/plugins/yith-woocommerce-waiting-list/",
+      "stars": 15000,
+      "severity": "high",
+      "finding_title": "Verified WordPress plugin vulnerability (CVE-2023-36506)",
+      "finding_summary": "yith-woocommerce-waiting-list @ 2.13.0 \u2014 Verified WordPress plugin vulnerability. Sink: yith-woocommerce-waiting-list.php (CVE-2023-36506).",
+      "file_path": "yith-woocommerce-waiting-list.php",
+      "line_number": 0,
+      "scanner_name": "wp.hunter",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2023-36506",
+        "file": "findings/yith-woocommerce-waiting-list-cve-2023-36506/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2023-36506",
+        "file": "findings/yith-woocommerce-waiting-list-cve-2023-36506/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "user-registration-cve-2026-1492",
+      "app_name": "User Registration & Membership",
+      "repo_url": "https://wordpress.org/plugins/user-registration/",
+      "stars": 200000,
+      "severity": "critical",
+      "finding_title": "Unauthenticated privilege escalation via membership registration accepting clien (CVE-2026-1492)",
+      "finding_summary": "user-registration @ 5.1.2 \u2014 Unauthenticated privilege escalation via membership registration accepting client-supplied role without server-side capability allowlist. Sink: membership registration AJAX role assignment without allowlist (CVE-2026-1492).",
+      "file_path": "membership",
+      "line_number": 0,
+      "scanner_name": "wp.auth.insecure_login",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-1492",
+        "file": "findings/user-registration-cve-2026-1492/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-1492",
+        "file": "findings/user-registration-cve-2026-1492/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "kaswara-cve-2021-24284",
+      "app_name": "Kaswara Modern VC Addons",
+      "repo_url": "https://wordpress.org/plugins/kaswara/",
+      "stars": 15000,
+      "severity": "critical",
+      "finding_title": "Unauthenticated arbitrary file upload via nopriv AJAX uploadFontIcon: fonticonzi (CVE-2021-24284)",
+      "finding_summary": "kaswara @ 3.0.1 \u2014 Unauthenticated arbitrary file upload via nopriv AJAX uploadFontIcon: fonticonzipfile ZipArchive->extractTo under uploads/kaswara/fonts_icon with no PHP/content checks. Sink: includes/handlers/ajax_handler.php uploadFontIcon \u2192 ZipArchive::extractTo (CVE-2021-24284).",
+      "file_path": "includes/handlers/ajax_handler.php",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_upload",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2021-24284",
+        "file": "findings/kaswara-cve-2021-24284/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2021-24284",
+        "file": "findings/kaswara-cve-2021-24284/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "wpmudev-updates-cve-2026-15459",
+      "app_name": "WPMU DEV Dashboard",
+      "repo_url": "https://wpmudev.com/",
+      "stars": 80000,
+      "severity": "critical",
+      "finding_title": "Empty wpmudev_apikey makes hash_hmac Hub auth forgeable; unauth SSO login / plug (CVE-2026-15459)",
+      "finding_summary": "wpmudev-updates @ 5.0.0 \u2014 Empty wpmudev_apikey makes hash_hmac Hub auth forgeable; unauth SSO login / plugin install via WDP-AUTH. Sink: validate_hash(empty key) \u2192 wp_set_auth_cookie / Plugin_Upgrader (CVE-2026-15459).",
+      "file_path": "validate_hash(empty",
+      "line_number": 0,
+      "scanner_name": "wp.auth.empty_hmac_secret",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-15459",
+        "file": "findings/wpmudev-updates-cve-2026-15459/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-15459",
+        "file": "findings/wpmudev-updates-cve-2026-15459/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "wp-travel-engine-cve-2025-7634",
+      "app_name": "WP Travel Engine",
+      "repo_url": "https://wordpress.org/plugins/wp-travel-engine/",
+      "stars": 60000,
+      "severity": "critical",
+      "finding_title": "Unauthenticated LFI via [WPTRAVELENGINE template=\u2026] shortcode \u2192 wte_get_template (CVE-2025-7634)",
+      "finding_summary": "wp-travel-engine @ 6.6.7 \u2014 Unauthenticated LFI via [WPTRAVELENGINE template=\u2026] shortcode \u2192 wte_get_template($atts['template']) \u2192 include $located (also subscriber+ arbitrary file deletion via profile image rename). Sink: [WPTRAVELENGINE template=\u2026] \u2192 wte_get_template \u2192 include $located (CVE-2025-7634).",
+      "file_path": "[WPTRAVELENGINE",
+      "line_number": 0,
+      "scanner_name": "wp.lfi.user_include",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2025-7634",
+        "file": "findings/wp-travel-engine-cve-2025-7634/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2025-7634",
+        "file": "findings/wp-travel-engine-cve-2025-7634/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "divi-membership-cve-2026-19652",
+      "app_name": "Divi Membership",
+      "repo_url": "https://wordpress.org/plugins/divi-membership/",
+      "stars": 15000,
+      "severity": "critical",
+      "finding_title": "Unauthenticated privilege escalation via form_id bcrypt role hash: dmem_form_sub (CVE-2026-19652)",
+      "finding_summary": "divi-membership @ 2.2.0 \u2014 Unauthenticated privilege escalation via form_id bcrypt role hash: dmem_form_submit_handler iterates wp_roles and password_verify() against attacker hash then wp_insert_user/set_role (auto_login optional). Sink: dmem_form_submit_handler password_verify(form_id) \u2192 wp_insert_user role (CVE-2026-19652).",
+      "file_path": "dmem_form_submit_handler",
+      "line_number": 0,
+      "scanner_name": "wp.user.role_assignment",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-19652",
+        "file": "findings/divi-membership-cve-2026-19652/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-19652",
+        "file": "findings/divi-membership-cve-2026-19652/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "divi-membership-paypal-cve-2026-19660",
+      "app_name": "Divi Membership PayPal Bypass",
+      "repo_url": "https://wordpress.org/plugins/divi-membership-paypal/",
+      "stars": 15000,
+      "severity": "critical",
+      "finding_title": "Unauthenticated authentication bypass via base64 paypal_param GET \u2192 attacker-con (CVE-2026-19660)",
+      "finding_summary": "divi-membership-paypal @ 2.3.0 \u2014 Unauthenticated authentication bypass via base64 paypal_param GET \u2192 attacker-controlled user_id \u2192 wp_set_current_user + wp_set_auth_cookie with no IPN/signature/nonce. Sink: process_paypal_callback paypal_param \u2192 wp_set_auth_cookie (CVE-2026-19660).",
+      "file_path": "process_paypal_callback",
+      "line_number": 0,
+      "scanner_name": "wp.auth.insecure_login",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-19660",
+        "file": "findings/divi-membership-paypal-cve-2026-19660/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-19660",
+        "file": "findings/divi-membership-paypal-cve-2026-19660/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "super-forms-cve-2026-15896",
+      "app_name": "Super Forms",
+      "repo_url": "https://codecanyon.net/item/super-forms-drag-drop-form-builder/13979866",
+      "stars": 20000,
+      "severity": "high",
+      "finding_title": "Unauth path traversal arbitrary file read via sfgtfi (CVE-2026-15896, CVE-2026-15897)",
+      "finding_summary": "super-forms @ 6.3.316 \u2014 Unauth path traversal arbitrary file read via sfgtfi (CVE-2026-15896) + subscriber user_id PE via register_login update \u2192 wp_update_user (CVE-2026-15897). Sink: super_forms_sfgtfi_read readfile($_GET[sfgtfi]); submit user_id \u2192 wp_update_user (CVE-2026-15896, CVE-2026-15897).",
+      "file_path": "super_forms_sfgtfi_read",
+      "line_number": 0,
+      "scanner_name": "wp.fs.user_path",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-15896",
+        "file": "findings/super-forms-cve-2026-15896/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-15896",
+        "file": "findings/super-forms-cve-2026-15896/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "so-widgets-bundle-cve-2026-92174",
+      "app_name": "SiteOrigin Widgets Bundle",
+      "repo_url": "https://wordpress.org/plugins/so-widgets-bundle/",
+      "stars": 600000,
+      "severity": "critical",
+      "finding_title": "Authenticated contributor+ LFI via legacy widgetData theme key + columns on /wp- (CVE-2026-92174)",
+      "finding_summary": "so-widgets-bundle @ 1.73.2 \u2014 Authenticated contributor+ LFI via legacy widgetData theme key + columns on /wp-json/sowb/v1/widgets/previews \u2192 include($theme) without allowlist. Sink: sowb_widget_preview_lfi widgetData[theme] \u2192 include (CVE-2026-92174).",
+      "file_path": "sowb_widget_preview_lfi",
+      "line_number": 0,
+      "scanner_name": "wp.lfi.user_include",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-92174",
+        "file": "findings/so-widgets-bundle-cve-2026-92174/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-92174",
+        "file": "findings/so-widgets-bundle-cve-2026-92174/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "jet-appointments-booking-cve-2026-93875",
+      "app_name": "JetAppointment",
+      "repo_url": "https://wordpress.org/plugins/jet-appointments-booking/",
+      "stars": 15000,
+      "severity": "high",
+      "finding_title": "Unauthenticated stored XSS via friendlyTime on jet_engine_form_booking_submit \u2192  (CVE-2026-93875)",
+      "finding_summary": "jet-appointments-booking @ 2.5.2.1 \u2014 Unauthenticated stored XSS via friendlyTime on jet_engine_form_booking_submit \u2192 wp_jet_appointments_meta \u2192 admin popup echo. Sink: friendlyTime insert \u2192 admin_footer echo meta_value (CVE-2026-93875).",
+      "file_path": "friendlyTime",
+      "line_number": 0,
+      "scanner_name": "wp.xss.second_order",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-93875",
+        "file": "findings/jet-appointments-booking-cve-2026-93875/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-93875",
+        "file": "findings/jet-appointments-booking-cve-2026-93875/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "ninja-forms-uploads-cve-2026-92820",
+      "app_name": "Ninja Forms File Uploads",
+      "repo_url": "https://ninjaforms.com/extensions/file-uploads/",
+      "stars": 50000,
+      "severity": "critical",
+      "finding_title": "Unauthenticated arbitrary file ops via external/S3 upload flow trusting attacker (CVE-2026-92820)",
+      "finding_summary": "ninja-forms-uploads @ 3.3.34 \u2014 Unauthenticated arbitrary file ops via external/S3 upload flow trusting attacker files[].data.file_path (read/write/delete) + local AFU. Sink: nf_fu_external_upload_handler file_path \u2192 file_put_contents/move_uploaded_file (CVE-2026-92820).",
+      "file_path": "nf_fu_external_upload_handler",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_upload",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-92820",
+        "file": "findings/ninja-forms-uploads-cve-2026-92820/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-92820",
+        "file": "findings/ninja-forms-uploads-cve-2026-92820/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "devkit-cve-2026-14378",
+      "app_name": "DevKit Pro",
+      "repo_url": "https://wordpress.org/plugins/devkit/",
+      "stars": 15000,
+      "severity": "critical",
+      "finding_title": "Unauthenticated ATO via original_user_id cookie: revert_switch checks manage_opt (CVE-2026-14378)",
+      "finding_summary": "devkit @ 2.3.0 \u2014 Unauthenticated ATO via original_user_id cookie: revert_switch checks manage_options on cookie identity then wp_set_auth_cookie(admin id). Sink: revert_switch original_user_id cookie \u2192 wp_set_auth_cookie (CVE-2026-14378).",
+      "file_path": "revert_switch",
+      "line_number": 0,
+      "scanner_name": "wp.auth.insecure_login",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-14378",
+        "file": "findings/devkit-cve-2026-14378/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-14378",
+        "file": "findings/devkit-cve-2026-14378/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "king-addons-cve-2025-6325",
+      "app_name": "King Addons for Elementor",
+      "repo_url": "https://wordpress.org/plugins/king-addons/",
+      "stars": 15000,
+      "severity": "critical",
+      "finding_title": "Unauthenticated privilege escalation via registration $user_role \u2192 wp_insert_use (CVE-2025-6325)",
+      "finding_summary": "king-addons @ 51.1.36 \u2014 Unauthenticated privilege escalation via registration $user_role \u2192 wp_insert_user; also unauth AFU via king_addons_upload_file. Sink: Login_Register_Form_Ajax $user_role \u2192 wp_insert_user (CVE-2025-6325).",
+      "file_path": "Login_Register_Form_Ajax",
+      "line_number": 0,
+      "scanner_name": "wp.user.role_assignment",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2025-6325",
+        "file": "findings/king-addons-cve-2025-6325/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2025-6325",
+        "file": "findings/king-addons-cve-2025-6325/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "woocommerce-product-addon-cve-2025-11391",
+      "app_name": "PPOM for WooCommerce",
+      "repo_url": "https://wordpress.org/plugins/woocommerce-product-addon/",
+      "stars": 30000,
+      "severity": "critical",
+      "finding_title": "Unauthenticated arbitrary file upload via PPOM file field handlers (CVE-2025-11391)",
+      "finding_summary": "woocommerce-product-addon @ 33.0.15 \u2014 Unauthenticated arbitrary file upload via PPOM file field handlers (inc/files.php move_uploaded_file) without capability/extension allowlist. Sink: inc/files.php \u2192 move_uploaded_file (CVE-2025-11391).",
+      "file_path": "inc/files.php",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_upload",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2025-11391",
+        "file": "findings/woocommerce-product-addon-cve-2025-11391/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2025-11391",
+        "file": "findings/woocommerce-product-addon-cve-2025-11391/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "community-events-cve-2025-10586",
+      "app_name": "Community Events",
+      "repo_url": "https://wordpress.org/plugins/community-events/",
+      "stars": 15000,
+      "severity": "critical",
+      "finding_title": "Unauthenticated SQL injection via unprepared $wpdb queries on request-influenced (CVE-2025-10586)",
+      "finding_summary": "community-events @ 1.5.1 \u2014 Unauthenticated SQL injection via unprepared $wpdb queries on request-influenced event/search parameters. Sink: community-events.php unprepared $wpdb query (CVE-2025-10586).",
+      "file_path": "community-events.php",
+      "line_number": 0,
+      "scanner_name": "wp.sql.unprepared",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2025-10586",
+        "file": "findings/community-events-cve-2025-10586/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2025-10586",
+        "file": "findings/community-events-cve-2025-10586/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "ownid-passwordless-login-cve-2025-10294",
+      "app_name": "OwnID Passwordless Login",
+      "repo_url": "https://wordpress.org/plugins/ownid-passwordless-login/",
+      "stars": 15000,
+      "severity": "critical",
+      "finding_title": "Authentication bypass via open REST ownid/v1/login-with-jwt (CVE-2025-10294)",
+      "finding_summary": "ownid-passwordless-login @ 1.3.4 \u2014 Authentication bypass via open REST ownid/v1/login-with-jwt (permission_callback __return_true) \u2192 wp_set_auth_cookie. Sink: ownid/v1/login-with-jwt open REST \u2192 auth cookie (CVE-2025-10294).",
+      "file_path": "ownid/v1/login-with-jwt",
+      "line_number": 0,
+      "scanner_name": "wp.auth.insecure_login",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2025-10294",
+        "file": "findings/ownid-passwordless-login-cve-2025-10294/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2025-10294",
+        "file": "findings/ownid-passwordless-login-cve-2025-10294/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "ace-user-management-cve-2025-6027",
+      "app_name": "Ace User Management",
+      "repo_url": "https://wordpress.org/plugins/ace-user-management/",
+      "stars": 15000,
+      "severity": "critical",
+      "finding_title": "Unauthenticated privilege escalation via password reset / usermeta role mutation (CVE-2025-6027)",
+      "finding_summary": "ace-user-management @ 2.0.3 \u2014 Unauthenticated privilege escalation via password reset / usermeta role mutation (POST-controlled meta key + weak reset token \u2192 user_pass UPDATE). Sink: POST-controlled update_user_meta / user_pass overwrite (CVE-2025-6027).",
+      "file_path": "POST-controlled",
+      "line_number": 0,
+      "scanner_name": "wp.user.role_assignment",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2025-6027",
+        "file": "findings/ace-user-management-cve-2025-6027/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2025-6027",
+        "file": "findings/ace-user-management-cve-2025-6027/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "user-toolkit-cve-2024-50503",
+      "app_name": "User Toolkit",
+      "repo_url": "https://wordpress.org/plugins/user-toolkit/",
+      "stars": 15000,
+      "severity": "critical",
+      "finding_title": "Unauthenticated privilege escalation via init user-switch (CVE-2024-50503)",
+      "finding_summary": "user-toolkit @ 1.2.3 \u2014 Unauthenticated privilege escalation via init user-switch (wp_set_auth_cookie / wp_set_current_user on request user_id). Sink: UserSwitch::switchUser \u2192 wp_set_auth_cookie($_GET[user_id]) (CVE-2024-50503).",
+      "file_path": "UserSwitch::switchUser",
+      "line_number": 0,
+      "scanner_name": "wp.auth.insecure_login",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2024-50503",
+        "file": "findings/user-toolkit-cve-2024-50503/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2024-50503",
+        "file": "findings/user-toolkit-cve-2024-50503/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "elex-helpdesk-customer-support-ticket-system-cve-2025-11456",
+      "app_name": "ELEX HelpDesk",
+      "repo_url": "https://wordpress.org/plugins/elex-helpdesk-customer-support-ticket-system/",
+      "stars": 15000,
+      "severity": "critical",
+      "finding_title": "Unauthenticated arbitrary file upload via ticket attachment handlers (CVE-2025-11456)",
+      "finding_summary": "elex-helpdesk-customer-support-ticket-system @ 3.3.1 \u2014 Unauthenticated arbitrary file upload via ticket attachment handlers (move_uploaded_file / wp_handle_upload) without capability gate. Sink: class-crm-ajax-functions.php \u2192 move_uploaded_file (CVE-2025-11456).",
+      "file_path": "class-crm-ajax-functions.php",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_upload",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2025-11456",
+        "file": "findings/elex-helpdesk-customer-support-ticket-system-cve-2025-11456/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2025-11456",
+        "file": "findings/elex-helpdesk-customer-support-ticket-system-cve-2025-11456/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "easycommerce-cve-2025-11457",
+      "app_name": "EasyCommerce",
+      "repo_url": "https://wordpress.org/plugins/easycommerce/",
+      "stars": 15000,
+      "severity": "critical",
+      "finding_title": "Unauthenticated privilege escalation via open REST auth trait (CVE-2025-11457)",
+      "finding_summary": "easycommerce @ 1.8.2 \u2014 Unauthenticated privilege escalation via open REST auth trait (__return_true) \u2192 user create/update / set_role. Sink: Auth trait __return_true \u2192 wp_insert_user / set_role (CVE-2025-11457).",
+      "file_path": "Auth",
+      "line_number": 0,
+      "scanner_name": "wp.user.role_assignment",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2025-11457",
+        "file": "findings/easycommerce-cve-2025-11457/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2025-11457",
+        "file": "findings/easycommerce-cve-2025-11457/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "ai-engine-cve-2025-11749",
+      "app_name": "AI Engine",
+      "repo_url": "https://wordpress.org/plugins/ai-engine/",
+      "stars": 100000,
+      "severity": "high",
+      "finding_title": "Unauthenticated sensitive information exposure (CVE-2025-11749)",
+      "finding_summary": "ai-engine @ 3.1.3 \u2014 Unauthenticated sensitive information exposure (bearer/public API) escalating to privilege escalation / user create via MCP tools. Sink: open REST / bearer token exposure \u2192 user create (CVE-2025-11749).",
+      "file_path": "open",
+      "line_number": 0,
+      "scanner_name": "wp.rest.open_permission",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2025-11749",
+        "file": "findings/ai-engine-cve-2025-11749/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2025-11749",
+        "file": "findings/ai-engine-cve-2025-11749/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "ce21-suite-cve-2025-11008",
+      "app_name": "CE21 Suite",
+      "repo_url": "https://wordpress.org/plugins/ce21-suite/",
+      "stars": 15000,
+      "severity": "critical",
+      "finding_title": "Unauthenticated SSO/settings PE: open REST __return_true + nopriv settings updat (CVE-2025-11008)",
+      "finding_summary": "ce21-suite @ 2.3.1 \u2014 Unauthenticated SSO/settings PE: open REST __return_true + nopriv settings update \u2192 set_role(administrator). Sink: SSO callback set_role(administrator) / nopriv settings (CVE-2025-11008).",
+      "file_path": "SSO",
+      "line_number": 0,
+      "scanner_name": "wp.user.role_assignment",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2025-11008",
+        "file": "findings/ce21-suite-cve-2025-11008/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2025-11008",
+        "file": "findings/ce21-suite-cve-2025-11008/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "easy-upload-files-during-checkout-cve-2025-12682",
+      "app_name": "Easy Upload Files During Checkout",
+      "repo_url": "https://wordpress.org/plugins/easy-upload-files-during-checkout/",
+      "stars": 15000,
+      "severity": "critical",
+      "finding_title": "Unauthenticated arbitrary JS file upload via checkout upload handlers (CVE-2025-12682)",
+      "finding_summary": "easy-upload-files-during-checkout @ 2.9.8 \u2014 Unauthenticated arbitrary JS file upload via checkout upload handlers (move_uploaded_file / wp_handle_upload) with weak allowlist. Sink: inc/functions.php \u2192 move_uploaded_file (CVE-2025-12682).",
+      "file_path": "inc/functions.php",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_upload",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2025-12682",
+        "file": "findings/easy-upload-files-during-checkout-cve-2025-12682/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2025-12682",
+        "file": "findings/easy-upload-files-during-checkout-cve-2025-12682/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "woolentor-addons-cve-2025-12493",
+      "app_name": "ShopLentor (WooLentor)",
+      "repo_url": "https://wordpress.org/plugins/woolentor-addons/",
+      "stars": 100000,
+      "severity": "critical",
+      "finding_title": "Unauthenticated local PHP file inclusion via load_template style/layout paramete (CVE-2025-12493)",
+      "finding_summary": "woolentor-addons @ 3.2.5 \u2014 Unauthenticated local PHP file inclusion via load_template style/layout parameters. Sink: load_template \u2192 include user-controlled path (CVE-2025-12493).",
+      "file_path": "load_template",
+      "line_number": 0,
+      "scanner_name": "wp.lfi.user_include",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2025-12493",
+        "file": "findings/woolentor-addons-cve-2025-12493/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2025-12493",
+        "file": "findings/woolentor-addons-cve-2025-12493/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "post-smtp-cve-2025-11833",
+      "app_name": "Post SMTP Mailer",
+      "repo_url": "https://wordpress.org/plugins/post-smtp/",
+      "stars": 400000,
+      "severity": "high",
+      "finding_title": "Missing authorization \u2192 unauthenticated email log disclosure (CVE-2025-11833)",
+      "finding_summary": "post-smtp @ 3.6.0 \u2014 Missing authorization \u2192 unauthenticated email log disclosure (open REST get_logs __return_true) \u2192 account takeover. Sink: Mobile REST get_logs permission_callback __return_true (CVE-2025-11833).",
+      "file_path": "Mobile",
+      "line_number": 0,
+      "scanner_name": "wp.rest.open_permission",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2025-11833",
+        "file": "findings/post-smtp-cve-2025-11833/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2025-11833",
+        "file": "findings/post-smtp-cve-2025-11833/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "mstore-api-cve-2025-11127",
+      "app_name": "MStore API",
+      "repo_url": "https://wordpress.org/plugins/mstore-api/",
+      "stars": 15000,
+      "severity": "critical",
+      "finding_title": "Unauthenticated privilege escalation via registration/user create with attacker- (CVE-2025-11127)",
+      "finding_summary": "mstore-api @ 4.15.8 \u2014 Unauthenticated privilege escalation via registration/user create with attacker-controlled role parameter. Sink: flutter-user.php $params[role] \u2192 wp_insert_user (CVE-2025-11127).",
+      "file_path": "flutter-user.php",
+      "line_number": 0,
+      "scanner_name": "wp.user.role_assignment",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2025-11127",
+        "file": "findings/mstore-api-cve-2025-11127/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2025-11127",
+        "file": "findings/mstore-api-cve-2025-11127/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "tablesome-cve-2025-11499",
+      "app_name": "Tablesome",
+      "repo_url": "https://wordpress.org/plugins/tablesome/",
+      "stars": 10000,
+      "severity": "critical",
+      "finding_title": "Unauthenticated arbitrary file upload via open REST / upload_file_from_url workf (CVE-2025-11499)",
+      "finding_summary": "tablesome @ 1.1.32 \u2014 Unauthenticated arbitrary file upload via open REST / upload_file_from_url workflow handlers. Sink: wp-media-file-handler upload_file_from_url / open REST (CVE-2025-11499).",
+      "file_path": "wp-media-file-handler",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_upload",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2025-11499",
+        "file": "findings/tablesome-cve-2025-11499/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2025-11499",
+        "file": "findings/tablesome-cve-2025-11499/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "tenweb-speed-optimizer-cve-2025-13377",
+      "app_name": "10Web Booster",
+      "repo_url": "https://wordpress.org/plugins/tenweb-speed-optimizer/",
+      "stars": 200000,
+      "severity": "critical",
+      "finding_title": "Authenticated (CVE-2025-13377)",
+      "finding_summary": "tenweb-speed-optimizer @ 2.32.7 \u2014 Authenticated (Subscriber+) arbitrary folder deletion via two_clear_page_cache + attacker-controlled permalink \u2192 delete_cache_by_url (unlink/rmdir). Sink: OptimizerWebPageCacheWP::maybe_clear_page_cache \u2192 delete_cache_by_url (CVE-2025-13377).",
+      "file_path": "OptimizerWebPageCacheWP::maybe_clear_page_cache",
+      "line_number": 0,
+      "scanner_name": "wp.fs.arbitrary_deletion",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2025-13377",
+        "file": "findings/tenweb-speed-optimizer-cve-2025-13377/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2025-13377",
+        "file": "findings/tenweb-speed-optimizer-cve-2025-13377/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "crm-memberships-cve-2025-13313",
+      "app_name": "CRM Memberships",
+      "repo_url": "https://wordpress.org/plugins/crm-memberships/",
+      "stars": 15000,
+      "severity": "critical",
+      "finding_title": "Unauthenticated password reset / account takeover via nopriv AJAX ntzcrm_changep (CVE-2025-13313)",
+      "finding_summary": "crm-memberships @ 2.6 \u2014 Unauthenticated password reset / account takeover via nopriv AJAX ntzcrm_changepassword (login email + new password \u2192 wp_set_password). Sink: class-ntzcrm-api.php ntzcrm_changepassword \u2192 wp_set_password (CVE-2025-13313).",
+      "file_path": "class-ntzcrm-api.php",
+      "line_number": 0,
+      "scanner_name": "wp.auth.insecure_login",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2025-13313",
+        "file": "findings/crm-memberships-cve-2025-13313/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2025-13313",
+        "file": "findings/crm-memberships-cve-2025-13313/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "wpdirectorykit-cve-2025-13390",
+      "app_name": "WP Directory Kit",
+      "repo_url": "https://wordpress.org/plugins/wpdirectorykit/",
+      "stars": 15000,
+      "severity": "critical",
+      "finding_title": "Authentication bypass / account takeover via predictable auto-login token (CVE-2025-13390)",
+      "finding_summary": "wpdirectorykit @ 1.4.4 \u2014 Authentication bypass / account takeover via predictable auto-login token (user_id + md5(user_id).NONCE_KEY \u2192 wp_set_auth_cookie). Sink: actions.php init auto-login \u2192 wp_set_auth_cookie (CVE-2025-13390).",
+      "file_path": "actions.php",
+      "line_number": 0,
+      "scanner_name": "wp.auth.weak_token_login",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2025-13390",
+        "file": "findings/wpdirectorykit-cve-2025-13390/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2025-13390",
+        "file": "findings/wpdirectorykit-cve-2025-13390/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "acf-frontend-form-element-cve-2025-13342",
+      "app_name": "Frontend Admin by DynamiApps",
+      "repo_url": "https://wordpress.org/plugins/acf-frontend-form-element/",
+      "stars": 15000,
+      "severity": "high",
+      "finding_title": "Unauthenticated arbitrary options update via frontend form options action (CVE-2025-13342)",
+      "finding_summary": "acf-frontend-form-element @ 3.28.18 \u2014 Unauthenticated arbitrary options update via frontend form options action (attacker-controlled option key \u2192 update_option). Sink: forms/actions/options.php update_option($key, \u2026) (CVE-2025-13342).",
+      "file_path": "forms/actions/options.php",
+      "line_number": 0,
+      "scanner_name": "wp.option.unconstrained_update",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2025-13342",
+        "file": "findings/acf-frontend-form-element-cve-2025-13342/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2025-13342",
+        "file": "findings/acf-frontend-form-element-cve-2025-13342/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "acf-extended-cve-2025-13486",
+      "app_name": "Advanced Custom Fields: Extended",
+      "repo_url": "https://wordpress.org/plugins/acf-extended/",
+      "stars": 15000,
+      "severity": "critical",
+      "finding_title": "Unauthenticated remote code execution in prepare_form (CVE-2025-13486)",
+      "finding_summary": "acf-extended @ 0.9.1.1 \u2014 Unauthenticated remote code execution in prepare_form (attacker-controlled form render/callback \u2192 call_user_func / eval). Sink: acfe prepare_form / form front hooks \u2192 call_user_func (CVE-2025-13486).",
+      "file_path": "acfe",
+      "line_number": 0,
+      "scanner_name": "wp.rce.rest_eval",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2025-13486",
+        "file": "findings/acf-extended-cve-2025-13486/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2025-13486",
+        "file": "findings/acf-extended-cve-2025-13486/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "givewp-poi",
+      "app_name": "GiveWP Donation Plugin",
+      "repo_url": "https://wordpress.org/plugins/give/",
+      "stars": 100000,
+      "severity": "critical",
+      "finding_title": "Unauthenticated donor-meta & purchase-session PHP Object Injection (CVE-2024-5932, CVE-2026-82222)",
+      "finding_summary": "give <= 3.14.1 \u2014 unauthenticated donation form submission and purchase-session handling pass attacker-controlled serialized objects into unserialize() (CVE-2024-5932, CVE-2026-82222).",
+      "file_path": "includes/process-donation.php",
+      "line_number": 185,
+      "scanner_name": "wp.deserial.unserialize",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2024-5932",
+        "file": "findings/givewp-poi/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2024-5932",
+        "file": "findings/givewp-poi/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "jetformbuilder-pe",
+      "app_name": "JetFormBuilder",
+      "repo_url": "https://wordpress.org/plugins/jetformbuilder/",
+      "stars": 50000,
+      "severity": "critical",
+      "finding_title": "Unauthenticated form_id schema privilege escalation & role mutation (CVE-2026-12793, CVE-2026-18432, CVE-2026-62062)",
+      "finding_summary": "jetformbuilder \u2014 unauthenticated form submission with attacker-controlled _jet_engine_booking_form_id loads arbitrary post schema and mutates user roles/capabilities (CVE-2026-12793, CVE-2026-18432, CVE-2026-62062, finding 88482, JOB-959E85).",
+      "file_path": "includes/form-handler.php",
+      "line_number": 112,
+      "scanner_name": "wp.user.role_assignment",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-12793",
+        "file": "findings/jetformbuilder-pe/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-12793",
+        "file": "findings/jetformbuilder-pe/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "burst-statistics-ato",
+      "app_name": "Burst Statistics",
+      "repo_url": "https://wordpress.org/plugins/burst-statistics/",
+      "stars": 300000,
+      "severity": "critical",
+      "finding_title": "Application-password null-return Basic Auth bypass to ATO (CVE-2026-8181)",
+      "finding_summary": "burst-statistics \u2014 wp_authenticate_application_password() null return is treated as authenticated administrator during REST/Basic Auth requests (CVE-2026-8181, finding 182702).",
+      "file_path": "includes/Admin/App_Auth.php",
+      "line_number": 64,
+      "scanner_name": "wp.auth.app_password_null_bypass",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-8181",
+        "file": "findings/burst-statistics-ato/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-8181",
+        "file": "findings/burst-statistics-ato/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "user-verification-otp",
+      "app_name": "User Verification",
+      "repo_url": "https://wordpress.org/plugins/user-verification/",
+      "stars": 30000,
+      "severity": "critical",
+      "finding_title": "JSON boolean type-juggling OTP authentication bypass (CVE-2026-7458)",
+      "finding_summary": "user-verification \u2014 loose != comparison between stored OTP meta and JSON boolean true allows unauthenticated account takeover (CVE-2026-7458, finding 182705).",
+      "file_path": "includes/functions-otp.php",
+      "line_number": 98,
+      "scanner_name": "wp.auth.loose_otp_compare",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-7458",
+        "file": "findings/user-verification-otp/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-7458",
+        "file": "findings/user-verification-otp/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "temporary-login-token-ato",
+      "app_name": "Temporary Login Without Password",
+      "repo_url": "https://wordpress.org/plugins/temporary-login-without-password/",
+      "stars": 100000,
+      "severity": "critical",
+      "finding_title": "Array query-token empty sanitize_key authentication bypass (CVE-2026-7567)",
+      "finding_summary": "temporary-login-without-password \u2014 passing wt_token[] as an array produces an empty sanitize_key() lookup that matches empty usermeta and logs in as administrator (CVE-2026-7567).",
+      "file_path": "includes/class-wp-temporary-login-without-password-common.php",
+      "line_number": 142,
+      "scanner_name": "wp.auth.empty_token_meta_bypass",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-7567",
+        "file": "findings/temporary-login-token-ato/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-7567",
+        "file": "findings/temporary-login-token-ato/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "wp-maps-lfi",
+      "app_name": "WP Maps (FlipperCode)",
+      "repo_url": "https://wordpress.org/plugins/wp-google-map-plugin/",
+      "stars": 100000,
+      "severity": "critical",
+      "finding_title": "Delimiter-split page parameter local file inclusion (CVE-2026-16263)",
+      "finding_summary": "wp-google-map-plugin \u2014 explode('_', $_GET['page']) builds a view path without traversal canonicalization, allowing local PHP file inclusion (CVE-2026-16263, finding 135683).",
+      "file_path": "core/class.controller.php",
+      "line_number": 77,
+      "scanner_name": "wp.lfi.user_include",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-16263",
+        "file": "findings/wp-maps-lfi/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-16263",
+        "file": "findings/wp-maps-lfi/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "eventin-layout-lfi",
+      "app_name": "Eventin Event Management",
+      "repo_url": "https://wordpress.org/plugins/wp-event-solution/",
+      "stars": 20000,
+      "severity": "critical",
+      "finding_title": "Stored event_layout postmeta local file inclusion (CVE-2026-84898)",
+      "finding_summary": "wp-event-solution <= 4.1.20 \u2014 stored event_layout post meta flows into include_once without template allowlist validation (CVE-2026-84898, finding 86137, JOB-58041B).",
+      "file_path": "core/event/template-functions.php",
+      "line_number": 54,
+      "scanner_name": "wp.lfi.user_include",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-84898",
+        "file": "findings/eventin-layout-lfi/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-84898",
+        "file": "findings/eventin-layout-lfi/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "wp-ultimate-review-rce",
+      "app_name": "WP Ultimate Review",
+      "repo_url": "https://wordpress.org/plugins/wp-ultimate-review/",
+      "stars": 10000,
+      "severity": "critical",
+      "finding_title": "Unauthenticated review summary second-order do_shortcode execution (CVE-2026-92235)",
+      "finding_summary": "wp-ultimate-review \u2014 public review submission persists unstripped shortcode tags that execute via do_shortcode() on review render (CVE-2026-92235, finding 119450).",
+      "file_path": "views/public/meta-box-user-review.php",
+      "line_number": 88,
+      "scanner_name": "wp.rce.second_order",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-92235",
+        "file": "findings/wp-ultimate-review-rce/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-92235",
+        "file": "findings/wp-ultimate-review-rce/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "rename-wp-login-sqli",
+      "app_name": "Rename wp-login.php",
+      "repo_url": "https://wordpress.org/plugins/rename-wp-login/",
+      "stars": 80000,
+      "severity": "critical",
+      "finding_title": "Unauthenticated wp_login_failed audit-log SQL injection (CVE-2026-93368)",
+      "finding_summary": "rename-wp-login \u2014 failed login handler interpolates unsanitized username/header fields into an unprepared $wpdb->query INSERT on wp_login_failed (CVE-2026-93368).",
+      "file_path": "rename-wp-login.php",
+      "line_number": 214,
+      "scanner_name": "wp.sqli.login_failed_log",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-93368",
+        "file": "findings/rename-wp-login-sqli/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-93368",
+        "file": "findings/rename-wp-login-sqli/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "ethpress-auth-bypass",
+      "app_name": "EthPress Web3 Login",
+      "repo_url": "https://wordpress.org/plugins/ethpress/",
+      "stars": 5000,
+      "severity": "critical",
+      "finding_title": "Signature verification fallthrough authentication bypass (CVE-2026-19125)",
+      "finding_summary": "ethpress \u2014 signature verification callback falls through on malformed/empty ECDSA verification state and issues wp_set_auth_cookie for administrator (CVE-2026-19125).",
+      "file_path": "app/Login.php",
+      "line_number": 91,
+      "scanner_name": "wp.auth.verify_fallthrough",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-19125",
+        "file": "findings/ethpress-auth-bypass/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-19125",
+        "file": "findings/ethpress-auth-bypass/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "hivepress-sso-bypass",
+      "app_name": "HivePress",
+      "repo_url": "https://wordpress.org/plugins/hivepress/",
+      "stars": 15000,
+      "severity": "critical",
+      "finding_title": "Weak SSO/REST token extraction authentication bypass (CVE-2026-18056)",
+      "finding_summary": "hivepress \u2014 REST/SSO token verification accepts predictable or empty token state and authenticates the target user (CVE-2026-18056).",
+      "file_path": "includes/controllers/class-user.php",
+      "line_number": 129,
+      "scanner_name": "wp.auth.sso_token_bypass",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-18056",
+        "file": "findings/hivepress-sso-bypass/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-18056",
+        "file": "findings/hivepress-sso-bypass/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "comboblocks-dynamic-action",
+      "app_name": "ComboBlocks / FireBox",
+      "repo_url": "https://wordpress.org/plugins/post-grid/",
+      "stars": 40000,
+      "severity": "critical",
+      "finding_title": "Unauthenticated REST process_form_data dynamic do_action invocation (CVE-2024-11080)",
+      "finding_summary": "post-grid / firebox \u2014 REST form handler dispatches attacker-controlled JSON action names into do_action() without capability checks (CVE-2024-11080, finding 45000, JOB-BEE076).",
+      "file_path": "Inc/Core/FB/Track.php",
+      "line_number": 63,
+      "scanner_name": "wp.automator.dynamic_action",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2024-11080",
+        "file": "findings/comboblocks-dynamic-action/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2024-11080",
+        "file": "findings/comboblocks-dynamic-action/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "translatepress-export-ato",
+      "app_name": "TranslatePress Multilingual",
+      "repo_url": "https://wordpress.org/plugins/translatepress-multilingual/",
+      "stars": 300000,
+      "severity": "critical",
+      "finding_title": "Unauthenticated dictionary export password-reset URL leak to ATO (CVE-2026-19632)",
+      "finding_summary": "translatepress-multilingual \u2014 unauthenticated dictionary/translation export leaks captured password-reset links and sensitive user tokens (CVE-2026-19632, finding 109241).",
+      "file_path": "includes/class-translation-manager.php",
+      "line_number": 310,
+      "scanner_name": "wp.info.dictionary_export_leak",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-19632",
+        "file": "findings/translatepress-export-ato/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-19632",
+        "file": "findings/translatepress-export-ato/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "shibboleth-header-sso",
+      "app_name": "Shibboleth SSO for WordPress",
+      "repo_url": "https://wordpress.org/plugins/shibboleth/",
+      "stars": 10000,
+      "severity": "critical",
+      "finding_title": "Unauthenticated HTTP identity-header spoofing to administrator creation (CVE-2026-12281)",
+      "finding_summary": "shibboleth \u2014 trusts client-supplied HTTP identity headers when reverse-proxy stripping is absent, auto-provisioning or authenticating an administrator account (CVE-2026-12281, finding 140831).",
+      "file_path": "shibboleth.php",
+      "line_number": 412,
+      "scanner_name": "wp.auth.header_sso_bypass",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-12281",
+        "file": "findings/shibboleth-header-sso/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-12281",
+        "file": "findings/shibboleth-header-sso/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "cmp-coming-soon-option-pe",
+      "app_name": "CMP \u2013 Coming Soon & Maintenance",
+      "repo_url": "https://wordpress.org/plugins/cmp-coming-soon-maintenance/",
+      "stars": 100000,
+      "severity": "high",
+      "finding_title": "Unconstrained import_settings update_option privilege escalation (CVE-2026-12470, CVE-2023-22695, CVE-2023-38392)",
+      "finding_summary": "cmp-coming-soon-maintenance \u2014 AJAX settings import writes arbitrary WordPress options without administrator capability checks (CVE-2026-12470, CVE-2023-22695, CVE-2023-38392, finding 119523).",
+      "file_path": "niteo-cmp.php",
+      "line_number": 520,
+      "scanner_name": "wp.option.unconstrained_update",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-12470",
+        "file": "findings/cmp-coming-soon-option-pe/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-12470",
+        "file": "findings/cmp-coming-soon-option-pe/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "mstore-api-jwt-ato",
+      "app_name": "MStore API",
+      "repo_url": "https://wordpress.org/plugins/mstore-api/",
+      "stars": 20000,
+      "severity": "critical",
+      "finding_title": "Unverified Firebase/JWT token payload account takeover (CVE-2026-13447, CVE-2026-12492, CVE-2026-77002, CVE-2026-10580)",
+      "finding_summary": "mstore-api \u2014 mobile checkout/login endpoints trust unverified JWT/OTP identity claims in raw JSON POST bodies to issue administrator sessions (CVE-2026-13447, CVE-2026-12492, CVE-2026-77002, CVE-2026-10580).",
+      "file_path": "controllers/flutter-user.php",
+      "line_number": 240,
+      "scanner_name": "wp.auth.jwt_forged_claim",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-13447",
+        "file": "findings/mstore-api-jwt-ato/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-13447",
+        "file": "findings/mstore-api-jwt-ato/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "w3-total-cache-mfunc-rce",
+      "app_name": "W3 Total Cache",
+      "repo_url": "https://wordpress.org/plugins/w3-total-cache/",
+      "stars": 1000000,
+      "severity": "critical",
+      "finding_title": "Dynamic mfunc comment tag PHP code execution (CVE-2026-27384)",
+      "finding_summary": "w3-total-cache \u2014 page-cache dynamic fragment parser evaluates mfunc comment blocks containing attacker-controlled PHP expressions (CVE-2026-27384, finding 181455).",
+      "file_path": "PgCache_ContentGrabber.php",
+      "line_number": 1180,
+      "scanner_name": "wp.rce.mfunc_eval",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-27384",
+        "file": "findings/w3-total-cache-mfunc-rce/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-27384",
+        "file": "findings/w3-total-cache-mfunc-rce/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "rank-math-deserial",
+      "app_name": "Rank Math SEO",
+      "repo_url": "https://wordpress.org/plugins/seo-by-rank-math/",
+      "stars": 3000000,
+      "severity": "high",
+      "finding_title": "Second-order metadata unserialize PHP Object Injection (CVE-2026-81757)",
+      "finding_summary": "seo-by-rank-math \u2014 low-privilege metadata plant flows into unserialize() during frontend/admin SEO schema evaluation (CVE-2026-81757, finding 110059).",
+      "file_path": "includes/modules/schema/class-frontend.php",
+      "line_number": 145,
+      "scanner_name": "wp.deserial.second_order",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-81757",
+        "file": "findings/rank-math-deserial/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-81757",
+        "file": "findings/rank-math-deserial/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "ht-contactform-xss-bac",
+      "app_name": "HT Contact Form / Kirki / Hummingbird",
+      "repo_url": "https://wordpress.org/plugins/ht-contactform/",
+      "stars": 30000,
+      "severity": "high",
+      "finding_title": "Two-phase public submit to admin raw render & cookie/meta injection (CVE-2026-96326, CVE-2026-8206, CVE-2026-83627, CVE-2026-84219)",
+      "finding_summary": "ht-contactform \u2014 unauthenticated form submission and cookie-key iteration persist unsanitized payloads rendered in admin SPA views and password-reset flows (CVE-2026-96326, CVE-2026-8206, CVE-2026-83627, CVE-2026-84219, finding 161000).",
+      "file_path": "include/class.ht-contactform.php",
+      "line_number": 95,
+      "scanner_name": "wp.xss.second_order",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-96326",
+        "file": "findings/ht-contactform-xss-bac/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-96326",
+        "file": "findings/ht-contactform-xss-bac/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "paytium-csv-role-pe",
+      "app_name": "Paytium / Import Export Users / WP DSGVO",
+      "repo_url": "https://wordpress.org/plugins/paytium/",
+      "stars": 10000,
+      "severity": "critical",
+      "finding_title": "Form-field usermeta & CSV roundtrip role privilege escalation (CVE-2026-56030, CVE-2026-86583, CVE-2026-4283, CVE-2025-14975, CVE-2026-8809)",
+      "finding_summary": "paytium / import-users-from-csv \u2014 attacker-controlled form meta keys and CSV import columns overwrite wp_capabilities / user_email to escalate to administrator (CVE-2026-56030, CVE-2026-86583, CVE-2026-4283, CVE-2025-14975, CVE-2026-8809, finding 129199).",
+      "file_path": "includes/process-payment-functions.php",
+      "line_number": 174,
+      "scanner_name": "wp.user.role_assignment",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-56030",
+        "file": "findings/paytium-csv-role-pe/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2026-56030",
+        "file": "findings/paytium-csv-role-pe/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "woocommerce-delivery-notes-rce",
+      "app_name": "WooCommerce Delivery Notes / Demo Importer",
+      "repo_url": "https://wordpress.org/plugins/woocommerce-delivery-notes/",
+      "stars": 200000,
+      "severity": "critical",
+      "finding_title": "Dompdf remote PHP execution & unauthenticated upload handlers (CVE-2025-13773, CVE-2026-40746, CVE-2026-42737, CVE-2025-7852, CVE-2023-4596)",
+      "finding_summary": "woocommerce-delivery-notes \u2014 guest order-print / upload endpoints permit arbitrary file write or Dompdf PHP evaluation before extension validation (CVE-2025-13773, CVE-2026-40746, CVE-2026-42737, CVE-2025-7852, CVE-2023-4596).",
+      "file_path": "includes/class-wcdn-print.php",
+      "line_number": 89,
+      "scanner_name": "wp.fs.arbitrary_upload",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2025-13773",
+        "file": "findings/woocommerce-delivery-notes-rce/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2025-13773",
+        "file": "findings/woocommerce-delivery-notes-rce/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "yith-order-tracking-idor",
+      "app_name": "YITH WooCommerce Order Tracking & Nextend",
+      "repo_url": "https://wordpress.org/plugins/yith-woocommerce-order-tracking/",
+      "stars": 50000,
+      "severity": "high",
+      "finding_title": "Unauthenticated order-tracking IDOR & open redirect chain (CVE-2022-4019, CVE-2023-6401, CVE-2026-18442)",
+      "finding_summary": "yith-woocommerce-order-tracking \u2014 missing order ownership verification exposes customer PII and chains with unvalidated redirect targets (CVE-2022-4019, CVE-2023-6401, CVE-2026-18442, finding 27043, JOB-532F4C).",
+      "file_path": "init.php",
+      "line_number": 132,
+      "scanner_name": "wp.idor.order_tracking",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2022-4019",
+        "file": "findings/yith-order-tracking-idor/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.sh // CVE-2022-4019",
+        "file": "findings/yith-order-tracking-idor/poc.sh",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "openzeppelin-uups-governor",
+      "app_name": "OpenZeppelin Contracts (EVM Benchmark)",
+      "repo_url": "https://github.com/OpenZeppelin/openzeppelin-contracts",
+      "stars": 25600,
+      "severity": "critical",
+      "finding_title": "UUPS uninitialized implementation takeover & Governor quorum/returndata flaws (CVE-2021-41264, CVE-2021-46320, CVE-2022-31198, CVE-2022-35915)",
+      "finding_summary": "openzeppelin-contracts \u2014 uninitialized UUPS proxy implementation allows direct initialize() + upgradeToAndCall(selfdestruct), alongside Governor historical quorum mutation and unbounded returndata copy (CVE-2021-41264, CVE-2021-46320, CVE-2022-31198, CVE-2022-35915).",
+      "file_path": "contracts/proxy/utils/UUPSUpgradeable.sol",
+      "line_number": 58,
+      "scanner_name": "evm.foundry.uups_uninitialized",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2021-41264",
+        "file": "findings/openzeppelin-uups-governor/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.py // CVE-2021-41264",
+        "file": "findings/openzeppelin-uups-governor/poc.py",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "aiohttp-mongoose-native",
+      "app_name": "aiohttp / Cesanta Mongoose / Native C Parsers",
+      "repo_url": "https://github.com/cesanta/mongoose",
+      "stars": 12400,
+      "severity": "high",
+      "finding_title": "Static symlink traversal & multipart/arena integer wrap (CVE-2024-23334, CVE-2025-9648, CVE-2025-53630)",
+      "finding_summary": "aiohttp / mongoose \u2014 static route symlink traversal (CVE-2024-23334), mg_handle_form_request boundary OOB (CVE-2025-9648), and 32-bit arena allocation integer wrap (CVE-2025-53630) verified under AddressSanitizer.",
+      "file_path": "mongoose.c",
+      "line_number": 4820,
+      "scanner_name": "native.memory.asan_verify",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2024-23334",
+        "file": "findings/aiohttp-mongoose-native/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.c // CVE-2024-23334",
+        "file": "findings/aiohttp-mongoose-native/poc.c",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "python-multi-bug-chains",
+      "app_name": "Python Web & AI Multi-Bug Chains",
+      "repo_url": "https://github.com/pyca/pyopenssl",
+      "stars": 8500,
+      "severity": "high",
+      "finding_title": "Multi-stage INFO_LEAK \u2192 AUTH_BYPASS \u2192 RCE chains & BOLA benchmarks (CVE-2022-28948, CVE-2023-6572, CVE-2026-39408, CVE-2026-45830, CVE-2026-45831, CVE-2026-49854, CVE-2026-54286, CVE-2026-59198, CVE-2026-6321, CVE-2026-73646, CVE-2026-9101, CVE-2026-9102, CVE-2026-9103, CVE-2026-9104)",
+      "finding_summary": "Iridium multi-bug chain synthesizer & differential BOLA/authz benchmarks verified across JOB-BBD2D3, JOB-C7356C, JOB-BB0B4B, JOB-B9E185, JOB-4CA434 (CVE-2022-28948, CVE-2023-6572, CVE-2026-39408, CVE-2026-45830, CVE-2026-45831, CVE-2026-49854, CVE-2026-54286, CVE-2026-59198, CVE-2026-6321, CVE-2026-73646, CVE-2026-9101, CVE-2026-9102, CVE-2026-9103, CVE-2026-9104).",
+      "file_path": "backend/app/api/routes.py",
+      "line_number": 42,
+      "scanner_name": "python.chain.bola_authz",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2026-49854",
+        "file": "findings/python-multi-bug-chains/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.py // CVE-2026-49854",
+        "file": "findings/python-multi-bug-chains/poc.py",
+        "kind": "code"
+      }
+    },
+    {
+      "id": "urllib3-requests-demo",
+      "app_name": "urllib3 / Requests (CLI Demo Target)",
+      "repo_url": "https://github.com/urllib3/urllib3",
+      "stars": 3800,
+      "severity": "high",
+      "finding_title": "Catastrophic URL authority parsing ReDoS reachable via requests.get (CVE-2021-33503)",
+      "finding_summary": "urllib3 < 1.26.5 (via requests 2.25.0) \u2014 HTTP route handler passes untrusted URL into requests.get(), reaching urllib3 parse_url() catastrophic backtracking sink (CVE-2021-33503).",
+      "file_path": "app.py",
+      "line_number": 10,
+      "scanner_name": "python.sca.reachability",
+      "verification_status": "VERIFIED",
+      "report": {
+        "title": "report.md // CVE-2021-33503",
+        "file": "findings/urllib3-requests-demo/report.md",
+        "kind": "markdown"
+      },
+      "poc": {
+        "title": "poc.py // CVE-2021-33503",
+        "file": "findings/urllib3-requests-demo/poc.py",
         "kind": "code"
       }
     }

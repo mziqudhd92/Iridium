@@ -21,3 +21,19 @@ def test_iridiumignore_patterns(tmp_path: Path) -> None:
     assert spec is not None
     assert should_ignore(secret, tmp_path, spec) is True
     assert should_ignore(tmp_path / "app.py", tmp_path, spec) is False
+
+
+def test_iridiumignore_star_excludes_nested_paths(tmp_path: Path) -> None:
+    """Patterns like `vendor/*` must exclude nested files (GitIgnoreSpec semantics)."""
+    (tmp_path / ".iridiumignore").write_text("vendor/*\nsecrets/*\n", encoding="utf-8")
+    nested = tmp_path / "vendor" / "pkg" / "mod.py"
+    nested.parent.mkdir(parents=True)
+    nested.write_text("x = 1\n", encoding="utf-8")
+    secret = tmp_path / "secrets" / "nested" / "key.py"
+    secret.parent.mkdir(parents=True)
+    secret.write_text("TOKEN = 1\n", encoding="utf-8")
+    spec = load_ignore_spec(tmp_path)
+    assert spec is not None
+    assert should_ignore(nested, tmp_path, spec) is True
+    assert should_ignore(secret, tmp_path, spec) is True
+    assert should_ignore(tmp_path / "app.py", tmp_path, spec) is False

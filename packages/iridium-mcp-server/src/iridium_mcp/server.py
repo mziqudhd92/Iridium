@@ -19,10 +19,13 @@ mcp = MCPServer("iridium-mcp-server", version=__version__)
 
 
 def _start_parent_heartbeat() -> threading.Thread:
+    initial_ppid = os.getppid()
+
     def _run() -> None:
         while True:
             time.sleep(2.0)
-            if os.getppid() == 1:
+            current_ppid = os.getppid()
+            if current_ppid in (0, 1) or current_ppid != initial_ppid:
                 append_audit("parent process exited; shutting down MCP server")
                 os._exit(0)
 

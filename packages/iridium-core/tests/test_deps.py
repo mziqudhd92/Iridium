@@ -44,3 +44,31 @@ def test_parse_all_lockfiles_merges_sources(tmp_path: Path) -> None:
     deps, _ = parse_all_lockfiles(tmp_path)
     names = {dep.name for dep in deps}
     assert names == {"foo", "bar"}
+
+
+def test_parse_uv_lock_handles_workspace_virtual_packages_and_nested_deps(
+    tmp_path: Path,
+) -> None:
+    (tmp_path / "uv.lock").write_text(
+        """version = 1
+requires-python = ">=3.11"
+
+[[package]]
+name = "workspace-root"
+source = { virtual = "." }
+dependencies = [
+    { name = "requests" },
+]
+
+[[package]]
+name = "requests"
+version = "2.32.3"
+source = { registry = "https://pypi.org/simple" }
+""",
+        encoding="utf-8",
+    )
+    deps, warnings = parse_uv_lock(tmp_path)
+    assert len(deps) == 1
+    assert deps[0].name == "requests"
+    assert deps[0].version == "2.32.3"
+    assert warnings == []

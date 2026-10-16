@@ -28,3 +28,23 @@ def test_run_batched_processes_files(tmp_path: Path) -> None:
 
 def test_pool_worker_count_is_positive() -> None:
     assert pool_worker_count() >= 1
+
+
+def _slow_worker(paths: list[Path]) -> list[str]:
+    import time
+
+    time.sleep(2.0)
+    return [p.name for p in paths]
+
+
+def test_run_batched_returns_promptly_on_timeout(tmp_path: Path) -> None:
+    import time
+
+    path = tmp_path / "slow.py"
+    path.write_text("x = 1\n", encoding="utf-8")
+    start = time.monotonic()
+    results, warnings = run_batched([path], _slow_worker, timeout=0.1, max_workers=1)
+    elapsed = time.monotonic() - start
+    assert results == []
+    assert any("timed out" in w for w in warnings)
+    assert elapsed < 1.5

@@ -229,13 +229,46 @@
     return `<span class="board-rank ${rankClass}"><span class="rank-ico">${icon}</span> #${String(rank).padStart(2, "0")}</span>`;
   }
 
+  function extractCves(entry) {
+    const text = `${entry.finding_title || ""} ${entry.finding_summary || ""}`;
+    const matches = text.match(/CVE-\d{4}-\d{4,}/g) || [];
+    return Array.from(new Set(matches));
+  }
+
+  function inferEcosystem(entry) {
+    const rule = String(entry.scanner_name || "").toLowerCase();
+    const repo = String(entry.repo_url || "").toLowerCase();
+    const file = String(entry.file_path || "").toLowerCase();
+    if (rule.startsWith("wp.") || repo.includes("wordpress") || file.endsWith(".php")) {
+      return "wordpress";
+    }
+    if (
+      rule.startsWith("native.") ||
+      rule.startsWith("evm.") ||
+      file.endsWith(".c") ||
+      file.endsWith(".cpp") ||
+      file.endsWith(".sol")
+    ) {
+      return "native";
+    }
+    return "python";
+  }
+
   function renderRow(entry, idx) {
     const pocFileName = entry.poc && entry.poc.file ? entry.poc.file.split("/").pop() : "";
+    const cves = extractCves(entry);
+    const cvePills = cves
+      .map(
+        (cve) =>
+          `<a href="#" class="board-poc-link" data-open="report" data-id="${esc(entry.id)}" title="Open briefing for ${esc(cve)}"><code>${esc(cve)}</code></a>`
+      )
+      .join(" ");
     const pocLinkHtml = entry.poc ? `
       <div class="board-poc-row">
         <a href="#" class="board-poc-link" data-open="poc" data-id="${esc(entry.id)}" title="View Proof of Concept">
           <span>⛏️</span> PROOF OF CONCEPT: <code>${esc(pocFileName)}</code>
         </a>
+        ${cvePills}
       </div>` : "";
 
     return `<tr>
@@ -277,16 +310,128 @@
       }
       if (!payload) throw new Error("Could not load findings.json");
       const entries = Array.isArray(payload.entries) ? payload.entries : [];
-      tbody.innerHTML = entries.map((entry, idx) => renderRow(entry, idx)).join("");
-      tbody.querySelectorAll("[data-open]").forEach((btn) => {
-        btn.addEventListener("click", (e) => {
-          e.preventDefault();
+
+      const allCves = new Set();
+      entries.forEach((e) => extractCves(e).forEach((c) => allCves.add(c)));
+      const critCount = entries.filter((e) => String(e.severity).toLowerCase() === "critical").length;
+      const highCount = entries.filter((e) => String(e.severity).toLowerCase() === "high").length;
+
+      let activeFilter = "all";
+      let searchQuery = "";
+      let showAll = false;
+      const INITIAL_LIMIT = 25;
+
+      const toolbar = document.createElement("div");
+      toolbar.className = "digger-board-toolbar";
+      toolbar.innerHTML = `
+        <div class="digger-kpis">
+          <span class="pill">FINDINGS: ${entries.length}</span>
+          <span class="pill live">CVES INDEXED: ${allCves.size}</span>
+          <span class="pill mute">CRIT: ${critCount} / HIGH: ${highCount}</span>
+        </div>
+        <div class="digger-controls">
+          <input
+            type="search"
+            class="digger-search"
+            placeholder="SEARCH CVE / APP / RULE..."
+            aria-label="Filter arcade findings"
+            data-digger-search
+          />
+          <div class="digger-filters">
+            <button type="button" class="btn digger-filter active" data-filter="all">ALL</button>
+            <button type="button" class="btn ghost digger-filter" data-filter="critical">CRIT</button>
+            <button type="button" class="btn ghost digger-filter" data-filter="high">HIGH</button>
+            <button type="button" class="btn ghost digger-filter" data-filter="wordpress">WP</button>
+            <button type="button" class="btn ghost digger-filter" data-filter="python">PY/AI</button>
+            <button type="button" class="btn ghost digger-filter" data-filter="native">C/EVM</button>
+          </div>
+        </div>
+      `;
+      board.parentNode.insertBefore(toolbar, board);
+
+      const footerWrap = document.createElement("div");
+      footerWrap.className = "digger-board-footer";
+      board.parentNode.insertBefore(footerWrap, board.nextSibling);
+
+      function bindOpenButtons() {
+        tbody.querySelectorAll("[data-open]").forEach((btn) => {
+          btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            if (window.DiggerAudio) window.DiggerAudio.playBlip();
+            const entry = entries.find((item) => item.id === btn.getAttribute("data-id"));
+            const kind = btn.getAttribute("data-open");
+            if (entry && entry[kind]) void openTerminal(entry[kind]);
+          });
+        });
+      }
+
+      function updateView() {
+        const q = searchQuery.trim().toLowerCase();
+        const filtered = entries.filter((entry) => {
+          const sev = String(entry.severity || "").toLowerCase();
+          const eco = inferEcosystem(entry);
+          if (activeFilter === "critical" && sev !== "critical") return false;
+          if (activeFilter === "high" && sev !== "high") return false;
+          if (activeFilter === "wordpress" && eco !== "wordpress") return false;
+          if (activeFilter === "python" && eco !== "python") return false;
+          if (activeFilter === "native" && eco !== "native") return false;
+          if (!q) return true;
+          const hay = `${entry.app_name} ${entry.finding_title} ${entry.finding_summary} ${entry.file_path} ${entry.scanner_name} ${entry.repo_url}`.toLowerCase();
+          return hay.includes(q);
+        });
+
+        const isFiltering = Boolean(q) || activeFilter !== "all";
+        const visible = isFiltering || showAll ? filtered : filtered.slice(0, INITIAL_LIMIT);
+
+        if (!visible.length) {
+          tbody.innerHTML = `<tr><td colspan="5" class="board-empty">NO MATCHING SECTORS FOR "${esc(searchQuery)}".</td></tr>`;
+        } else {
+          tbody.innerHTML = visible.map((entry, idx) => renderRow(entry, idx)).join("");
+          bindOpenButtons();
+        }
+
+        if (!isFiltering && filtered.length > INITIAL_LIMIT) {
+          footerWrap.innerHTML = `
+            <button type="button" class="btn" data-digger-toggle>
+              ${showAll ? `▲ SHOW TOP ${INITIAL_LIMIT} SECTORS` : `▼ LOAD ALL ${filtered.length} FINDINGS (${allCves.size} CVES)`}
+            </button>
+          `;
+          const toggleBtn = footerWrap.querySelector("[data-digger-toggle]");
+          if (toggleBtn) {
+            toggleBtn.addEventListener("click", () => {
+              if (window.DiggerAudio) window.DiggerAudio.playBlip();
+              showAll = !showAll;
+              updateView();
+            });
+          }
+        } else {
+          footerWrap.innerHTML = `<div class="mono-label" style="margin-top:12px;text-align:center;">DISPLAYING ${visible.length} / ${entries.length} VERIFIED SECTORS (${allCves.size} CVES)</div>`;
+        }
+      }
+
+      const searchInput = toolbar.querySelector("[data-digger-search]");
+      if (searchInput) {
+        searchInput.addEventListener("input", (e) => {
+          searchQuery = e.target.value || "";
+          updateView();
+        });
+      }
+
+      toolbar.querySelectorAll("[data-filter]").forEach((btn) => {
+        btn.addEventListener("click", () => {
           if (window.DiggerAudio) window.DiggerAudio.playBlip();
-          const entry = entries.find((item) => item.id === btn.getAttribute("data-id"));
-          const kind = btn.getAttribute("data-open");
-          if (entry && entry[kind]) void openTerminal(entry[kind]);
+          activeFilter = btn.getAttribute("data-filter") || "all";
+          toolbar.querySelectorAll("[data-filter]").forEach((b) => {
+            b.classList.remove("active");
+            b.classList.add("ghost");
+          });
+          btn.classList.add("active");
+          btn.classList.remove("ghost");
+          updateView();
         });
       });
+
+      updateView();
     } catch (err) {
       tbody.innerHTML = `<tr><td colspan="5" class="board-empty"><span class="arcade-blink">UNABLE TO LOAD FINDINGS TABLE.</span> ${esc(err.message || err)}</td></tr>`;
     }

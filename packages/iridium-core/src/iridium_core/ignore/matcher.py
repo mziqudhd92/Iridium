@@ -19,7 +19,9 @@ def load_ignore_spec(repo: Path) -> pathspec.PathSpec | None:
     patterns = [line.strip() for line in lines if line.strip() and not line.strip().startswith("#")]
     if not patterns:
         return None
-    return pathspec.PathSpec.from_lines("gitwildmatch", patterns)
+    # GitIgnoreSpec preserves recursive exclusion for patterns like `dir/*`
+    # (PathSpec "gitignore" dialect does not match nested paths).
+    return pathspec.GitIgnoreSpec.from_lines(patterns)
 
 
 DEFAULT_IGNORE_DIRS = {

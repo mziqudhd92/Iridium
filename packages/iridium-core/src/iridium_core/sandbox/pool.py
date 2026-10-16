@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import os
 from collections.abc import Callable
-from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import Executor, ProcessPoolExecutor, ThreadPoolExecutor
 from concurrent.futures import TimeoutError as FuturesTimeoutError
 from pathlib import Path
 from typing import TypeVar
@@ -65,15 +65,33 @@ def run_batched(
     warnings: list[str] = []
     batches = _chunked(paths, batch_size)
 
-    with ProcessPoolExecutor(max_workers=workers) as pool:
+    try:
+        pool: Executor = ProcessPoolExecutor(max_workers=workers)
+    except (PermissionError, NotImplementedError, OSError):
+        pool = ThreadPoolExecutor(max_workers=workers)
+    timed_out = False
+    try:
         futures = [pool.submit(worker_fn, batch) for batch in batches]
         for idx, future in enumerate(futures):
             try:
                 batch_result = future.result(timeout=timeout)
                 results.extend(batch_result)
             except FuturesTimeoutError:
+                timed_out = True
+                future.cancel()
                 warnings.append(f"batch {idx} timed out after {timeout}s")
             except Exception as exc:  # noqa: BLE001 — continue on worker crash
                 warnings.append(f"batch {idx} failed: {exc}")
+    finally:
+        if timed_out:
+            processes = getattr(pool, "_processes", None) or {}
+            for proc in list(processes.values()):
+                try:
+                    proc.terminate()
+                except Exception:  # noqa: BLE001, S110
+                    pass
+            pool.shutdown(wait=False, cancel_futures=True)
+        else:
+            pool.shutdown(wait=True)
 
     return results, warnings

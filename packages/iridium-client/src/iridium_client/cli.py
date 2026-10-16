@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import shutil
 import time
 from pathlib import Path
 
@@ -71,7 +72,7 @@ def scan(
     apply_telemetry_env(cli_opt_in=telemetry, cli_opt_out=no_telemetry)
 
     start = time.monotonic()
-    indexer = WorkspaceIndexer(path)
+    indexer = WorkspaceIndexer(path, anonymize=anonymize)
     payload = indexer.index()
     duration_index = time.monotonic() - start
 
@@ -102,26 +103,29 @@ def demo() -> None:
     """Run embedded vulnerable micro-target demo (<10s)."""
     start = time.monotonic()
     target = materialize_demo_target()
-    console.print(f"[dim]Demo target: {target}[/dim]")
+    try:
+        console.print(f"[dim]Demo target: {target}[/dim]")
 
-    indexer = WorkspaceIndexer(target, use_process_pool=False)
-    payload = indexer.index()
+        indexer = WorkspaceIndexer(target, use_process_pool=False)
+        payload = indexer.index()
 
-    render_demo_graph()
-    console.print(
-        "\n[bold]Patch preview[/bold]\n"
-        "  - requests: 2.25.0 → 2.32.3\n"
-        "  - pins urllib3 transitive fix for CVE-2021-33503\n"
-    )
+        render_demo_graph()
+        console.print(
+            "\n[bold]Patch preview[/bold]\n"
+            "  - requests: 2.25.0 → 2.32.3\n"
+            "  - pins urllib3 transitive fix for CVE-2021-33503\n"
+        )
 
-    render_zero_results(
-        duration_s=time.monotonic() - start,
-        dependency_count=max(payload.dependency_count, 2),
-        entrypoint_count=max(payload.entrypoint_count, 1),
-        languages=payload.languages or ["python"],
-        reachable_count=1,
-        raw_cve_count=12,
-    )
+        render_zero_results(
+            duration_s=time.monotonic() - start,
+            dependency_count=max(payload.dependency_count, 2),
+            entrypoint_count=max(payload.entrypoint_count, 1),
+            languages=payload.languages or ["python"],
+            reachable_count=1,
+            raw_cve_count=12,
+        )
+    finally:
+        shutil.rmtree(target, ignore_errors=True)
 
 
 if __name__ == "__main__":

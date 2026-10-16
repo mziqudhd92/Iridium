@@ -6,7 +6,7 @@ import hashlib
 import re
 from pathlib import Path
 
-from iridium_core.extract.base import ImportMap, LanguageExtractor
+from iridium_core.extract.base import ImportMap, LanguageExtractor, relative_file_path
 from iridium_core.models.enums import EdgeType, NodeKind
 from iridium_core.models.fragment import GraphEdge, GraphFragment, GraphNode
 from iridium_core.sanitize.scrubber import scrub_source
@@ -47,8 +47,12 @@ class JavaScriptExtractor(LanguageExtractor):
             mapping[rel] = rel
         return mapping
 
-    def parse_batch_safe(self, paths: list[Path]) -> list[GraphFragment]:
-        return [self._parse_file(path) for path in paths]
+    def parse_batch_safe(
+        self,
+        paths: list[Path],
+        repo: Path | None = None,
+    ) -> list[GraphFragment]:
+        return [self._parse_file(path, repo=repo) for path in paths]
 
     def _add_edge(
         self,
@@ -64,25 +68,25 @@ class JavaScriptExtractor(LanguageExtractor):
         seen.add(key)
         edges.append(GraphEdge(source=source, target=target, edge_type=edge_type))
 
-    def _parse_file(self, path: Path) -> GraphFragment:
+    def _parse_file(self, path: Path, repo: Path | None = None) -> GraphFragment:
         warnings: list[str] = []
         nodes: list[GraphNode] = []
         edges: list[GraphEdge] = []
         seen_edges: set[tuple[str, str, EdgeType]] = set()
+        rel = relative_file_path(path, repo)
 
         try:
             raw = path.read_bytes()
         except OSError as exc:
-            return GraphFragment(warnings=[f"read error {path}: {exc}"])
+            return GraphFragment(file=rel, warnings=[f"read error {rel}: {exc}"])
 
         if len(raw) > MAX_FILE_BYTES:
-            return GraphFragment(warnings=[f"skipped oversized file: {path.name}"])
+            return GraphFragment(file=rel, warnings=[f"skipped oversized file: {path.name}"])
 
         source = scrub_source(raw.decode("utf-8", errors="ignore"))
         if any(len(line) > 50_000 for line in source.splitlines()):
-            return GraphFragment(warnings=[f"skipped minified: {path.name}"])
+            return GraphFragment(file=rel, warnings=[f"skipped minified: {path.name}"])
 
-        rel = path.as_posix()
         lines = source.splitlines()
         current_handler_id: str | None = None
         handler_indent: int | None = None
@@ -196,4 +200,4 @@ class JavaScriptExtractor(LanguageExtractor):
             for imp_id in module_import_ids:
                 self._add_edge(edges, seen_edges, handler_id, imp_id, EdgeType.IMPORTS)
 
-        return GraphFragment(nodes=nodes, edges=edges, warnings=warnings)
+        return GraphFragment(file=rel, nodes=nodes, edges=edges, warnings=warnings)
